@@ -43,3 +43,6 @@ next-env.d.ts
 /src/generated/prisma
 dev.db
 dev.db-journal
+# Keep the production seed snapshot committed for Vercel /tmp bootstrap
+!data/fungal.db
+
