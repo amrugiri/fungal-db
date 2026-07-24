@@ -1,0 +1,336 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+enum VerificationStatus {
+  draft
+  single_source
+  peer_reviewed
+  expert_verified
+}
+
+enum MeatAnalogPotential {
+  high
+  moderate
+  low
+  unknown
+}
+
+enum CitationType {
+  journal
+  book
+  patent
+  website
+  catalog
+  review
+}
+
+enum HyphalType {
+  septate
+  coenocytic
+  unknown
+}
+
+enum ImageCategory {
+  microscopy
+  organism
+  commercial_product
+  biomass
+  other
+}
+
+enum CommercialStatus {
+  commercial_meat_analog
+  commercial_food
+  research_only
+  traditional_food
+  none
+}
+
+enum RegulatoryStatus {
+  gras
+  novel_food_authorized
+  traditional_food
+  approved_safe
+  not_evaluated
+  not_approved_food
+  restricted_use
+}
+
+model Taxonomy {
+  id        String   @id @default(uuid())
+  kingdom   String   @default("Fungi")
+  phylum    String?
+  class     String?
+  order     String?
+  family    String?
+  genus     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  species Species[]
+
+  @@map("taxonomies")
+}
+
+model Species {
+  id                 String             @id @default(uuid())
+  slug               String             @unique
+  genus              String
+  speciesEpithet     String             @map("species_epithet")
+  scientificName     String             @map("scientific_name")
+  commonNames        String             @map("common_names")
+  synonyms           String?
+  mycobankId         String?            @map("mycobank_id")
+  ncbiTaxonomyId     String?            @map("ncbi_taxonomy_id")
+  indexFungorumId    String?            @map("index_fungorum_id")
+  verificationStatus VerificationStatus @default(draft) @map("verification_status")
+  fdaStatus              RegulatoryStatus?  @map("fda_status")
+  efsaStatus             RegulatoryStatus?  @map("efsa_status")
+  regulatoryNotes        String?            @map("regulatory_notes")
+  lastVerifiedAt     DateTime?          @map("last_verified_at")
+  verifiedBy         String?            @map("verified_by")
+  confidenceNotes    String?            @map("confidence_notes")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  taxonomyId String?   @map("taxonomy_id")
+  taxonomy   Taxonomy? @relation(fields: [taxonomyId], references: [id])
+
+  sensoryProfiles           SensoryProfile[]
+  morphologies              Morphology[]
+  nutritionProfiles         NutritionProfile[]
+  geographicDistributions   GeographicDistribution[]
+  cultureCollectionStrains  CultureCollectionStrain[]
+  speciesImages             SpeciesImage[]
+  morphologyModels3D        MorphologyModel3D[]
+  commercialApplications    CommercialApplication[]
+  citationLinks             CitationLink[]
+  altProteinResearchHighlights AltProteinResearchHighlight[]
+
+  @@index([genus])
+  @@index([scientificName])
+  @@map("species")
+}
+
+model SensoryProfile {
+  id                  String              @id @default(uuid())
+  speciesId           String              @map("species_id")
+  tasteAxes           String              @map("taste_axes")
+  textureAxes         String              @map("texture_axes")
+  aromaNotes            String?             @map("aroma_notes")
+  meatAnalogPotential MeatAnalogPotential @default(unknown) @map("meat_analog_potential")
+  meatAnalogRationale String?             @map("meat_analog_rationale")
+  preparationContext  String?             @map("preparation_context")
+  verificationStatus  VerificationStatus  @default(draft) @map("verification_status")
+  confidenceNotes     String?             @map("confidence_notes")
+  createdAt           DateTime            @default(now()) @map("created_at")
+  updatedAt           DateTime            @updatedAt @map("updated_at")
+
+  species       Species        @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+  citationLinks CitationLink[]
+
+  @@map("sensory_profiles")
+}
+
+model Morphology {
+  id                    String             @id @default(uuid())
+  speciesId             String             @map("species_id")
+  hyphalType            HyphalType         @default(unknown) @map("hyphal_type")
+  cellWallComposition   String?            @map("cell_wall_composition")
+  fruitingBodyStructure String?            @map("fruiting_body_structure")
+  sporeCharacteristics  String?            @map("spore_characteristics")
+  microscopyNotes       String?            @map("microscopy_notes")
+  verificationStatus    VerificationStatus @default(draft) @map("verification_status")
+  confidenceNotes       String?            @map("confidence_notes")
+  createdAt             DateTime           @default(now()) @map("created_at")
+  updatedAt             DateTime           @updatedAt @map("updated_at")
+
+  species Species @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+
+  @@map("morphologies")
+}
+
+model NutritionProfile {
+  id                 String             @id @default(uuid())
+  speciesId          String             @map("species_id")
+  proteinPercent     Float?             @map("protein_percent")
+  fiberPercent       Float?             @map("fiber_percent")
+  fatPercent         Float?             @map("fat_percent")
+  moisturePercent    Float?             @map("moisture_percent")
+  ashPercent         Float?             @map("ash_percent")
+  aminoAcids         String?            @map("amino_acids")
+  aminoAcidBasis     String?            @map("amino_acid_basis")
+  pdcaas             Float?             @map("pdcaas")
+  diaas              Float?             @map("diaas")
+  limitingAminoAcids String?            @map("limiting_amino_acids")
+  preparationContext String?            @map("preparation_context")
+  verificationStatus VerificationStatus @default(draft) @map("verification_status")
+  confidenceNotes    String?            @map("confidence_notes")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  species       Species        @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+  citationLinks CitationLink[]
+
+  @@map("nutrition_profiles")
+}
+
+model GeographicDistribution {
+  id                 String             @id @default(uuid())
+  speciesId          String             @map("species_id")
+  nativeRange        String?            @map("native_range")
+  cultivatedRegions  String?            @map("cultivated_regions")
+  habitat            String?
+  gbifUrl            String?            @map("gbif_url")
+  verificationStatus VerificationStatus @default(draft) @map("verification_status")
+  confidenceNotes    String?            @map("confidence_notes")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  species Species @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+
+  @@map("geographic_distributions")
+}
+
+model CultureCollectionStrain {
+  id                 String             @id @default(uuid())
+  speciesId          String             @map("species_id")
+  collectionName     String             @map("collection_name")
+  strainId           String             @map("strain_id")
+  catalogUrl         String             @map("catalog_url")
+  availabilityNotes  String?            @map("availability_notes")
+  verificationStatus VerificationStatus @default(draft) @map("verification_status")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  species Species @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+
+  @@map("culture_collection_strains")
+}
+
+model SpeciesImage {
+  id                 String             @id @default(uuid())
+  speciesId          String             @map("species_id")
+  url                String
+  caption            String?
+  license            String?
+  attributionText    String?            @map("attribution_text")
+  sourceUrl          String?            @map("source_url")
+  imageCategory      ImageCategory      @default(other) @map("image_category")
+  verificationStatus VerificationStatus @default(draft) @map("verification_status")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  species       Species        @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+  citationLinks CitationLink[]
+
+  @@map("species_images")
+}
+
+model CommercialApplication {
+  id                 String             @id @default(uuid())
+  speciesId          String             @map("species_id")
+  meatAlternativeUse Boolean            @default(false) @map("meat_alternative_use")
+  applicationSummary String             @map("application_summary")
+  commercialStatus   CommercialStatus   @default(none) @map("commercial_status")
+  companies          String             @default("[]")
+  productionProcess  String             @default("[]") @map("production_process")
+  verificationStatus VerificationStatus @default(draft) @map("verification_status")
+  confidenceNotes    String?            @map("confidence_notes")
+  createdAt          DateTime           @default(now()) @map("created_at")
+  updatedAt          DateTime           @updatedAt @map("updated_at")
+
+  species       Species        @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+  citationLinks CitationLink[]
+
+  @@map("commercial_applications")
+}
+
+model MorphologyModel3D {
+  id              String             @id @default(uuid())
+  speciesId       String             @map("species_id")
+  fileUrl         String?            @map("file_url")
+  thumbnailUrl    String?            @map("thumbnail_url")
+  sourceType      String             @default("parametric") @map("source_type")
+  license         String?
+  attributionText String?            @map("attribution_text")
+  parameters      String             @map("parameters")
+  verificationStatus VerificationStatus @default(draft) @map("verification_status")
+  createdAt       DateTime           @default(now()) @map("created_at")
+  updatedAt       DateTime           @updatedAt @map("updated_at")
+
+  species       Species        @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+  citationLinks CitationLink[]
+
+  @@map("morphology_models_3d")
+}
+
+model Citation {
+  id            String       @id @default(uuid())
+  type          CitationType
+  doi           String?
+  pmid          String?
+  patentNumber  String?      @map("patent_number")
+  url           String?
+  title         String
+  authors       String?
+  year          Int?
+  journal       String?
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @updatedAt @map("updated_at")
+
+  links CitationLink[]
+
+  @@map("citations")
+}
+
+model CitationLink {
+  id        String   @id @default(uuid())
+  citationId String  @map("citation_id")
+  fieldName String   @map("field_name")
+  notes     String?
+
+  speciesId           String? @map("species_id")
+  sensoryProfileId    String? @map("sensory_profile_id")
+  nutritionProfileId  String? @map("nutrition_profile_id")
+  speciesImageId      String? @map("species_image_id")
+  morphologyModel3DId String? @map("morphology_model_3d_id")
+  commercialApplicationId String? @map("commercial_application_id")
+
+  citation          Citation           @relation(fields: [citationId], references: [id], onDelete: Cascade)
+  species           Species?           @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+  sensoryProfile    SensoryProfile?    @relation(fields: [sensoryProfileId], references: [id], onDelete: Cascade)
+  nutritionProfile  NutritionProfile?  @relation(fields: [nutritionProfileId], references: [id], onDelete: Cascade)
+  speciesImage      SpeciesImage?      @relation(fields: [speciesImageId], references: [id], onDelete: Cascade)
+  morphologyModel3D MorphologyModel3D? @relation(fields: [morphologyModel3DId], references: [id], onDelete: Cascade)
+  commercialApplication CommercialApplication? @relation(fields: [commercialApplicationId], references: [id], onDelete: Cascade)
+
+  @@map("citation_links")
+}
+
+model AltProteinResearchHighlight {
+  id             String   @id @default(uuid())
+  speciesId      String   @map("species_id")
+  spotlightMonth String   @map("spotlight_month")
+  title          String
+  authors        String?
+  journal        String?
+  year           Int?
+  doi            String?
+  url            String?
+  summary        String
+  publishedAt    DateTime? @map("published_at")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  species Species @relation(fields: [speciesId], references: [id], onDelete: Cascade)
+
+  @@index([speciesId, spotlightMonth])
+  @@map("alt_protein_research_highlights")
+}
