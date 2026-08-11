@@ -18,11 +18,13 @@ export function ToolbarIcon({
   active,
   onClick,
   children,
+  light = false,
 }: {
   label: string;
   active?: boolean;
   onClick: () => void;
   children: ReactNode;
+  light?: boolean;
 }) {
   return (
     <button
@@ -31,11 +33,27 @@ export function ToolbarIcon({
       title={label}
       aria-label={label}
       className={`flex flex-col items-center gap-1 px-3 py-2 text-xs transition ${
-        active ? "text-emerald-400" : "text-zinc-400 hover:text-white"
+        active
+          ? light
+            ? "text-emerald-600"
+            : "text-emerald-400"
+          : light
+            ? "text-zinc-500 hover:text-black"
+            : "text-zinc-400 hover:text-white"
       }`}
     >
       {children}
-      <span className={active ? "border-b-2 border-emerald-400 pb-0.5" : ""}>{label}</span>
+      <span
+        className={
+          active
+            ? light
+              ? "border-b-2 border-emerald-600 pb-0.5"
+              : "border-b-2 border-emerald-400 pb-0.5"
+            : ""
+        }
+      >
+        {label}
+      </span>
     </button>
   );
 }
@@ -44,23 +62,31 @@ export function ViewThumbnail({
   active,
   rotation,
   onClick,
+  light = false,
 }: {
   active: boolean;
   rotation: number;
   onClick: () => void;
+  light?: boolean;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-11 w-11 items-center justify-center rounded-md border bg-zinc-900 transition ${
-        active ? "border-emerald-500 ring-1 ring-emerald-500/50" : "border-zinc-700 hover:border-zinc-500"
+      className={`flex h-11 w-11 items-center justify-center rounded-md border transition ${
+        light ? "bg-white" : "bg-zinc-900"
+      } ${
+        active
+          ? "border-emerald-500 ring-1 ring-emerald-500/50"
+          : light
+            ? "border-zinc-300 hover:border-zinc-500"
+            : "border-zinc-700 hover:border-zinc-500"
       }`}
       aria-label="Change camera view"
     >
       <svg
         viewBox="0 0 32 32"
-        className="h-7 w-7 text-zinc-300"
+        className={`h-7 w-7 ${light ? "text-zinc-700" : "text-zinc-300"}`}
         style={{ transform: `rotate(${rotation}deg)` }}
       >
         <ellipse cx="16" cy="11" rx="9" ry="5" fill="currentColor" opacity="0.9" />

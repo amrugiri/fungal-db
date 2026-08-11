@@ -1,0 +1,161 @@
+{
+  "species": {
+    "slug": "cyclocybe-aegerita",
+    "genus": "Cyclocybe",
+    "speciesEpithet": "aegerita",
+    "scientificName": "Cyclocybe aegerita",
+    "commonNames": [
+      "pioppino",
+      "poplar mushroom",
+      "black poplar mushroom"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Strophariaceae",
+      "genus": "Cyclocybe"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 4,
+        "earthy": 3,
+        "nutty": 3
+      },
+      "textureAxes": {
+        "firm": 5,
+        "fibrous": 3,
+        "meat_like": 3
+      },
+      "aromaNotes": "Strong aromatic, wine-like fungal scent when cooked",
+      "meatAnalogPotential": "moderate",
+      "meatAnalogRationale": "Dense firm texture holds up in stews and grilled applications as a whole-cut meat alternative.",
+      "preparationContext": "Fresh fruiting bodies, grilled or braised",
+      "confidenceNotes": "Nutrition and bioactives documented for C. aegerita fruiting bodies.",
+      "citationKeys": [
+        "li2018_agrocybe",
+        "kalac2016"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "Central-stiped agaric with brown pileus and persistent partial veil remnants",
+      "sporeCharacteristics": "Brown spore print",
+      "microscopyNotes": "Chrysocystidia may be present; clamped hyphae"
+    },
+    "nutrition": {
+      "proteinPercent": 27,
+      "fiberPercent": 13,
+      "fatPercent": 2,
+      "moisturePercent": 89,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Dry matter or fresh weight basis \u2014 verify against primary source.",
+      "confidenceNotes": "Food Chemistry analyses of pioppino fruiting bodies.",
+      "citationKeys": [
+        "li2018_agrocybe",
+        "kalac2016"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "Southern Europe, Mediterranean",
+      "cultivatedRegions": "Italy, Spain, China, specialty farms worldwide",
+      "habitat": "Saprotroph on poplar and other hardwoods"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Cyclocybe aegerita."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Agrocybe_aegerita.jpg",
+        "caption": "Pioppino (Cyclocybe / Agrocybe aegerita)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Agrocybe_aegerita.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Mediterranean specialty cultivated mushroom; firm texture used as meat substitute in regional cuisine.",
+      "companies": [
+        {
+          "name": "Italian/Spanish specialty growers",
+          "region": "EU"
+        }
+      ],
+      "confidenceNotes": "Commercial food crop with published nutritional profiles.",
+      "citationKeys": [
+        "li2018_agrocybe",
+        "valverde2015"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "mushroom",
+      "capDiameter": 5,
+      "stipeLength": 8,
+      "capColor": "#6b4423",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "approved_safe",
+      "notes": "Traditional European cultivated edible mushroom (pioppino)."
+    },
+    "speciesCitationKeys": [
+      "li2018_agrocybe",
+      "kalac2016",
+      "ncbi_taxonomy"
+    ],
+    "synonyms": [
+      "Agrocybe aegerita",
+      "Agrocybe cylindracea"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Nutritional and bioactive properties of Cyclocybe aegerita",
+      "authors": "Li et al.",
+      "journal": "Food Chemistry",
+      "year": 2018,
+      "doi": "10.1016/j.foodchem.2018.02.016",
+      "summary": "Quantifies protein and bioactive compounds in pioppino, supporting its use as a nutritious culinary meat alternative.",
+      "publishedAt": "2018-06-01"
+    }
+  ]
+}

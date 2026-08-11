@@ -1,0 +1,158 @@
+{
+  "species": {
+    "slug": "pleurotus-citrinopileatus",
+    "genus": "Pleurotus",
+    "speciesEpithet": "citrinopileatus",
+    "scientificName": "Pleurotus citrinopileatus",
+    "commonNames": [
+      "golden oyster",
+      "yellow oyster",
+      "tamogitake"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Pleurotaceae",
+      "genus": "Pleurotus"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 4,
+        "nutty": 3,
+        "earthy": 2
+      },
+      "textureAxes": {
+        "fibrous": 4,
+        "tender": 3,
+        "meat_like": 4
+      },
+      "aromaNotes": "Cashew-like aroma when cooked; vivid golden fruiting bodies",
+      "meatAnalogPotential": "high",
+      "meatAnalogRationale": "Oyster morphology yields pull-apart fibrous texture widely used as chicken-style shreds; strong umami.",
+      "preparationContext": "Fresh clusters, dry-saut\u00e9ed to concentrate texture",
+      "confidenceNotes": "Aligned with Pleurotus meat-analog literature; species-specific nutrition cited.",
+      "citationKeys": [
+        "rodrigues2015_pleurotus",
+        "manzi2013",
+        "girmay2016_oyster"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "Imbricate yellow pilei with short lateral stipes; decurrent gills",
+      "sporeCharacteristics": "Lilac-gray spore print",
+      "microscopyNotes": "Dimitic hyphal system typical of Pleurotus"
+    },
+    "nutrition": {
+      "proteinPercent": 30,
+      "fiberPercent": 15,
+      "fatPercent": 2,
+      "moisturePercent": 90,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Dry matter or fresh weight basis \u2014 verify against primary source.",
+      "confidenceNotes": "Chemical composition from P. citrinopileatus analyses.",
+      "citationKeys": [
+        "rodrigues2015_pleurotus",
+        "manzi2013"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "Eastern Russia, China, Japan",
+      "cultivatedRegions": "Asia, Europe, North America specialty farms",
+      "habitat": "Hardwood saprotroph"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Pleurotus citrinopileatus."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/92/Limonenseitlinge_%28Pleurotus_citrinopileatus%29_-_20100828.jpg",
+        "caption": "Golden oyster (Pleurotus citrinopileatus)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Limonenseitlinge_%28Pleurotus_citrinopileatus%29_-_20100828.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Specialty cultivated oyster; marketed fresh and used in shredded chicken-style plant/fungal meals.",
+      "companies": [
+        {
+          "name": "Specialty oyster mushroom farms",
+          "region": "Global"
+        }
+      ],
+      "confidenceNotes": "Commercial specialty crop; Pleurotus genus has strong alt-protein evidence base.",
+      "citationKeys": [
+        "rodrigues2015_pleurotus",
+        "manzi2013"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "oyster",
+      "capDiameter": 7,
+      "stipeLength": 2,
+      "capColor": "#f0c93a",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "approved_safe",
+      "notes": "Cultivated edible Pleurotus species with established food use."
+    },
+    "speciesCitationKeys": [
+      "rodrigues2015_pleurotus",
+      "manzi2013",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Chemical composition and nutritional value of Pleurotus citrinopileatus",
+      "authors": "Rodrigues et al.",
+      "journal": "European Food Research and Technology",
+      "year": 2015,
+      "doi": "10.1007/s00217-014-2375-9",
+      "summary": "Reports protein, fiber, and amino acid profiles supporting golden oyster as a nutritious meat-alternative biomass.",
+      "publishedAt": "2015-01-01"
+    }
+  ]
+}

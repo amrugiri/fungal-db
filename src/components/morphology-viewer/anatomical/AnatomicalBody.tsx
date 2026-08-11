@@ -14,12 +14,20 @@ import {
   MICROSCOPY_SECTION_RANGE,
 } from "@/components/morphology-viewer/anatomical/MicroscopyAnatomy";
 import { AnatomicalFruitingBody } from "@/components/morphology-viewer/anatomical/AnatomicalFruitingBodies";
+import {
+  GlbAnatomy,
+  glbSectionRange,
+} from "@/components/morphology-viewer/anatomical/GlbAnatomy";
 import { getMorphologyReferenceAssets } from "@/lib/species-morphology-assets";
+import { getSpeciesMorphologyModel } from "@/lib/species-morphology-models";
 
 export function getSectionRange(
+  slug: string,
   parameters: MorphologyParameters,
   config: SpeciesMorphologyConfig,
 ): number {
+  const model = getSpeciesMorphologyModel(slug);
+  if (model) return glbSectionRange(model);
   if (parameters.visualizationStyle === "microscopy") return MICROSCOPY_SECTION_RANGE;
   if (config.detailedGilledModel) return GILLED_SECTION_RANGE;
   return 1.4;
@@ -47,6 +55,21 @@ export function AnatomicalBody({
 
   const isMicroscopy = parameters.visualizationStyle === "microscopy";
   const hasReferenceAssets = getMorphologyReferenceAssets(slug) != null;
+  const glbModel = getSpeciesMorphologyModel(slug);
+
+  // A real mesh always wins over the parametric primitives and the reference
+  // image planes — those exist only for species that don't have one yet.
+  if (glbModel) {
+    return (
+      <Suspense fallback={null}>
+        <GlbAnatomy
+          model={glbModel}
+          clippingPlanes={clippingPlanes}
+          showSection={showSection}
+        />
+      </Suspense>
+    );
+  }
 
   if (isMicroscopy) {
     return (
@@ -88,10 +111,11 @@ export function AnatomicalBody({
 }
 
 export function getDefaultSectionOffset(
+  slug: string,
   parameters: MorphologyParameters,
   config: SpeciesMorphologyConfig,
 ): number {
-  const range = getSectionRange(parameters, config);
+  const range = getSectionRange(slug, parameters, config);
   return showSectionMidpoint(range);
 }
 
@@ -102,10 +126,11 @@ function showSectionMidpoint(range: number): number {
 /** Compute section slider offset from 0–1 position. */
 export function sectionOffsetFromT(
   t: number,
+  slug: string,
   parameters: MorphologyParameters,
   config: SpeciesMorphologyConfig,
 ): number {
-  const range = getSectionRange(parameters, config);
+  const range = getSectionRange(slug, parameters, config);
   return -range * 0.5 + t * range;
 }
 

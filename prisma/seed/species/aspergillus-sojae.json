@@ -1,0 +1,155 @@
+{
+  "species": {
+    "slug": "aspergillus-sojae",
+    "genus": "Aspergillus",
+    "speciesEpithet": "sojae",
+    "scientificName": "Aspergillus sojae",
+    "commonNames": [
+      "soy sauce koji mold",
+      "sojae koji"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Ascomycota",
+      "class": "Eurotiomycetes",
+      "order": "Agaricales",
+      "family": "Aspergillaceae",
+      "genus": "Aspergillus"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 5,
+        "savory": 5,
+        "mild": 2
+      },
+      "textureAxes": {
+        "soft": 3
+      },
+      "aromaNotes": "Enzymatic, soy-sauce/miso aromas from fermented substrates",
+      "meatAnalogPotential": "moderate",
+      "meatAnalogRationale": "Not a meat analog alone, but essential for unlocking soy protein umami in sauces, miso, and fermented alt-protein seasonings.",
+      "preparationContext": "Solid-state koji on soy/wheat; enzymes drive protein hydrolysis",
+      "confidenceNotes": "Foundational koji mold literature (Kitamoto review).",
+      "citationKeys": [
+        "kitamoto2002_sojae",
+        "machida2008"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, galactomannan",
+      "fruitingBodyStructure": "No macroscopic mushroom; conidiophores with chains of conidia",
+      "sporeCharacteristics": "Greenish conidia in culture",
+      "microscopyNotes": "Branching septate hyphae; uniseriate/biseriate aspergillum heads"
+    },
+    "nutrition": {
+      "proteinPercent": 20,
+      "fiberPercent": 8,
+      "fatPercent": 3,
+      "moisturePercent": 40,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Koji biomass contribution is secondary to hydrolyzed soy protein products",
+      "confidenceNotes": "Food role is enzymatic fermentation of soy protein substrates.",
+      "citationKeys": [
+        "kitamoto2002_sojae",
+        "machida2008"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "East Asia (domesticated)",
+      "cultivatedRegions": "Japan, Korea, China, global soy-sauce industry",
+      "habitat": "Domesticated solid-state fermentation organism"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Aspergillus sojae."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Shoyukoji.jpg",
+        "caption": "Soy sauce koji (Aspergillus sojae on soy)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Shoyukoji.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Industrial koji for soy sauce and miso; critical for fermented savory seasonings in plant/fungal protein products.",
+      "companies": [
+        {
+          "name": "Soy sauce / miso manufacturers (e.g. Kikkoman partners)",
+          "region": "East Asia / Global"
+        }
+      ],
+      "confidenceNotes": "Established industrial food fungus.",
+      "citationKeys": [
+        "kitamoto2002_sojae",
+        "machida2008"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "microscopy",
+      "stainColor": "#5a8f6a",
+      "backgroundColor": "#f4f1ea",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8dcc8",
+      "hyphaeDensity": 8,
+      "fruitingBodyType": "none",
+      "capDiameter": 0,
+      "stipeLength": 0,
+      "capColor": "#e8dcc8",
+      "showMycelium": true,
+      "showFruitingBody": false
+    },
+    "regulatory": {
+      "fda": "gras",
+      "efsa": "approved_safe",
+      "notes": "Traditional food fermentation organism with GRAS/QPS-aligned use in soy products."
+    },
+    "speciesCitationKeys": [
+      "kitamoto2002_sojae",
+      "machida2008",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Molecular biology of the koji molds Aspergillus oryzae and Aspergillus sojae",
+      "authors": "Kitamoto",
+      "journal": "Applied Microbiology and Biotechnology",
+      "year": 2002,
+      "doi": "10.1007/s00253-002-1012-x",
+      "summary": "Reviews A. sojae as the soy-sauce koji mold enabling large-scale fermented soy protein foods.",
+      "publishedAt": "2002-01-01"
+    }
+  ]
+}

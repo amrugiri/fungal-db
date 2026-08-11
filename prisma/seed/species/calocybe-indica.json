@@ -1,0 +1,156 @@
+{
+  "species": {
+    "slug": "calocybe-indica",
+    "genus": "Calocybe",
+    "speciesEpithet": "indica",
+    "scientificName": "Calocybe indica",
+    "commonNames": [
+      "milky mushroom",
+      "white milky mushroom"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Lyophyllaceae",
+      "genus": "Calocybe"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 3,
+        "mild": 4,
+        "earthy": 2
+      },
+      "textureAxes": {
+        "firm": 4,
+        "meat_like": 3,
+        "tender": 3
+      },
+      "aromaNotes": "Mild milky-mushroom aroma; soft savory when cooked",
+      "meatAnalogPotential": "moderate",
+      "meatAnalogRationale": "Large fleshy fruiting bodies and documented protein content support use as a tropical meat alternative.",
+      "preparationContext": "Fresh fruiting bodies, curry and saut\u00e9 applications",
+      "confidenceNotes": "Nutritional analysis of cultivated milky mushroom cited.",
+      "citationKeys": [
+        "alam2008_calocybe",
+        "kalac2016"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "Robust white agaric with broad pileus and thick central stipe",
+      "sporeCharacteristics": "White spore print",
+      "microscopyNotes": "Lyophyllaceous hymenium; clamps present"
+    },
+    "nutrition": {
+      "proteinPercent": 25,
+      "fiberPercent": 12,
+      "fatPercent": 2,
+      "moisturePercent": 88,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Dry matter or fresh weight basis \u2014 verify against primary source.",
+      "confidenceNotes": "Cultivated Calocybe indica proximate analyses.",
+      "citationKeys": [
+        "alam2008_calocybe",
+        "kalac2016"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "India / South Asia",
+      "cultivatedRegions": "India, Southeast Asia, tropical farms",
+      "habitat": "Tropical saprotroph on agricultural residues"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Calocybe indica."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/83/Calocybe_indica_884511.jpg",
+        "caption": "Milky mushroom (Calocybe indica)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Calocybe_indica_884511.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Leading tropical commercial mushroom in India; sold fresh as a protein-rich meat substitute in regional diets.",
+      "companies": [
+        {
+          "name": "Indian milky mushroom growers",
+          "region": "India"
+        }
+      ],
+      "confidenceNotes": "Major commercial crop with peer-reviewed nutrition data.",
+      "citationKeys": [
+        "alam2008_calocybe",
+        "valverde2015"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "mushroom",
+      "capDiameter": 10,
+      "stipeLength": 8,
+      "capColor": "#f5f2e8",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "not_evaluated",
+      "notes": "Traditional cultivated edible mushroom in South Asia; widely consumed as food."
+    },
+    "speciesCitationKeys": [
+      "alam2008_calocybe",
+      "kalac2016",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Nutritional analysis of cultivated milky mushroom (Calocybe indica)",
+      "authors": "Alam et al.",
+      "journal": "Annals of Microbiology",
+      "year": 2008,
+      "doi": "10.1007/s13213-008-0007-7",
+      "summary": "Reports protein and nutrient profiles establishing C. indica as a cultivated alternative protein food in tropical climates.",
+      "publishedAt": "2008-01-01"
+    }
+  ]
+}

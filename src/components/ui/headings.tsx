@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 
-const sectionClass = "mb-4 text-xl font-bold text-black";
-const subSectionClass = "mb-2 text-base font-bold text-black";
+const sectionClass = "mb-4 font-sans text-xl font-bold text-truffle";
+const subSectionClass = "mb-2 font-sans text-base font-bold text-truffle";
 
 export function SectionHeading({
   children,
@@ -25,4 +25,4 @@ export function SubHeading({
   return <Tag className={`${subSectionClass} ${className}`.trim()}>{children}</Tag>;
 }
 
-export const labelClass = "text-base font-bold text-black";
+export const labelClass = "font-sans text-base font-bold text-truffle";

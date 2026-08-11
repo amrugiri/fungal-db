@@ -1,0 +1,156 @@
+{
+  "species": {
+    "slug": "pholiota-nameko",
+    "genus": "Pholiota",
+    "speciesEpithet": "nameko",
+    "scientificName": "Pholiota nameko",
+    "commonNames": [
+      "nameko",
+      "butterscotch mushroom"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Strophariaceae",
+      "genus": "Pholiota"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 4,
+        "mild": 3,
+        "earthy": 2
+      },
+      "textureAxes": {
+        "slippery": 4,
+        "tender": 4,
+        "gelatinous": 5
+      },
+      "aromaNotes": "Mild, slightly sweet; gelatinous surface when fresh",
+      "meatAnalogPotential": "moderate",
+      "meatAnalogRationale": "Protein-bearing fruiting bodies used in soups and as a savory extender; gelatinous coat aids mouthfeel in formulated foods.",
+      "preparationContext": "Fresh or bottled; classic in miso soup and nabemono",
+      "confidenceNotes": "Proximate and amino acid data from nameko food studies.",
+      "citationKeys": [
+        "choi2012_nameko",
+        "kalac2016"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins; gelatinous pileipellis",
+      "fruitingBodyStructure": "Clustered agarics with viscid orange-brown pileus and central stipe",
+      "sporeCharacteristics": "Brown spore print",
+      "microscopyNotes": "Gelatinized pileipellis hyphae; clamps present"
+    },
+    "nutrition": {
+      "proteinPercent": 24,
+      "fiberPercent": 11,
+      "fatPercent": 2,
+      "moisturePercent": 92,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Dry matter or fresh weight basis \u2014 verify against primary source.",
+      "confidenceNotes": "Proximate composition from Pholiota nameko analyses.",
+      "citationKeys": [
+        "choi2012_nameko",
+        "kalac2016"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "East Asia",
+      "cultivatedRegions": "Japan, China, Korea",
+      "habitat": "Hardwood saprotroph"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Pholiota nameko."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/38/Pholiota_nameko_culture.JPG",
+        "caption": "Nameko (Pholiota nameko) cultivated fruiting bodies",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pholiota_nameko_culture.JPG"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Major Japanese cultivated mushroom; protein-rich ingredient in soups and increasingly in plant-based savory products.",
+      "companies": [
+        {
+          "name": "Japanese nameko producers",
+          "region": "Japan"
+        }
+      ],
+      "confidenceNotes": "Commercial staple with published amino acid profiles.",
+      "citationKeys": [
+        "choi2012_nameko",
+        "valverde2015"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "mushroom",
+      "capDiameter": 3,
+      "stipeLength": 5,
+      "capColor": "#c4782a",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "approved_safe",
+      "notes": "Traditional East Asian cultivated edible mushroom."
+    },
+    "speciesCitationKeys": [
+      "choi2012_nameko",
+      "kalac2016",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Proximate composition and amino acids of Pholiota nameko",
+      "authors": "Choi et al.",
+      "journal": "Food Science and Biotechnology",
+      "year": 2012,
+      "doi": "10.1007/s10068-012-0041-1",
+      "summary": "Establishes nameko as a meaningful dietary protein source among cultivated mushrooms.",
+      "publishedAt": "2012-01-01"
+    }
+  ]
+}

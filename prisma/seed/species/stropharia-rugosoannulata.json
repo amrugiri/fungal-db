@@ -1,0 +1,157 @@
+{
+  "species": {
+    "slug": "stropharia-rugosoannulata",
+    "genus": "Stropharia",
+    "speciesEpithet": "rugosoannulata",
+    "scientificName": "Stropharia rugosoannulata",
+    "commonNames": [
+      "wine cap",
+      "garden giant",
+      "king stropharia"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Strophariaceae",
+      "genus": "Stropharia"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 4,
+        "earthy": 3,
+        "mild": 3
+      },
+      "textureAxes": {
+        "firm": 4,
+        "meat_like": 4,
+        "tender": 3
+      },
+      "aromaNotes": "Rich, potato-like savory aroma when cooked",
+      "meatAnalogPotential": "moderate",
+      "meatAnalogRationale": "Large fleshy caps and published meat-alternative ingredient studies support steak/burger-style uses.",
+      "preparationContext": "Fresh young fruiting bodies, grilled or saut\u00e9ed",
+      "confidenceNotes": "Food Chemistry study frames S. rugosoannulata as meat-alternative ingredient.",
+      "citationKeys": [
+        "huang2019_stropharia",
+        "kalac2016"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "Large agaric with wine-red pileus, thick stipe, and membranous annulus",
+      "sporeCharacteristics": "Purple-brown spore print",
+      "microscopyNotes": "Chrysocystidia present; clamped generative hyphae"
+    },
+    "nutrition": {
+      "proteinPercent": 28,
+      "fiberPercent": 13,
+      "fatPercent": 2,
+      "moisturePercent": 90,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Dry matter or fresh weight basis \u2014 verify against primary source.",
+      "confidenceNotes": "Nutritional composition from wine-cap food chemistry study.",
+      "citationKeys": [
+        "huang2019_stropharia",
+        "kalac2016"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "Europe / temperate Northern Hemisphere",
+      "cultivatedRegions": "China, Europe, North America garden/outdoor beds",
+      "habitat": "Woodchip beds, gardens, hardwood debris"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Stropharia rugosoannulata."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/ac/2011-05-19_Stropharia_rugosoannulata_Farl._ex_Murrill_183478.jpg",
+        "caption": "Wine cap (Stropharia rugosoannulata)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:2011-05-19_Stropharia_rugosoannulata_Farl._ex_Murrill_183478.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Outdoor-cultivated specialty mushroom; studied and used as a meat-alternative ingredient for large-cap applications.",
+      "companies": [
+        {
+          "name": "Specialty outdoor mushroom farms",
+          "region": "China / EU / NA"
+        }
+      ],
+      "confidenceNotes": "Peer-reviewed meat-alternative ingredient framing.",
+      "citationKeys": [
+        "huang2019_stropharia",
+        "valverde2015"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "mushroom",
+      "capDiameter": 12,
+      "stipeLength": 10,
+      "capColor": "#7a1f3d",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "approved_safe",
+      "notes": "Cultivated edible mushroom with food-use history in Europe and Asia."
+    },
+    "speciesCitationKeys": [
+      "huang2019_stropharia",
+      "kalac2016",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Nutritional composition of Stropharia rugosoannulata and meat-alternative potential",
+      "authors": "Huang et al.",
+      "journal": "Food Chemistry",
+      "year": 2019,
+      "doi": "10.1016/j.foodchem.2019.01.098",
+      "summary": "Explicitly evaluates wine cap nutrition in the context of meat-alternative ingredient development.",
+      "publishedAt": "2019-06-01"
+    }
+  ]
+}

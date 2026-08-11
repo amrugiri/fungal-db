@@ -1,0 +1,157 @@
+{
+  "species": {
+    "slug": "cordyceps-militaris",
+    "genus": "Cordyceps",
+    "speciesEpithet": "militaris",
+    "scientificName": "Cordyceps militaris",
+    "commonNames": [
+      "cordyceps militaris",
+      "orange cordyceps",
+      "cultivated cordyceps"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Ascomycota",
+      "class": "Sordariomycetes",
+      "order": "Agaricales",
+      "family": "Cordycipitaceae",
+      "genus": "Cordyceps"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 3,
+        "bitter": 2,
+        "earthy": 2
+      },
+      "textureAxes": {
+        "firm": 3,
+        "fibrous": 3,
+        "tender": 3
+      },
+      "aromaNotes": "Mild fungal with slight marine note when dried",
+      "meatAnalogPotential": "moderate",
+      "meatAnalogRationale": "Cultivated proteinaceous fruiting bodies used in Asian cuisine and functional foods; researched as a food protein source.",
+      "preparationContext": "Fresh or dried stromata; soups, powders, extracts",
+      "confidenceNotes": "Composition and cultivation review supports food applications.",
+      "citationKeys": [
+        "dong2013_cordyceps",
+        "kalac2016"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans",
+      "fruitingBodyStructure": "Clavate orange stroma with embedded perithecia; no gilled pileus",
+      "sporeCharacteristics": "Filiform ascospores",
+      "microscopyNotes": "Perithecia in stromatal head; septate mycelium in culture"
+    },
+    "nutrition": {
+      "proteinPercent": 30,
+      "fiberPercent": 10,
+      "fatPercent": 5,
+      "moisturePercent": 85,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Dry matter or fresh weight basis \u2014 verify against primary source.",
+      "confidenceNotes": "Composition from Cordyceps militaris food/cultivation literature.",
+      "citationKeys": [
+        "dong2013_cordyceps",
+        "kalac2016"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "Temperate Northern Hemisphere",
+      "cultivatedRegions": "China, Korea, Thailand, global functional-food producers",
+      "habitat": "Entomopathogen of lepidopteran pupae; cultivated on grain substrates"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Cordyceps militaris."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/e7/Puppenkernkeule.jpg",
+        "caption": "Cordyceps militaris stromata",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Puppenkernkeule.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Widely cultivated for food and supplements; fruiting-body protein used in soups and powdered alt-protein blends.",
+      "companies": [
+        {
+          "name": "East Asian cordyceps cultivators",
+          "region": "China / Korea"
+        }
+      ],
+      "confidenceNotes": "Large commercial cultivated food fungus.",
+      "citationKeys": [
+        "dong2013_cordyceps",
+        "valverde2015"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "mushroom",
+      "capDiameter": 2,
+      "stipeLength": 8,
+      "capColor": "#e85d04",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "gras",
+      "efsa": "not_evaluated",
+      "notes": "Sold as food/supplement in many markets; specific extracts may have distinct regulatory pathways."
+    },
+    "speciesCitationKeys": [
+      "dong2013_cordyceps",
+      "kalac2016",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Cordyceps militaris: composition, cultivation and food applications",
+      "authors": "Dong et al.",
+      "journal": "Journal of Ethnopharmacology",
+      "year": 2013,
+      "doi": "10.1016/j.jep.2013.06.056",
+      "summary": "Reviews cultivated C. militaris composition and food uses, including proteinaceous fruiting bodies.",
+      "publishedAt": "2013-01-01"
+    }
+  ]
+}

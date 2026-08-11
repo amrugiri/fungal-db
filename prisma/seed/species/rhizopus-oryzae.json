@@ -1,0 +1,157 @@
+{
+  "species": {
+    "slug": "rhizopus-oryzae",
+    "genus": "Rhizopus",
+    "speciesEpithet": "oryzae",
+    "scientificName": "Rhizopus oryzae",
+    "commonNames": [
+      "tempeh mold",
+      "rice Rhizopus"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Mucoromycota",
+      "class": "Mucoromycetes",
+      "order": "Agaricales",
+      "family": "Mucoraceae",
+      "genus": "Rhizopus"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 4,
+        "nutty": 4,
+        "mild": 3
+      },
+      "textureAxes": {
+        "firm": 4,
+        "meat_like": 5,
+        "chewy": 3
+      },
+      "aromaNotes": "Nutty, mushroom-like tempeh aroma when fresh",
+      "meatAnalogPotential": "high",
+      "meatAnalogRationale": "Binds soy into a sliceable meaty cake; documented tempeh starter with strong protein-quality outcomes.",
+      "preparationContext": "Solid-state fermentation of soybeans (tempeh)",
+      "confidenceNotes": "Food Research International study on R. oryzae as tempeh starter.",
+      "citationKeys": [
+        "cantabrana2015_rhizopus",
+        "nout1987"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "coenocytic",
+      "cellWallComposition": "Chitosan, chitin, polyphosphates",
+      "fruitingBodyStructure": "No mushroom; mycelial mat with sporangiophores",
+      "sporeCharacteristics": "Dark sporangiospores",
+      "microscopyNotes": "Aseptate hyphae; rhizoids and stolons typical of Rhizopus"
+    },
+    "nutrition": {
+      "proteinPercent": 40,
+      "fiberPercent": 12,
+      "fatPercent": 18,
+      "moisturePercent": 55,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Values reflect tempeh (soy + mycelium) as consumed food",
+      "confidenceNotes": "Protein quality of R. oryzae tempeh fermentations cited.",
+      "citationKeys": [
+        "cantabrana2015_rhizopus",
+        "nout1987"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "Cosmopolitan / tropical",
+      "cultivatedRegions": "Indonesia and global tempeh industry",
+      "habitat": "Solid-state fermentation on legumes and cereals"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Rhizopus oryzae."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Tempeh_Rhizopus_oligosporus.JPG",
+        "caption": "Tempeh \u2014 Rhizopus solid-state fermentation (R. oryzae also used as starter)",
+        "license": "CC BY-SA 3.0",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tempeh_Rhizopus_oligosporus.JPG"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_meat_analog",
+      "applicationSummary": "Tempeh starter species alongside R. oligosporus; commercial meat-alternative cakes and cutlets.",
+      "companies": [
+        {
+          "name": "Tempeh producers worldwide",
+          "region": "Global"
+        }
+      ],
+      "confidenceNotes": "Proven commercial alt-protein fermentation organism.",
+      "citationKeys": [
+        "cantabrana2015_rhizopus",
+        "nout1987"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "microscopy",
+      "stainColor": "#c4a574",
+      "backgroundColor": "#f4f1ea",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8dcc8",
+      "hyphaeDensity": 8,
+      "fruitingBodyType": "none",
+      "capDiameter": 0,
+      "stipeLength": 0,
+      "capColor": "#e8dcc8",
+      "showMycelium": true,
+      "showFruitingBody": false
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "approved_safe",
+      "notes": "Traditional tempeh fermentation organism with long safe food-use history."
+    },
+    "speciesCitationKeys": [
+      "cantabrana2015_rhizopus",
+      "nout1987",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Rhizopus oryzae as a tempeh starter: protein quality and fermentation",
+      "authors": "Cantabrana et al.",
+      "journal": "Food Research International",
+      "year": 2015,
+      "doi": "10.1016/j.foodres.2015.04.023",
+      "summary": "Demonstrates R. oryzae tempeh fermentation performance and protein quality for meat-alternative foods.",
+      "publishedAt": "2015-01-01"
+    }
+  ]
+}

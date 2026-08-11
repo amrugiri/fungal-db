@@ -35,11 +35,11 @@ export default async function ComparePage({ searchParams }: CompareProps) {
   if (slugs.length < 2 || slugs.length > 4) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-16 text-center">
-        <h1 className="text-2xl font-bold text-black">Compare Species</h1>
-        <p className="mt-4 text-black">
+        <h1 className="font-display text-2xl font-bold text-truffle">Compare Species</h1>
+        <p className="mt-4 font-sans text-muted">
           Select 2–4 species from the grid using checkboxes, then click Compare.
         </p>
-        <Link href="/" className="mt-6 inline-block text-blue-700 hover:underline">
+        <Link href="/" className="mt-6 inline-block font-sans text-berry hover:underline">
           ← Back to species grid
         </Link>
       </div>
@@ -99,13 +99,13 @@ export default async function ComparePage({ searchParams }: CompareProps) {
     <div className="mx-auto max-w-7xl px-4 py-8">
       <div className="mb-6 flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-black">Species Comparison</h1>
-          <p className="text-sm text-black">
+          <h1 className="font-display text-2xl font-bold text-truffle">Species Comparison</h1>
+          <p className="font-sans text-sm text-muted">
             Side-by-side alt-protein view of {rows.length} species — commercial use, sensory profile,
             nutrition, and morphology.
           </p>
         </div>
-        <Link href="/" className="text-sm text-blue-700 hover:underline">
+        <Link href="/" className="font-sans text-sm text-berry hover:underline">
           ← Back to grid
         </Link>
       </div>

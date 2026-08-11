@@ -12,6 +12,7 @@ import {
   type SortingState,
 } from "@tanstack/react-table";
 import { ScientificName } from "@/components/species/ScientificName";
+import { ThemedSelect } from "@/components/ui/ThemedSelect";
 import { formatEnumLabel, formatTagLabel } from "@/lib/format";
 import { parseCommonNames } from "@/lib/types";
 
@@ -49,21 +50,63 @@ const commercialStatusLabels: Record<string, string> = {
 function verificationColor(status: string) {
   switch (status) {
     case "peer_reviewed":
-      return "bg-green-100 text-green-800";
+      return "bg-sage/25 text-truffle";
     case "expert_verified":
-      return "bg-emerald-100 text-emerald-800";
+      return "bg-gold/30 text-truffle";
     case "single_source":
-      return "bg-amber-100 text-amber-800";
+      return "bg-gold/15 text-muted";
     case "draft":
-      return "bg-zinc-100 text-black";
+      return "bg-surface-muted text-muted";
     default:
-      return "bg-zinc-100 text-black";
+      return "bg-surface-muted text-muted";
   }
 }
 
 function commercialProductColor(inUse: boolean) {
-  return inUse ? "bg-blue-100 text-blue-900" : "bg-zinc-100 text-black";
+  return inUse ? "bg-berry/15 text-berry" : "bg-surface-muted text-muted";
 }
+
+function PopCheckbox({
+  checked,
+  onChange,
+  disabled,
+}: {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  disabled?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      role="checkbox"
+      aria-checked={checked}
+      disabled={disabled}
+      onClick={() => onChange(!checked)}
+      className={`relative flex h-5 w-5 items-center justify-center rounded border-2 transition-colors ${
+        checked
+          ? "border-sage bg-sage text-cream"
+          : "border-gold bg-cream hover:border-berry"
+      } ${disabled ? "cursor-not-allowed opacity-40" : "cursor-pointer"}`}
+    >
+      {checked ? (
+        <svg
+          key="checked"
+          viewBox="0 0 16 16"
+          className="checkbox-pop-mark h-3.5 w-3.5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.6"
+          aria-hidden
+        >
+          <path d="M3 8.5l3.2 3.2L13 4.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ) : null}
+    </button>
+  );
+}
+
+const filterControlClass =
+  "h-10 min-w-[10.5rem] appearance-none rounded-xl border-2 border-gold bg-cream px-3 py-2 font-sans text-sm font-medium text-truffle outline-none transition-colors placeholder:text-muted/70 hover:border-berry focus:border-berry focus:bg-surface";
 
 export function SpeciesGrid({ data, initialSearch = "" }: SpeciesGridProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -80,6 +123,16 @@ export function SpeciesGrid({ data, initialSearch = "" }: SpeciesGridProps) {
 
   const genera = useMemo(
     () => [...new Set(data.map((d) => d.genus))].sort(),
+    [data],
+  );
+
+  const tasteTags = useMemo(
+    () => [...new Set(data.flatMap((d) => d.tasteTags))].sort(),
+    [data],
+  );
+
+  const textureTags = useMemo(
+    () => [...new Set(data.flatMap((d) => d.textureTags))].sort(),
     [data],
   );
 
@@ -126,33 +179,36 @@ export function SpeciesGrid({ data, initialSearch = "" }: SpeciesGridProps) {
       columnHelper.display({
         id: "select",
         header: "",
-        cell: ({ row }) => (
-          <input
-            type="checkbox"
-            checked={selected.has(row.original.slug)}
-            onChange={(e) => {
-              const next = new Set(selected);
-              if (e.target.checked) {
-                if (next.size < 4) next.add(row.original.slug);
-              } else {
-                next.delete(row.original.slug);
-              }
-              setSelected(next);
-            }}
-            className="rounded border-zinc-300"
-          />
-        ),
+        cell: ({ row }) => {
+          const isChecked = selected.has(row.original.slug);
+          return (
+            <PopCheckbox
+              checked={isChecked}
+              disabled={!isChecked && selected.size >= 4}
+              onChange={(nextChecked) => {
+                const next = new Set(selected);
+                if (nextChecked) {
+                  if (next.size < 4) next.add(row.original.slug);
+                } else {
+                  next.delete(row.original.slug);
+                }
+                setSelected(next);
+              }}
+            />
+          );
+        },
       }),
       columnHelper.accessor("scientificName", {
         header: "Scientific Name",
         cell: (info) => (
           <Link
             href={`/species/${info.row.original.slug}`}
-            className="font-medium text-blue-700 hover:underline"
+            className="font-sans text-base font-extrabold text-sage hover:text-berry hover:underline"
           >
             <ScientificName
               genus={info.row.original.genus}
               scientificName={info.getValue()}
+              className="font-extrabold"
             />
           </Link>
         ),
@@ -225,112 +281,113 @@ export function SpeciesGrid({ data, initialSearch = "" }: SpeciesGridProps) {
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-3">
+      <div className="rounded-2xl border-2 border-gold bg-surface-muted p-4">
+        <p className="mb-3 font-display text-lg font-bold text-truffle">Filters</p>
+        <div className="flex flex-wrap gap-3">
         <input
           type="search"
           placeholder="Search species..."
           value={globalFilter}
           onChange={(e) => setGlobalFilter(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
+          className={`${filterControlClass} min-w-[14rem] flex-1`}
         />
-        <select
+        <ThemedSelect
           value={genusFilter}
-          onChange={(e) => setGenusFilter(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
-        >
-          <option value="">All Genera</option>
-          {genera.map((g) => (
-            <option key={g} value={g}>
-              {g}
-            </option>
-          ))}
-        </select>
-        <select
-          value={meatFilter}
-          onChange={(e) => setMeatFilter(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
-        >
-          <option value="">Meat Analog Potential</option>
-          <option value="high">High</option>
-          <option value="moderate">Moderate</option>
-          <option value="low">Low</option>
-          <option value="unknown">Unknown</option>
-        </select>
-        <select
-          value={meatAltFilter}
-          onChange={(e) => setMeatAltFilter(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
-        >
-          <option value="">Used in Meat Alternatives</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-        <select
-          value={commercialProductFilter}
-          onChange={(e) => setCommercialProductFilter(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
-        >
-          <option value="">In Commercial Product</option>
-          <option value="yes">Yes</option>
-          <option value="no">No</option>
-        </select>
-        <select
-          value={commercialFilter}
-          onChange={(e) => setCommercialFilter(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
-        >
-          <option value="">Commercial Status</option>
-          <option value="commercial_meat_analog">Commercial Meat Analog</option>
-          <option value="commercial_food">Commercial Food</option>
-          <option value="research_only">Research Only</option>
-          <option value="traditional_food">Traditional Food</option>
-          <option value="none">None Documented</option>
-        </select>
-        <select
-          value={citationLevelFilter}
-          onChange={(e) => setCitationLevelFilter(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
-          title="How well database entries are supported by citations — not food-safety approval"
-        >
-          <option value="">Citation Level</option>
-          <option value="peer_reviewed">Peer Reviewed</option>
-          <option value="expert_verified">Expert Verified</option>
-          <option value="single_source">Single Source</option>
-          <option value="draft">Draft</option>
-        </select>
-        <input
-          type="text"
-          placeholder="Taste Tag Filter"
-          value={tasteFilter}
-          onChange={(e) => setTasteFilter(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
+          onChange={setGenusFilter}
+          options={[
+            { value: "", label: "All Genera" },
+            ...genera.map((g) => ({ value: g, label: g })),
+          ]}
         />
-        <input
-          type="text"
-          placeholder="Texture Tag Filter"
+        <ThemedSelect
+          value={meatFilter}
+          onChange={setMeatFilter}
+          options={[
+            { value: "", label: "Meat Analog Potential" },
+            { value: "high", label: "High" },
+            { value: "moderate", label: "Moderate" },
+            { value: "low", label: "Low" },
+            { value: "unknown", label: "Unknown" },
+          ]}
+        />
+        <ThemedSelect
+          value={meatAltFilter}
+          onChange={setMeatAltFilter}
+          options={[
+            { value: "", label: "Used in Meat Alternatives" },
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ]}
+        />
+        <ThemedSelect
+          value={commercialProductFilter}
+          onChange={setCommercialProductFilter}
+          options={[
+            { value: "", label: "In Commercial Product" },
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" },
+          ]}
+        />
+        <ThemedSelect
+          value={commercialFilter}
+          onChange={setCommercialFilter}
+          options={[
+            { value: "", label: "Commercial Status" },
+            { value: "commercial_meat_analog", label: "Commercial Meat Analog" },
+            { value: "commercial_food", label: "Commercial Food" },
+            { value: "research_only", label: "Research Only" },
+            { value: "traditional_food", label: "Traditional Food" },
+            { value: "none", label: "None Documented" },
+          ]}
+        />
+        <ThemedSelect
+          value={citationLevelFilter}
+          onChange={setCitationLevelFilter}
+          title="How well database entries are supported by citations — not food-safety approval"
+          options={[
+            { value: "", label: "Citation Level" },
+            { value: "peer_reviewed", label: "Peer Reviewed" },
+            { value: "expert_verified", label: "Expert Verified" },
+            { value: "single_source", label: "Single Source" },
+            { value: "draft", label: "Draft" },
+          ]}
+        />
+        <ThemedSelect
+          value={tasteFilter}
+          onChange={setTasteFilter}
+          options={[
+            { value: "", label: "Taste Tag" },
+            ...tasteTags.map((tag) => ({ value: tag, label: formatTagLabel(tag) })),
+          ]}
+        />
+        <ThemedSelect
           value={textureFilter}
-          onChange={(e) => setTextureFilter(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 text-sm"
+          onChange={setTextureFilter}
+          options={[
+            { value: "", label: "Texture Tag" },
+            ...textureTags.map((tag) => ({ value: tag, label: formatTagLabel(tag) })),
+          ]}
         />
         {compareUrl && (
           <Link
             href={compareUrl}
-            className="rounded bg-zinc-900 px-4 py-2 text-sm text-white hover:bg-zinc-700"
+            className="inline-flex h-10 items-center rounded-xl bg-berry px-4 font-sans text-sm font-semibold text-cream transition-colors hover:bg-truffle"
           >
             Compare {selected.size} Species
           </Link>
         )}
+        </div>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-zinc-200">
-        <table className="min-w-full divide-y divide-zinc-200 text-sm">
-          <thead className="bg-zinc-50">
+      <div className="overflow-x-auto rounded-2xl border-2 border-gold/50 bg-cream/95">
+        <table className="min-w-full divide-y divide-border text-sm">
+          <thead className="bg-gold/20">
             {table.getHeaderGroups().map((hg) => (
               <tr key={hg.id}>
                 {hg.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="cursor-pointer px-4 py-3 text-left text-base font-bold text-black"
+                    className="cursor-pointer whitespace-nowrap px-4 py-3 text-left font-sans text-base font-bold text-truffle"
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     {flexRender(header.column.columnDef.header, header.getContext())}
@@ -340,11 +397,11 @@ export function SpeciesGrid({ data, initialSearch = "" }: SpeciesGridProps) {
               </tr>
             ))}
           </thead>
-          <tbody className="divide-y divide-zinc-100 bg-white">
+          <tbody className="divide-y divide-border bg-cream/95">
             {table.getRowModel().rows.map((row) => (
-              <tr key={row.id} className="hover:bg-zinc-50">
+              <tr key={row.id} className="hover:bg-gold/10">
                 {row.getVisibleCells().map((cell) => (
-                  <td key={cell.id} className="px-4 py-3 text-black">
+                  <td key={cell.id} className="px-4 py-3 text-truffle">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
@@ -353,7 +410,7 @@ export function SpeciesGrid({ data, initialSearch = "" }: SpeciesGridProps) {
           </tbody>
         </table>
       </div>
-      <p className="text-xs text-black">
+      <p className="text-xs text-muted">
         {filteredData.length} of {data.length} species shown. Select 2–4 to compare (commercial use,
         sensory, morphology). &quot;Citation Level&quot; on species pages reflects how well database
         entries are sourced — not food-safety approval.

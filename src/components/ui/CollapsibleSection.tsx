@@ -19,7 +19,7 @@ export function CollapsibleSection({
   const [open, setOpen] = useState(defaultOpen);
 
   return (
-    <section id={id} className="mb-6 border-b border-zinc-200 pb-6 last:border-b-0">
+    <section id={id} className="mb-6 border-b border-border pb-6 last:border-b-0">
       <button
         type="button"
         onClick={() => setOpen((v) => !v)}
@@ -27,7 +27,7 @@ export function CollapsibleSection({
         aria-expanded={open}
       >
         <span
-          className="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-zinc-300 text-sm font-bold text-black"
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded border border-border font-sans text-sm font-bold text-truffle"
           aria-hidden
         >
           {open ? "−" : "+"}

@@ -3,10 +3,12 @@ import { notFound } from "next/navigation";
 import { CitationBadge } from "@/components/citation-badge/CitationBadge";
 import { InteractiveMorphologyViewerLazy } from "@/components/morphology-viewer/InteractiveMorphologyViewerLazy";
 import { AltProteinUsageSection } from "@/components/species/AltProteinUsageSection";
+import { BackToTopButton } from "@/components/species/BackToTopButton";
 import { CitationLevelBadge } from "@/components/species/CitationLevelBadge";
 import { NutritionSection } from "@/components/species/NutritionSection";
 import { RegulatorySection } from "@/components/species/RegulatorySection";
 import { ScientificName, TaxonomyBreadcrumb } from "@/components/species/ScientificName";
+import { SpeciesNavArrows } from "@/components/species/SpeciesNavArrows";
 import { SensoryChart } from "@/components/sensory/SensoryChart";
 import { SpeciesImageFigure } from "@/components/species/SpeciesImageFigure";
 import { buildTaxonomyLevels, TaxonomyDiagram } from "@/components/taxonomy/TaxonomyDiagram";
@@ -14,7 +16,7 @@ import { CollapsibleSection } from "@/components/ui/CollapsibleSection";
 import { SubHeading, labelClass } from "@/components/ui/headings";
 import { getCurrentSpotlightMonth } from "@/lib/alt-protein";
 import { formatEnumLabel } from "@/lib/format";
-import { getSpeciesBySlug } from "@/lib/species";
+import { getSpeciesBySlug, getSpeciesNeighbors } from "@/lib/species";
 import {
   parseCommonNames,
   parseJsonField,
@@ -47,6 +49,7 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
   const { slug } = await params;
   const species = await getSpeciesBySlug(slug);
   if (!species) notFound();
+  const neighbors = await getSpeciesNeighbors(slug);
 
   const commonNames = parseCommonNames(species.commonNames);
   const sensory = species.sensoryProfiles[0];
@@ -130,7 +133,9 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
     [img.caption, img.license, img.attributionText].filter(Boolean).join(" — ");
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 text-black">
+    <div className="mx-auto max-w-6xl px-4 py-8 text-foreground">
+      <BackToTopButton />
+      <SpeciesNavArrows previous={neighbors.previous} next={neighbors.next} />
       {species.taxonomy && (
         <TaxonomyBreadcrumb
           kingdom={species.taxonomy.kingdom}
@@ -145,20 +150,20 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
 
       <div className="grid gap-x-8 gap-y-2 lg:grid-cols-[minmax(0,1fr)_280px]">
         <div className="lg:col-span-2">
-          <h1 className="text-3xl font-bold">
+          <h1 className="font-display text-3xl font-bold text-truffle">
             <ScientificName genus={species.genus} speciesEpithet={species.speciesEpithet} />
           </h1>
           {commonNames.length > 0 && (
-            <p className="mt-1 text-sm text-black">{commonNames.join(" · ")}</p>
+            <p className="mt-1 font-sans text-sm text-muted">{commonNames.join(" · ")}</p>
           )}
           <div className="mt-3 flex flex-wrap gap-2 text-xs">
             <CitationLevelBadge status={species.verificationStatus} />
             {commercial && (
               <span
-                className={`rounded px-2 py-1 font-bold ${
+                className={`rounded px-2 py-1 font-sans font-bold ${
                   commercial.meatAlternativeUse || commercial.commercialStatus !== "none"
-                    ? "bg-blue-100 text-blue-900"
-                    : "bg-zinc-100 text-black"
+                    ? "bg-berry/15 text-berry"
+                    : "bg-surface-muted text-muted"
                 }`}
               >
                 {commercial.commercialStatus === "none" && !commercial.meatAlternativeUse
@@ -169,7 +174,7 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
             {species.ncbiTaxonomyId && (
               <a
                 href={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${species.ncbiTaxonomyId}`}
-                className="rounded bg-zinc-100 px-2 py-1 text-black hover:bg-zinc-200"
+                className="rounded bg-surface-muted px-2 py-1 font-sans text-truffle hover:bg-gold/30"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -314,7 +319,7 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
                   href={geo.gbifUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-3 inline-block text-sm text-blue-700 hover:underline"
+                  className="mt-3 inline-block text-sm text-berry hover:underline"
                 >
                   View on GBIF →
                 </a>
@@ -331,7 +336,7 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
                       href={strain.catalogUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-bold text-blue-700 hover:underline"
+                      className="font-bold text-berry hover:underline"
                     >
                       {strain.collectionName} {strain.strainId}
                     </a>

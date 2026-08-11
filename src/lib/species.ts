@@ -64,6 +64,20 @@ export async function getSpeciesList(search?: string) {
   });
 }
 
+/** Previous/next neighbors in alphabetical scientific-name order. */
+export async function getSpeciesNeighbors(slug: string) {
+  const species = await db.species.findMany({
+    select: { slug: true, scientificName: true },
+    orderBy: { scientificName: "asc" },
+  });
+  const index = species.findIndex((s) => s.slug === slug);
+  if (index < 0) return { previous: null, next: null };
+  return {
+    previous: index > 0 ? species[index - 1]! : null,
+    next: index < species.length - 1 ? species[index + 1]! : null,
+  };
+}
+
 export async function getSpeciesBySlug(slug: string) {
   const species = await db.species.findUnique({
     where: { slug },

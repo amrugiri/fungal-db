@@ -1,8 +1,8 @@
 export default function DisclaimerPage() {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
-      <h1 className="text-2xl font-semibold">Disclaimer</h1>
-      <div className="prose prose-neutral mt-6 space-y-4 text-sm leading-relaxed text-black">
+      <h1 className="font-display text-2xl font-semibold text-truffle">Disclaimer</h1>
+      <div className="prose prose-neutral mt-6 space-y-4 font-sans text-sm leading-relaxed text-truffle">
         <p>
           The Fungal Mycoprotein Database is provided for <strong>research and educational
           purposes only</strong>. It is not intended to provide food safety, regulatory, medical,
@@ -23,7 +23,7 @@ export default function DisclaimerPage() {
           Images are used under their stated licenses (primarily Creative Commons). Parametric
           3D models are schematic representations, not anatomically exact reconstructions.
         </p>
-        <p className="text-black">
+        <p className="text-muted">
           Last updated: July 2026. For curation questions, see the admin interface and{" "}
           <code>docs/CURATION_GUIDE.md</code>.
         </p>

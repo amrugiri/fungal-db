@@ -8,7 +8,7 @@ type CitationLevelBadgeProps = {
 export function CitationLevelBadge({ status }: CitationLevelBadgeProps) {
   return (
     <span
-      className="rounded bg-green-100 px-2 py-1 font-bold text-green-900"
+      className="rounded bg-sage/30 px-2 py-1 font-sans font-bold text-truffle"
       title={citationLevelDescription(status)}
     >
       Citation Level: {formatEnumLabel(status)}

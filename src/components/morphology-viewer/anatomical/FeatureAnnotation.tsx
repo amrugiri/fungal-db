@@ -18,7 +18,7 @@ export function FeatureAnnotation({
   return (
     <group>
       <Line points={[position, lineEnd]} color="#ffffff" lineWidth={1} transparent opacity={0.85} />
-      <mesh position={position}>
+      <mesh position={position} userData={{ noFrame: true }}>
         <sphereGeometry args={[0.012, 10, 10]} />
         <meshBasicMaterial color="#ffffff" />
       </mesh>

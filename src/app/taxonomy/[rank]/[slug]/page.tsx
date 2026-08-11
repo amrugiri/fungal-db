@@ -50,38 +50,38 @@ export default async function TaxonomyPage({ params }: PageProps) {
   const italicName = rank === "genus";
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8 text-black">
-      <p className="text-sm text-black">
-        <Link href="/" className="text-blue-700 hover:underline">
+    <div className="mx-auto max-w-4xl px-4 py-8 text-foreground">
+      <p className="font-sans text-sm text-muted">
+        <Link href="/" className="text-berry hover:underline">
           Species Database
         </Link>
         {" › "}
         <span>{rankLabel(rank)}</span>
       </p>
 
-      <h1 className="mt-2 text-3xl font-bold">
+      <h1 className="mt-2 font-display text-3xl font-bold text-truffle">
         {italicName ? <em>{taxonName}</em> : taxonName}
       </h1>
-      <p className="mt-1 text-sm text-black">
+      <p className="mt-1 font-sans text-sm text-muted">
         {rankLabel(rank)} · {species.length} species in database
       </p>
 
-      <ul className="mt-8 divide-y divide-zinc-200 rounded-lg border border-zinc-200 bg-white">
+      <ul className="mt-8 divide-y divide-border rounded-lg border border-border bg-surface">
         {species.map((s) => {
           const commonNames = parseCommonNames(s.commonNames);
           return (
             <li key={s.id}>
               <Link
                 href={`/species/${s.slug}`}
-                className="flex flex-wrap items-baseline justify-between gap-2 px-4 py-4 hover:bg-zinc-50"
+                className="flex flex-wrap items-baseline justify-between gap-2 px-4 py-4 hover:bg-cream"
               >
-                <span className="text-lg font-medium text-blue-700">
+                <span className="font-sans text-lg font-medium text-berry">
                   <ScientificName genus={s.genus} speciesEpithet={s.speciesEpithet} />
                 </span>
-                <span className="text-sm text-black">
+                <span className="font-sans text-sm text-muted">
                   {commonNames.length > 0 ? commonNames.join(" · ") : ""}
                 </span>
-                <span className="w-full text-xs text-black sm:w-auto">
+                <span className="w-full font-sans text-xs text-muted sm:w-auto">
                   {formatEnumLabel(s.verificationStatus)}
                 </span>
               </Link>

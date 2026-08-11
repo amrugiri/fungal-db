@@ -1,0 +1,157 @@
+{
+  "species": {
+    "slug": "laetiporus-sulphureus",
+    "genus": "Laetiporus",
+    "speciesEpithet": "sulphureus",
+    "scientificName": "Laetiporus sulphureus",
+    "commonNames": [
+      "chicken of the woods",
+      "sulphur shelf"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Fomitopsidaceae",
+      "genus": "Laetiporus"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 4,
+        "mild": 3,
+        "chicken_like": 5
+      },
+      "textureAxes": {
+        "fibrous": 5,
+        "meat_like": 5,
+        "tender": 3
+      },
+      "aromaNotes": "Distinctly chicken-like when cooked young; lemony notes in some collections",
+      "meatAnalogPotential": "high",
+      "meatAnalogRationale": "Canonical wild chicken analog; fibrous bracket flesh pulls apart like poultry; protein documented in fruiting-body chemistry.",
+      "preparationContext": "Young tender margins, saut\u00e9ed or fried as chicken substitute",
+      "confidenceNotes": "Chemical composition studies plus long culinary meat-analog tradition.",
+      "citationKeys": [
+        "kovacs2017_laetiporus",
+        "stamets2005",
+        "valverde2015"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans; dimitic system",
+      "fruitingBodyStructure": "Annual polypore shelves; bright yellow-orange pore surface; sessile",
+      "sporeCharacteristics": "White spore print; ellipsoid basidiospores",
+      "microscopyNotes": "Dimitic hyphal system; binding and generative hyphae"
+    },
+    "nutrition": {
+      "proteinPercent": 22,
+      "fiberPercent": 18,
+      "fatPercent": 3,
+      "moisturePercent": 88,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Dry matter or fresh weight basis \u2014 verify against primary source.",
+      "confidenceNotes": "Fruiting-body chemistry of L. sulphureus.",
+      "citationKeys": [
+        "kovacs2017_laetiporus",
+        "kalac2016"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "Temperate Northern Hemisphere",
+      "cultivatedRegions": "Emerging specialty cultivation; mostly wild-foraged commercially",
+      "habitat": "Parasitic/saprotrophic on hardwoods (oak, etc.)"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Laetiporus sulphureus."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Laetiporus_sulphureus_big.jpg",
+        "caption": "Chicken of the woods (Laetiporus sulphureus)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Laetiporus_sulphureus_big.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "research_only",
+      "applicationSummary": "Iconic chicken-style wild mushroom; specialty farms and foragers supply restaurants; cultivation pilots expanding.",
+      "companies": [
+        {
+          "name": "Specialty foragers and pilot cultivators",
+          "region": "NA / EU"
+        }
+      ],
+      "confidenceNotes": "Culinary meat analog with peer-reviewed composition data; cultivation still limited.",
+      "citationKeys": [
+        "kovacs2017_laetiporus",
+        "stamets2005"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "bracket",
+      "capDiameter": 14,
+      "stipeLength": 0,
+      "capColor": "#f0a020",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "not_evaluated",
+      "notes": "Traditional wild edible when correctly identified and prepared young; some individuals report GI sensitivity."
+    },
+    "speciesCitationKeys": [
+      "kovacs2017_laetiporus",
+      "stamets2005",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Chemical composition and antioxidant activity of Laetiporus sulphureus",
+      "authors": "Kov\u00e1cs et al.",
+      "journal": "European Food Research and Technology",
+      "year": 2017,
+      "doi": "10.1007/s00217-016-2801-2",
+      "summary": "Quantifies nutrients supporting culinary use of chicken-of-the-woods as a proteinaceous meat substitute.",
+      "publishedAt": "2017-01-01"
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+{
+  "species": {
+    "slug": "flammulina-velutipes",
+    "genus": "Flammulina",
+    "speciesEpithet": "velutipes",
+    "scientificName": "Flammulina velutipes",
+    "commonNames": [
+      "enoki",
+      "enokitake",
+      "golden needle mushroom"
+    ],
+    "ncbiTaxonomyId": "38945",
+    "taxonomy": {
+      "kingdom": "Fungi",
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Physalacriaceae",
+      "genus": "Flammulina"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 3,
+        "mild": 4,
+        "earthy": 1
+      },
+      "textureAxes": {
+        "crunchy": 4,
+        "fibrous": 3,
+        "tender": 3
+      },
+      "aromaNotes": "Mild, faintly fruity; clean cooked aroma with light mushroom note",
+      "meatAnalogPotential": "moderate",
+      "meatAnalogRationale": "Long fibrous stipes shred and bind in Asian meat-analog and hybrid products; protein-rich dry matter supports partial meat replacement.",
+      "preparationContext": "Fresh clusters, blanched or stir-fried; stems used as shreds",
+      "confidenceNotes": "Sensory and nutrition grounded in Food Chemistry analyses of fruiting bodies.",
+      "citationKeys": [
+        "yang2013_enoki",
+        "kalac2016",
+        "valverde2015"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "Clustered basidiocarps with minute convex pileus and elongated hollow stipe; free to adnexed gills",
+      "sporeCharacteristics": "White spore print; ellipsoid basidiospores",
+      "microscopyNotes": "Clamp connections present; thin-walled generative hyphae in stipe trama"
+    },
+    "nutrition": {
+      "proteinPercent": 26,
+      "fiberPercent": 12,
+      "fatPercent": 2.5,
+      "moisturePercent": 89,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Sulfur amino acids (methionine + cysteine)",
+      "preparationContext": "Values on dry-weight basis for cultivated fruiting bodies unless noted",
+      "confidenceNotes": "Proximate composition from peer-reviewed enoki nutrition studies.",
+      "citationKeys": [
+        "yang2013_enoki",
+        "kalac2016"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "Temperate Northern Hemisphere woodlands",
+      "cultivatedRegions": "Japan, China, Korea, Europe, North America",
+      "habitat": "Saprotroph on hardwood stumps and logs",
+      "gbifUrl": "https://www.gbif.org/species/5243345"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Flammulina velutipes."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Flammulina_velutipes_04.jpg",
+        "caption": "Enoki (Flammulina velutipes) fruiting bodies",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Flammulina_velutipes_04.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "One of the world's most cultivated mushrooms; fibrous stems used in stir-fries, hot pots, and emerging hybrid meat-analog formulations.",
+      "companies": [
+        {
+          "name": "Hokuto / major Japanese enoki producers",
+          "region": "Japan"
+        },
+        {
+          "name": "Chinese industrial enoki farms",
+          "region": "China"
+        }
+      ],
+      "productionProcess": [
+        {
+          "title": "Bottle / bag cultivation",
+          "description": "Sawdust or corn-cob substrate in bottles; cold forcing produces elongated stipes characteristic of commercial enoki."
+        }
+      ],
+      "confidenceNotes": "Global commodity crop with documented protein composition.",
+      "citationKeys": [
+        "yang2013_enoki",
+        "valverde2015"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "mushroom",
+      "capDiameter": 1.5,
+      "stipeLength": 12,
+      "capColor": "#f2edd8",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "approved_safe",
+      "notes": "Longstanding cultivated edible mushroom; traditional food use in East Asia and globally traded."
+    },
+    "speciesCitationKeys": [
+      "yang2013_enoki",
+      "kalac2016",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Nutritional composition and antioxidant properties of Flammulina velutipes",
+      "authors": "Yang et al.",
+      "journal": "Food Chemistry",
+      "year": 2013,
+      "doi": "10.1016/j.foodchem.2012.11.009",
+      "summary": "Documents high protein and essential amino acids in enoki fruiting bodies \u2014 foundational for using F. velutipes as an alt-protein co-ingredient.",
+      "publishedAt": "2013-04-01"
+    },
+    {
+      "title": "Edible mushrooms as functional ingredients for meat analogues",
+      "authors": "Valverde et al.",
+      "journal": "Food Science and Technology International",
+      "year": 2015,
+      "doi": "10.1177/1082013214551338",
+      "summary": "Positions cultivated mushrooms including Flammulina among fungal biomass sources for meat-analog texture and umami.",
+      "publishedAt": "2015-01-01"
+    }
+  ]
+}

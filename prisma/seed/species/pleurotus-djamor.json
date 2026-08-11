@@ -1,0 +1,158 @@
+{
+  "species": {
+    "slug": "pleurotus-djamor",
+    "genus": "Pleurotus",
+    "speciesEpithet": "djamor",
+    "scientificName": "Pleurotus djamor",
+    "commonNames": [
+      "pink oyster",
+      "salmon oyster",
+      "flamingo mushroom"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Pleurotaceae",
+      "genus": "Pleurotus"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 4,
+        "meaty": 3,
+        "earthy": 2
+      },
+      "textureAxes": {
+        "fibrous": 5,
+        "chewy": 4,
+        "meat_like": 4
+      },
+      "aromaNotes": "Seafood-adjacent when raw; savory when crisped",
+      "meatAnalogPotential": "high",
+      "meatAnalogRationale": "Highly fibrous pileus tears into bacon-like strips; strong consumer use as plant-based bacon/chicken shreds.",
+      "preparationContext": "Fresh clusters, roasted or pan-fried until crisp",
+      "confidenceNotes": "Meat-analog use widely documented for oyster complex; species is commercial specialty.",
+      "citationKeys": [
+        "girmay2016_oyster",
+        "manzi2013",
+        "valverde2015"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "Bright pink imbricate pilei; short eccentric stipe; decurrent gills",
+      "sporeCharacteristics": "Pinkish spore deposit when fresh",
+      "microscopyNotes": "Pleurotoid trama; clamp connections present"
+    },
+    "nutrition": {
+      "proteinPercent": 29,
+      "fiberPercent": 14,
+      "fatPercent": 2,
+      "moisturePercent": 90,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Dry matter or fresh weight basis \u2014 verify against primary source.",
+      "confidenceNotes": "Proximate values aligned with Pleurotus spp. nutrition reviews.",
+      "citationKeys": [
+        "manzi2013",
+        "kalac2016"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "Pantropical",
+      "cultivatedRegions": "Asia, Americas, Europe specialty growers",
+      "habitat": "Tropical hardwood saprotroph"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Pleurotus djamor."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/2/21/Pleurotus_djamor_crop.jpg",
+        "caption": "Pink oyster (Pleurotus djamor)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Pleurotus_djamor_crop.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Specialty cultivated oyster sold fresh; popular DIY and restaurant meat-analog (pink bacon shreds).",
+      "companies": [
+        {
+          "name": "Specialty mushroom farms / kits",
+          "region": "Global"
+        }
+      ],
+      "confidenceNotes": "Commercial food; alt-protein use supported by Pleurotus literature.",
+      "citationKeys": [
+        "manzi2013",
+        "girmay2016_oyster"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "oyster",
+      "capDiameter": 8,
+      "stipeLength": 2,
+      "capColor": "#e87a9a",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "approved_safe",
+      "notes": "Cultivated edible oyster mushroom."
+    },
+    "speciesCitationKeys": [
+      "manzi2013",
+      "girmay2016_oyster",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Growth and yield of Pleurotus species on agricultural wastes",
+      "authors": "Girmay et al.",
+      "journal": "SpringerPlus",
+      "year": 2016,
+      "doi": "10.1186/s40064-016-1990-2",
+      "summary": "Supports scalable cultivation of oyster species including pink/golden types on low-cost substrates for protein biomass.",
+      "publishedAt": "2016-01-01"
+    }
+  ]
+}

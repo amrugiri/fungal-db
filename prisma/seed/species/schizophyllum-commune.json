@@ -1,0 +1,160 @@
+{
+  "species": {
+    "slug": "schizophyllum-commune",
+    "genus": "Schizophyllum",
+    "speciesEpithet": "commune",
+    "scientificName": "Schizophyllum commune",
+    "commonNames": [
+      "split gill",
+      "schizophyllum"
+    ],
+    "ncbiTaxonomyId": "000000",
+    "taxonomy": {
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Schizophyllaceae",
+      "genus": "Schizophyllum"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 3,
+        "mild": 3,
+        "earthy": 2
+      },
+      "textureAxes": {
+        "fibrous": 5,
+        "chewy": 4,
+        "meat_like": 4
+      },
+      "aromaNotes": "Mild fungal; mycelial biomass relatively neutral after processing",
+      "meatAnalogPotential": "high",
+      "meatAnalogRationale": "Emerging mycoprotein platform: fibrous hyphal biomass and traditional edible fruiting bodies; peer-reviewed meat-analog potential.",
+      "preparationContext": "Fruiting bodies cooked; or submerged/solid-state mycelial biomass for analogs",
+      "confidenceNotes": "Frontiers review frames S. commune as novel mycoprotein source.",
+      "citationKeys": [
+        "wosten2021_schizophyllum",
+        "valverde2015"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans (schizophyllan), mannoproteins",
+      "fruitingBodyStructure": "Small fan-shaped basidiocarps with longitudinally split gill-like folds; also filamentous mycelium in culture",
+      "sporeCharacteristics": "White spore print",
+      "microscopyNotes": "Clamped hyphae; schizophyllan secreted as extracellular polysaccharide"
+    },
+    "nutrition": {
+      "proteinPercent": 35,
+      "fiberPercent": 15,
+      "fatPercent": 2,
+      "moisturePercent": 75,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Mycelial biomass / dry-weight oriented values from mycoprotein literature",
+      "confidenceNotes": "Composition framed in mycoprotein cultivation literature.",
+      "citationKeys": [
+        "wosten2021_schizophyllum",
+        "kalac2016"
+      ]
+    },
+    "geographic": {
+      "nativeRange": "Cosmopolitan",
+      "cultivatedRegions": "Traditional food in parts of Asia/Africa; lab and pilot mycoprotein globally",
+      "habitat": "Saprotroph on dead wood worldwide"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add verified culture collection strain for Schizophyllum commune."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Schizophyllum_commune_%28849610%29.jpg",
+        "caption": "Split gill (Schizophyllum commune)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Schizophyllum_commune_%28849610%29.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "research_only",
+      "applicationSummary": "Traditional edible fungus and emerging mycoprotein candidate; researched for submerged cultivation meat analogs.",
+      "companies": [
+        {
+          "name": "Academic / startup mycoprotein pilots",
+          "region": "EU / Global"
+        }
+      ],
+      "productionProcess": [
+        {
+          "title": "Submerged or solid-state biomass",
+          "description": "Mycelium grown on defined media; harvested, heat-treated, and texturized similarly to other mycoproteins."
+        }
+      ],
+      "confidenceNotes": "Peer-reviewed mycoprotein potential; commercial scale still emerging.",
+      "citationKeys": [
+        "wosten2021_schizophyllum"
+      ]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "oyster",
+      "capDiameter": 4,
+      "stipeLength": 1,
+      "capColor": "#d4c4a8",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": true,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "not_evaluated",
+      "notes": "Fruiting bodies traditionally eaten in several regions; novel mycoprotein preparations may require novel-food assessment."
+    },
+    "speciesCitationKeys": [
+      "wosten2021_schizophyllum",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Schizophyllum commune as a novel source of mycoprotein",
+      "authors": "W\u00f6sten et al.",
+      "journal": "Frontiers in Sustainable Food Systems",
+      "year": 2021,
+      "doi": "10.3389/fsufs.2021.732685",
+      "summary": "Reviews cultivation, composition, and meat-analog potential of S. commune mycoprotein \u2014 key alt-protein citation.",
+      "publishedAt": "2021-01-01"
+    }
+  ]
+}
