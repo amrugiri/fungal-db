@@ -1,0 +1,11 @@
+# Local-only build tooling. The model-generation venv contains an absolute
+# symlink to a Homebrew Python that does not exist on Vercel, which fails the
+# deploy with "not a valid symlink". The .glb files it produces are committed
+# under public/models, so nothing here is needed to build or serve the site.
+.img-venv/
+__pycache__/
+*.pyc
+
+# Local database working copy; production bootstraps from data/fungal.db
+dev.db
+dev.db-journal
