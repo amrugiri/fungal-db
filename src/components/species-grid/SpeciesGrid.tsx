@@ -343,7 +343,7 @@ export function SpeciesGrid({ data, initialSearch = "" }: SpeciesGridProps) {
         <ThemedSelect
           value={citationLevelFilter}
           onChange={setCitationLevelFilter}
-          title="How well database entries are supported by citations — not food-safety approval"
+          title="How well database entries are supported by citations, not food-safety approval"
           options={[
             { value: "", label: "Citation Level" },
             { value: "peer_reviewed", label: "Peer Reviewed" },
@@ -413,7 +413,7 @@ export function SpeciesGrid({ data, initialSearch = "" }: SpeciesGridProps) {
       <p className="text-xs text-muted">
         {filteredData.length} of {data.length} species shown. Select 2–4 to compare (commercial use,
         sensory, morphology). &quot;Citation Level&quot; on species pages reflects how well database
-        entries are sourced — not food-safety approval.
+        entries are sourced, not food-safety approval.
       </p>
     </div>
   );

@@ -2,7 +2,7 @@ const featureCards = [
   {
     label: "Alt-protein R&D",
     title: "Built for formulation teams",
-    body: "Meat-analog potential, PDCAAS/DIAAS, regulatory status, and commercial use — mapped field by field.",
+    body: "Meat-analog potential, PDCAAS/DIAAS, regulatory status, and commercial use, mapped field by field.",
     shape: "rounded-3xl",
     tone: "bg-gold/40 border-gold text-truffle",
     labelTone: "text-truffle/80",
@@ -10,7 +10,7 @@ const featureCards = [
   {
     label: "Sensory benchmarks",
     title: "Taste & texture axes",
-    body: "Standardized 0–5 scales for umami, fibrous, chewy, and more — compare fungi like ingredient specs.",
+    body: "0–5 scales for umami, fibrous, chewy, and related traits, so you can compare fungi the way you would ingredient specs.",
     shape: "rounded-[2rem]",
     tone: "bg-berry/20 border-berry/50 text-truffle",
     labelTone: "text-berry",
@@ -18,7 +18,7 @@ const featureCards = [
   {
     label: "Go-to-market context",
     title: "Process & products",
-    body: "Production workflows, companies, and retail categories bridge bench science to shelf placement.",
+    body: "Production steps, companies, and product categories that connect lab work to what ends up on shelf.",
     shape: "rounded-2xl",
     tone: "bg-sage/40 border-sage text-truffle",
     labelTone: "text-truffle/80",
@@ -26,7 +26,7 @@ const featureCards = [
   {
     label: "3D morphology",
     title: "Interactive anatomy",
-    body: "Rotatable fruiting-body models and hyphae schematics link structure to mouthfeel and processing.",
+    body: "Rotatable fruiting-body models and hyphae views that tie structure to texture and how the biomass processes.",
     shape: "rounded-[1.75rem]",
     tone: "bg-truffle text-cream border-truffle",
     labelTone: "text-gold",
@@ -34,7 +34,7 @@ const featureCards = [
   {
     label: "Evidence quality",
     title: "Citation transparency",
-    body: "Peer-reviewed sources linked per field so R&D teams can judge evidence strength at a glance.",
+    body: "Peer-reviewed sources linked to each field, so you can see how strong the backing is before you rely on a value.",
     shape: "rounded-3xl",
     tone: "bg-surface border-gold text-truffle",
     labelTone: "text-sage",
@@ -42,7 +42,7 @@ const featureCards = [
   {
     label: "Literature feed",
     title: "Monthly research highlights",
-    body: "Curated alt-protein papers surfaced on each species page — no manual PubMed sweeps required.",
+    body: "Recent alt-protein papers collected on each species page, without digging through PubMed yourself.",
     shape: "rounded-[2.25rem]",
     tone: "bg-gold text-truffle border-truffle/20",
     labelTone: "text-truffle/70",
@@ -54,9 +54,8 @@ export function DatabaseUniqueness() {
     <section className="mb-10">
       <div className="max-w-3xl rounded-2xl border border-border/50 bg-cream px-5 py-4 sm:px-6">
         <p className="font-sans text-lg font-medium leading-relaxed text-truffle">
-          The citation-backed reference for fungal ingredients in alternative protein — from
-          strain selection and sensory benchmarking to protein quality, morphology, and commercial
-          positioning.
+          A citation-backed reference for fungal ingredients in alternative protein, covering
+          strain selection, sensory data, protein quality, morphology, and commercial use.
         </p>
       </div>
 
