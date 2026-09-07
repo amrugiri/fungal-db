@@ -50,16 +50,15 @@ export default async function Home({ searchParams }: HomeProps) {
       />
 
       <div className="relative z-10 mx-auto max-w-[96rem] px-4 py-8 text-foreground sm:px-10 md:px-14 lg:px-16 xl:px-20">
-        <div className="mb-6 rounded-2xl border border-border/60 bg-cream px-5 py-5 sm:px-6">
+        <div className="mb-6">
           <h1 className="font-display text-3xl font-bold leading-tight text-truffle md:text-4xl">
             MycoProt
           </h1>
-          <div className="mt-3 flex h-1.5 w-40 overflow-hidden rounded-full">
-            <span className="flex-1 bg-gold" />
-            <span className="flex-1 bg-berry" />
-            <span className="flex-1 bg-sage" />
-            <span className="flex-1 bg-truffle" />
-          </div>
+          <p className="mt-2 max-w-3xl font-sans text-sm leading-relaxed text-muted md:text-base">
+            Citation-backed reference for fungal ingredients in alternative
+            protein: strain selection, sensory data, protein quality,
+            morphology, and commercial use.
+          </p>
         </div>
         <DatabaseUniqueness />
         <SpeciesGrid data={gridData} initialSearch={q ?? ""} />
