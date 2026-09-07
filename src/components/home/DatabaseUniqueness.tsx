@@ -52,14 +52,7 @@ const featureCards = [
 export function DatabaseUniqueness() {
   return (
     <section className="mb-10">
-      <div className="max-w-3xl rounded-2xl border border-border/50 bg-cream px-5 py-4 sm:px-6">
-        <p className="font-sans text-lg font-medium leading-relaxed text-truffle">
-          A citation-backed reference for fungal ingredients in alternative protein, covering
-          strain selection, sensory data, protein quality, morphology, and commercial use.
-        </p>
-      </div>
-
-      <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {featureCards.map((card) => (
           <article
             key={card.title}

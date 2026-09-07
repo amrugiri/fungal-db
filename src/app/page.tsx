@@ -55,8 +55,8 @@ export default async function Home({ searchParams }: HomeProps) {
             MycoProt
           </h1>
           <p className="mt-2 max-w-3xl font-sans text-sm leading-relaxed text-muted md:text-base">
-            Citation-backed reference for fungal ingredients in alternative
-            protein: strain selection, sensory data, protein quality,
+            A citation-backed reference for fungal ingredients in alternative
+            protein, covering strain selection, sensory data, protein quality,
             morphology, and commercial use.
           </p>
         </div>
