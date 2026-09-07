@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Fungal Mycoprotein Database",
-    template: "%s | Fungal Mycoprotein DB",
+    default: "MycoProt",
+    template: "%s | MycoProt",
   },
   description:
     "Alternative protein database for fungal mycoprotein species — meat analog potential, sensory profiles, protein quality, commercial use, and interactive 3D morphology.",

@@ -52,7 +52,7 @@ export default async function Home({ searchParams }: HomeProps) {
       <div className="relative z-10 mx-auto max-w-[96rem] px-4 py-8 text-foreground sm:px-10 md:px-14 lg:px-16 xl:px-20">
         <div className="mb-6 rounded-2xl border border-border/60 bg-cream px-5 py-5 sm:px-6">
           <h1 className="font-display text-3xl font-bold leading-tight text-truffle md:text-4xl">
-            Alternative Protein Fungi Database
+            MycoProt
           </h1>
           <div className="mt-3 flex h-1.5 w-40 overflow-hidden rounded-full">
             <span className="flex-1 bg-gold" />
