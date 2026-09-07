@@ -28,7 +28,7 @@ const featureCards = [
     title: "Interactive anatomy",
     body: "Rotatable fruiting-body models and hyphae views that tie structure to texture and how the biomass processes.",
     shape: "rounded-[1.75rem]",
-    tone: "bg-truffle text-cream border-truffle",
+    tone: "bg-muted text-cream border-muted",
     labelTone: "text-gold",
   },
   {
