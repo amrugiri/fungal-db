@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+title: MycoProt
+message: If you use this database, please cite it as below.
+type: software
+authors:
+  - family-names: Girivasan
+    given-names: Amrutha
+repository-code: https://github.com/amrugiri/fungal-db
+url: https://fungal-db.vercel.app
+abstract: An open-source, citation-backed mycoprotein database for food-relevant fungi.
+license: MIT
+date-released: "2026-09-07"

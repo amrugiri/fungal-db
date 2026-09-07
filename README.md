@@ -73,6 +73,15 @@ npm run build   # verify locally first
 - `docs/MYCOLOGY_PRIMER.md` — fungi basics for food scientists
 - `docs/CURATION_GUIDE.md` — how to verify and add species
 
+## License
+
+Copyright © 2026 [Amrutha Girivasan](https://github.com/amrugiri).
+
+- **Source code** is licensed under the [MIT License](LICENSE).
+- **Curated database content** (species records, scores, and compiled citations) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Please credit Amrutha Girivasan / MycoProt when you reuse the data.
+
+If you use this work, cite the repository (see `CITATION.cff`).
+
 ## Disclaimer
 
 This database is for research and education only — not food safety or regulatory guidance. See `/disclaimer`.
