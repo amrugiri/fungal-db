@@ -51,13 +51,10 @@ export default async function Home({ searchParams }: HomeProps) {
 
       <div className="relative z-10 mx-auto max-w-[96rem] px-4 py-8 text-foreground sm:px-10 md:px-14 lg:px-16 xl:px-20">
         <div className="mb-6">
-          <h1 className="font-display text-3xl font-bold leading-tight text-truffle md:text-4xl">
-            MycoProt
-          </h1>
-          <p className="mt-2 max-w-3xl font-sans text-sm leading-relaxed text-muted md:text-base">
-            A citation-backed reference for fungal ingredients in alternative
-            protein, covering strain selection, sensory data, protein quality,
-            morphology, and commercial use.
+          <p className="max-w-3xl font-sans text-sm leading-relaxed text-muted md:text-base">
+            An open-source, citation-backed mycoprotein database for
+            food-relevant fungi, covering taxonomy, sensory profile, protein
+            quality, morphology, and commercial use.
           </p>
         </div>
         <DatabaseUniqueness />

@@ -6,7 +6,7 @@ export function Header() {
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
         <div className="flex items-center gap-6">
           <Link href="/" className="font-display text-lg font-semibold text-truffle">
-            Mycoprotein Database
+            MycoProt
           </Link>
           <nav className="flex gap-4 font-sans text-sm text-truffle">
             <Link href="/" className="hover:text-berry">
@@ -24,7 +24,7 @@ export function Header() {
           </nav>
         </div>
         <p className="hidden font-sans text-xs text-muted sm:block">
-          Alt-protein &amp; mycoprotein R&amp;D reference
+          Mycoprotein database
         </p>
       </div>
     </header>
