@@ -31,7 +31,7 @@ jobs:
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: `Monthly MycoProt update ${month} — review only, do not apply yet`,
+              title: `Monthly MycoProt update ${month} - review only, do not apply yet`,
               body:
                 "To: Amrutha Girivasan (amruthagirivasan@gmail.com)\n\n" +
                 "The monthly OpenAlex scan is done. **No database or page changes have been applied.** " +
@@ -41,7 +41,7 @@ jobs:
               assignees: ["amrugiri"],
             });
       - name: Email curator
-        if: ${{ secrets.GMAIL_APP_PASSWORD != '' }}
+        if: ${{ secrets.GMAIL_APP_PASSWORD }}
         continue-on-error: true
         uses: dawidd6/action-send-mail@v3
         with:
