@@ -69,6 +69,9 @@ export async function seedOneSpecies(
       meatAnalogPotential: sp.sensory.meatAnalogPotential,
       meatAnalogRationale: sp.sensory.meatAnalogRationale ?? null,
       preparationContext: sp.sensory.preparationContext ?? null,
+      publishedEvidence: sp.sensory.publishedEvidence
+        ? JSON.stringify(sp.sensory.publishedEvidence)
+        : null,
       confidenceNotes: sp.sensory.confidenceNotes ?? null,
       verificationStatus: verified,
     },

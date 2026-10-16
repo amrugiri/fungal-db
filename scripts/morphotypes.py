@@ -16,7 +16,8 @@ button-mushroom shape.
 import numpy as np
 import trimesh
 
-from mesh_kit import TAU, revolve, shell_cap, solid_blade, lumpy_sphere, spine, finalize
+from mesh_kit import (TAU, revolve, shell_cap, solid_blade, lumpy_sphere, spine,
+                      annulus_skirt, finalize)
 
 
 def units_per_cm(cap_diameter_cm):
@@ -30,12 +31,19 @@ def units_per_cm(cap_diameter_cm):
 def gilled(dome_z, under_rise, rim_thick, stipe_len, stipe_r, stipe_flare,
            n_gills, gill_depth, cap_color, stipe_color, gill_color,
            annulus=None, volva=None, cap_warp=None, gill_inner=0.34,
-           gill_outer=0.95, seg=96, cap_rough=0.85, lod=1.0):
+           gill_outer=0.95, seg=96, cap_rough=0.85, lod=1.0, stipe_profile=None,
+           decurrent=0.0):
     """
     dome_z(rr)      -> height of the cap's upper surface above the rim
     under_rise      -> how far the underside lifts toward the centre (flesh depth)
     annulus         -> (major_r, minor_r, z, color) or None
     volva           -> (radius, height, z, color) or None -- the basal cup
+    stipe_profile   -> f in [0,1] top-to-base -> radius multiplier. Overrides
+                       `stipe_flare` for species whose stipe is not a simple
+                       taper: a king oyster is waisted, not conical.
+    decurrent       -> how far the lamellae run DOWN the stipe past their inner
+                       edge. Attachment is real geometry here, not a label: a
+                       decurrent gill physically continues onto the stipe.
     """
     R = 1.0
     seg = max(int(seg * lod), 16)
@@ -56,14 +64,30 @@ def gilled(dome_z, under_rise, rim_thick, stipe_len, stipe_r, stipe_flare,
         seg=seg, warp=cap_warp,
     )
 
-    zs = np.linspace(under(0.0) * 0.9, -stipe_len, max(int(26*lod), 8))
-    rad = stipe_r * (1.0 + stipe_flare * (np.linspace(0, 1, len(zs)) ** 3))
+    n_st = max(int(26 * lod), 8)
+    zs = np.linspace(under(0.0) * 0.9, -stipe_len, n_st)
+    f_st = np.linspace(0, 1, n_st)
+    if stipe_profile is not None:
+        rad = stipe_r * np.array([stipe_profile(x) for x in f_st])
+    else:
+        rad = stipe_r * (1.0 + stipe_flare * (f_st ** 3))
     stipe = revolve(np.concatenate([[0.0], rad, [0.0]]),
                     np.concatenate([[zs[0]], zs, [zs[-1]]]), seg=max(int(64*lod), 14))
 
     ri = np.linspace(gill_inner, gill_outer, 8)
     top_z = under(ri)
     depth = gill_depth * (1 - (ri - gill_inner) / (gill_outer - gill_inner) * 0.4)
+    if decurrent > 0.0:
+        # Continue each blade inward and downward along the stipe surface.
+        r_stipe = stipe_r * (stipe_profile(0.0) if stipe_profile else 1.0)
+        n_dec = 5
+        ri_dec = np.linspace(r_stipe * 0.99, gill_inner, n_dec, endpoint=False)
+        drop = np.linspace(decurrent, 0.0, n_dec, endpoint=False)
+        top_dec = under(gill_inner) - drop
+        dep_dec = depth[0] * np.linspace(0.35, 1.0, n_dec, endpoint=False)
+        ri = np.concatenate([ri_dec, ri])
+        top_z = np.concatenate([top_dec, top_z])
+        depth = np.concatenate([dep_dec, depth])
     blades = [solid_blade(TAU * k / n_gills, ri, top_z, top_z - depth, 0.012)
               for k in range(n_gills)]
     gills = trimesh.util.concatenate(blades)
@@ -74,10 +98,8 @@ def gilled(dome_z, under_rise, rim_thick, stipe_len, stipe_r, stipe_flare,
         ("lamellae_gills", finalize(gills, gill_color, 0.95)),
     ]
     if annulus:
-        major, minor, z, color = annulus
-        ring = trimesh.creation.torus(major_radius=major, minor_radius=minor,
-                                      major_sections=64, minor_sections=16)
-        ring.apply_translation([0, 0, z])
+        outer_r, thickness, z, color = annulus
+        ring = annulus_skirt(stipe_r, outer_r, z, thickness)
         parts.append(("annulus_ring", finalize(ring, color, 0.9)))
     if volva:
         vr, vh, vz, color = volva
@@ -105,7 +127,11 @@ def _fan_outline(phi0, eccentricity, lobes):
     """
     def phi_max(theta):
         base = phi0 * (eccentricity + (1.0 - eccentricity) * (1 + np.cos(theta)) / 2)
-        return base * (1.0 + lobes * np.sin(3 * theta + 0.5))
+        # Two harmonics, not one: a single 3-lobe wave reads as a smooth oval,
+        # where an oyster's margin is crinkled at a finer scale as well.
+        return base * (1.0
+                       + lobes * np.sin(3 * theta + 0.5)
+                       + 0.55 * lobes * np.sin(7 * theta + 1.3))
     return phi_max
 
 
@@ -145,7 +171,7 @@ def _stub(length, radius, direction, origin, seg=40):
 
 def shelf(stipe_len, stipe_r, n_gills, gill_depth, cap_color, gill_color,
           stipe_color, thickness=0.09, phi0=1.15, eccentricity=0.20,
-          flatten=0.62, tilt_deg=16, nf=26, nt=104):
+          flatten=0.62, tilt_deg=16, nf=26, nt=104, lobes=0.10, pitch_deg=30):
     """
     Oyster-type basidiocarp: a laterally attached fan with decurrent gills
     running onto a rudimentary stipe at the narrow heel.
@@ -178,7 +204,7 @@ def shelf(stipe_len, stipe_r, n_gills, gill_depth, cap_color, gill_color,
 
     # The viewer maps build -y toward the camera, so a pitch about X presents
     # the upper surface instead of showing the fan edge-on.
-    pitch = trimesh.transformations.rotation_matrix(np.radians(30), [1, 0, 0])
+    pitch = trimesh.transformations.rotation_matrix(np.radians(pitch_deg), [1, 0, 0])
     tilt = trimesh.transformations.rotation_matrix(np.radians(tilt_deg), [0, 1, 0])
     for m in (cap, gills, stipe):
         m.apply_transform(pitch @ tilt)
@@ -311,6 +337,98 @@ def ruffled(n_lobes, color):
     return [("gelatinous_lobes", finalize(trimesh.util.concatenate(lobes), color, 0.34))]
 
 
+def chanterelle(stipe_len, stipe_r, cap_color, ridge_color, seed=4):
+    """
+    Cantharellus: one continuous vase (depressed pileus flaring from a
+    downward-tapering stipe) plus blunt forked ridges that run down the stipe
+    — false gills, not lamellae. Margin is lobed. Proportions come from the
+    species JSON (capDiameter / stipeLength).
+    """
+    R = 1.0
+
+    def profile(t):
+        z = -stipe_len + (stipe_len + 0.08) * t
+        flare = np.clip((t - 0.18) / 0.82, 0, 1) ** 1.05
+        r = stipe_r * (1.35 - 0.40 * (1 - t))
+        r = r * (1 - flare) + R * flare
+        return float(r), float(z)
+
+    n_out = 48
+    ts = np.linspace(0, 1, n_out)
+    r_out = np.array([profile(t)[0] for t in ts])
+    z_out = np.array([profile(t)[1] for t in ts])
+
+    n_in = 22
+    zs_in = np.linspace(0.08, -0.28, n_in)
+    r_in = np.linspace(R * 0.90, 0.18, n_in)
+
+    pr = np.concatenate([[0.0], r_out, r_in, [0.0]])
+    pz = np.concatenate([[z_out[0]], z_out, zs_in, [zs_in[-1]]])
+    rim_j = 1 + int(np.argmax(r_out))
+
+    def warp(j, theta):
+        if j < rim_j - 14 or j > rim_j + 6:
+            return (0.0, 0.0)
+        fade = 1.0 - abs(j - rim_j) / 15.0
+        w = 0.16 * np.sin(5 * theta + 0.35) + 0.07 * np.sin(11 * theta + 1.1)
+        return (w * fade, 0.045 * w * fade)
+
+    body = revolve(pr, pz, seg=96, warp=warp)
+
+    def ridge_samples(t0, t1, n):
+        ri, top, bot = [], [], []
+        for t in np.linspace(t0, t1, n):
+            r, z = profile(t)
+            r2, z2 = profile(min(t + 0.035, 1.0))
+            dr, dz = r2 - r, z2 - z
+            nlen = (dr * dr + dz * dz) ** 0.5 + 1e-9
+            nr, nz = dz / nlen, -dr / nlen
+            hang = 0.018 + 0.070 * max(0.0, -nz)
+            ri.append(r + nr * 0.012)
+            top.append(z + nz * 0.008 + 0.010)
+            bot.append(z + nz * 0.008 - hang)
+        return np.array(ri), np.array(top), np.array(bot)
+
+    ridges = []
+    n_main = 24
+    for k in range(n_main):
+        a = TAU * k / n_main
+        ri, top, bot = ridge_samples(0.14, 0.985, 16)
+        ridges.append(solid_blade(a, ri, top, bot, 0.046))
+        if k % 2 == 0:
+            a2 = a + TAU / n_main * 0.42
+            ri2, top2, bot2 = ridge_samples(0.48, 0.985, 10)
+            ridges.append(solid_blade(a2, ri2, top2, bot2, 0.032))
+
+    return [
+        ("funnel_body", finalize(body, cap_color, 0.78)),
+        ("false_gills", finalize(trimesh.util.concatenate(ridges), ridge_color, 0.88)),
+    ]
+
+
+def truffle(peridium_color, gleba_color, seed=6):
+    """
+    Tuber ascoma: irregular lumpy globose peridium over a solid gleba.
+    No stipe, no gills — a hypogeous roundish fruiting body.
+    """
+    bumps = [
+        ((2.1, 1.4, 1.8), 0.40),
+        ((3.4, 2.6, 1.2), 0.28),
+        ((1.2, 3.0, 2.4), 0.24),
+        ((4.5, 1.8, 3.2), 0.18),
+        ((5.2, 3.8, 2.0), 0.14),
+        ((2.8, 4.2, 3.6), 0.16),
+    ]
+    outer = lumpy_sphere(1.0, bumps, seed, subdivisions=3)
+    outer.apply_transform(np.diag([1.08, 1.02, 0.90, 1.0]))
+    inner = lumpy_sphere(0.86, [(b[0], b[1] * 0.7) for b in bumps], seed + 1, subdivisions=3)
+    inner.apply_transform(np.diag([1.08, 1.02, 0.90, 1.0]))
+    return [
+        ("peridium_wall", finalize(outer, peridium_color, 0.92)),
+        ("gleba_mass", finalize(inner, gleba_color, 0.95)),
+    ]
+
+
 def puffball(sterile_frac, peridium_color, gleba_color):
     """
     Calvatia: a near-spherical body narrowing to a sterile base. Modelled as a
@@ -331,40 +449,104 @@ def puffball(sterile_frac, peridium_color, gleba_color):
     ]
 
 
-def morel(cap_h, stipe_len, stipe_r, n_ridges, cap_color):
+def morel(cap_h, stipe_len, stipe_r, ridge_color, pit_color, stipe_color,
+          context_color, seed=3, seg=116, n_cap=48, n_stipe=14,
+          wall=0.10, ridge_amp=0.165):
     """
-    Morchella: a pitted, ridged conical cap fused to the stipe, and -- the
-    diagnostic feature -- hollow from the top of the cap right through the base.
+    Morchella: an OVOID alveolate head -- rounded and tapering at the apex,
+    widest about two-thirds down, narrowing again where it meets the stipe --
+    fused to the stipe as one continuously hollow chamber.
 
-    The profile runs up the outside and back down the inside, meeting at the
-    bottom, so revolving it yields one closed hollow shell. That is what makes
-    the cross-section worth looking at for this genus. Because it is a single
-    continuous shell, cap and stipe necessarily share one material.
+    The previous version had this inverted: radius 1.0 at the apex falling to 0
+    at the stipe, which is an upside-down cone and reads as a flat-topped drum.
+
+    Ridges are a reticulate net rather than a regular grid: wandering
+    longitudinal ribs crossed by wandering transverse bars, unioned so the ribs
+    enclose irregular pits. Colour is carried per-vertex -- pale sterile ridges
+    over dark fertile pits -- because that contrast, not the silhouette, is what
+    makes a morel recognisable, and one flat material cannot express it.
     """
-    n = 34
-    t = np.linspace(0, 1, n)
-    # Outside: conical cap over a slightly waisted stipe.
-    cap_r = 1.0 * np.sin(np.pi * 0.5 * (1 - t) ** 0.85)
-    out_r = np.concatenate([cap_r, stipe_r * (1.0 + 0.22 * np.linspace(0, 1, 14) ** 2)])
-    out_z = np.concatenate([cap_h * (1 - t), -stipe_len * np.linspace(0, 1, 14)])
+    def _hex8(h):
+        """
+        COLOR_0 bytes, written in sRGB. three.js converts vertex colours from
+        sRGB on load, so feeding it linear values (as srgb() produces for
+        baseColorFactor) renders everything darker than specified.
+        """
+        h = h.lstrip("#")
+        return np.array([int(h[i:i + 2], 16) for i in (0, 2, 4)] + [255], dtype=np.uint8)
 
-    wall = 0.10
-    in_r = np.clip(out_r - wall, 0.02, None)[::-1]
-    in_z = (out_z + np.concatenate([np.full(n, -wall * 0.8), np.full(14, 0.0)]))[::-1]
+    rng = np.random.default_rng(seed)
+    ph = rng.uniform(0, TAU, 6)
 
-    prof_r = np.concatenate([[0.0], out_r, in_r, [0.0]])
-    prof_z = np.concatenate([[out_z[0]], out_z, in_z, [in_z[-1]]])
+    def base_r(t):
+        return float(np.interp(
+            t,
+            [0.00, 0.05, 0.12, 0.22, 0.35, 0.50, 0.65, 0.78, 0.88, 0.95, 1.00],
+            [0.00, 0.26, 0.45, 0.63, 0.79, 0.91, 0.99, 1.00, 0.96, 0.86, 0.72]))
+
+    def ridge(t, th):
+        """0 in a pit floor, 1 on a ridge crest."""
+        a = np.cos(14.0 * th + 0.95 * np.sin(2.4 * np.pi * t + ph[0]) + ph[1])
+        b = np.cos(11.0 * np.pi * t + 1.15 * np.sin(3.0 * th + ph[2]) + ph[3])
+        fine = np.cos(23.0 * th + 7.0 * np.pi * t + ph[4])
+        v = 0.5 * (max(a, b) + 1.0) + 0.10 * fine
+        return float(np.clip(v, 0.0, 1.0)) ** 1.9
+
+    # ---- outer profile: apex -> cap -> margin -> stipe ---------------------
+    pr, pz, kind, tt = [0.0], [cap_h], ["apex"], [0.0]
+    for i in range(1, n_cap):
+        t = i / (n_cap - 1)
+        pr.append(base_r(t)); pz.append(cap_h * (1 - t)); kind.append("cap"); tt.append(t)
+    pr.append(stipe_r * 1.02); pz.append(0.0); kind.append("stipe"); tt.append(-1.0)
+    for k in range(1, n_stipe + 1):
+        f = k / n_stipe
+        pr.append(stipe_r * (1 + 0.18 * f * f)); pz.append(-stipe_len * f)
+        kind.append("stipe"); tt.append(-1.0)
+    n_out = len(pr)
+
+    # ---- inner profile: back up the inside, smooth (a morel's cavity is) ---
+    for i in range(n_out - 1, 0, -1):
+        pr.append(max(pr[i] - wall, 0.02) if kind[i] != "cap"
+                  else max(base_r(tt[i]) - wall, 0.02))
+        pz.append(pz[i] + (wall * 0.15 if kind[i] == "cap" else 0.0))
+        kind.append("inner"); tt.append(tt[i])
+    pr.append(0.0); pz.append(cap_h - wall * 0.95); kind.append("inner"); tt.append(0.0)
 
     def warp(j, theta):
-        """Pits and ridges, only over the cap portion and dying out at the apex."""
-        if j < 1 or j > n:
-            return (0.0, 0.0)
-        f = (j - 1) / max(n - 1, 1)
-        env = np.sin(np.pi * np.clip(f, 0, 1)) ** 0.8
-        return (0.16 * env * np.cos(n_ridges * theta) * np.cos(7.5 * np.pi * f), 0.0)
+        if kind[j] == "cap":
+            env = np.sin(np.pi * tt[j]) ** 0.28
+            return (ridge_amp * env * (ridge(tt[j], theta) - 0.55), 0.0)
+        if kind[j] == "stipe":
+            return (stipe_r * 0.045 * np.cos(9.0 * theta + 2.2 * abs(pz[j])), 0.0)
+        return (0.0, 0.0)
 
-    body = revolve(prof_r, prof_z, seg=96, warp=warp)
-    return [("ascocarp_body", finalize(body, cap_color, 0.86))]
+    mesh = revolve(pr, pz, seg=seg, warp=warp)
+    trimesh.repair.fix_normals(mesh)
+
+    # ---- per-vertex colour, reconstructed from revolve's vertex order ------
+    pole_start, pole_end = pr[0] <= 1e-12, pr[-1] <= 1e-12
+    ring_idx = list(range(1 if pole_start else 0, len(pr) - (2 if pole_end else 1) + 1))
+    cols = np.zeros((len(mesh.vertices), 4), dtype=np.uint8)
+    c_ridge, c_pit = _hex8(ridge_color).astype(float), _hex8(pit_color).astype(float)
+    c_stipe, c_ctx = _hex8(stipe_color), _hex8(context_color)
+    v = 0
+    if pole_start:
+        cols[v] = c_ridge.astype(np.uint8); v += 1
+    for i in range(seg):
+        th = i / seg * TAU
+        for j in ring_idx:
+            if kind[j] == "cap":
+                f = ridge(tt[j], th)
+                cols[v] = (c_pit + (c_ridge - c_pit) * f).astype(np.uint8)
+            elif kind[j] == "stipe":
+                cols[v] = c_stipe
+            else:
+                cols[v] = c_ctx
+            v += 1
+    if pole_end:
+        cols[v] = c_ctx
+    mesh.visual = trimesh.visual.ColorVisuals(mesh=mesh, vertex_colors=cols)
+    return [("ascocarp_body", mesh)]
 
 
 def gall(n_lobes, gall_color, husk_color):
@@ -618,7 +800,8 @@ def conidiophore(stipe_len, stipe_r, vesicle_r, n_phialides, chain_len,
     ]
 
 
-def sporangiophore(hypha_color, sporangium_color, columella_color, seed=10):
+def sporangiophore(hypha_color, sporangium_color, columella_color, seed=10,
+                   sporangium_r=0.24, n_nodes=3):
     """
     Rhizopus: arching stolons that root at nodes by tufts of rhizoids, with
     sporangiophores rising opposite each node and bearing a globose sporangium
@@ -626,7 +809,7 @@ def sporangiophore(hypha_color, sporangium_color, columella_color, seed=10):
     """
     rng = np.random.default_rng(seed)
     hy, sp, col = [], [], []
-    nodes = [-1.5, 0.0, 1.5]
+    nodes = list(np.linspace(-1.5, 1.5, n_nodes))
 
     for i in range(len(nodes)-1):
         x0, x1 = nodes[i], nodes[i+1]
@@ -655,23 +838,166 @@ def sporangiophore(hypha_color, sporangium_color, columella_color, seed=10):
             rz.apply_translation([nx, 0, 0.0])
             hy.append(rz)
 
-        H = 1.25 + 0.25*rng.random()             # sporangiophore, opposite the rhizoids
-        t = np.linspace(0, 1, 8)
-        stalk = revolve(np.concatenate([[0.0], 0.052*(1 - 0.2*t), [0.0]]),
-                        np.concatenate([[0.0], H*t, [H]]), seg=12)
-        stalk.apply_translation([nx, 0, 0.0])
-        hy.append(stalk)
-
-        s = trimesh.creation.icosphere(subdivisions=2, radius=0.30)
-        s.apply_translation([nx, 0, H + 0.24])
-        sp.append(s)
-        c = trimesh.creation.icosphere(subdivisions=2, radius=0.17)
-        c.apply_transform(np.diag([1.0, 1.0, 0.72, 1.0]))
-        c.apply_translation([nx, 0, H + 0.14])
-        col.append(c)
+        # Sporangiophores rise in a group of two or three from each node,
+        # opposite the rhizoids -- they are not borne singly in Rhizopus.
+        for g in range(3):
+            ga = TAU*g/3 + rng.uniform(-0.25, 0.25)
+            lean = 0.10 + 0.06*rng.random()
+            H = 1.15 + 0.30*rng.random()
+            top = np.array([nx + lean*np.cos(ga), lean*np.sin(ga), H])
+            stalk = _tube([nx, 0, 0.0], top, 0.052, 0.042, seg=12)
+            if stalk is not None:
+                hy.append(stalk)
+            R = sporangium_r + sporangium_r*0.22*rng.random()
+            s_ = trimesh.creation.icosphere(subdivisions=2, radius=R)
+            s_.apply_translation(top + [0, 0, R*0.80])
+            sp.append(s_)
+            c = trimesh.creation.icosphere(subdivisions=2, radius=R*0.58)
+            c.apply_transform(np.diag([1.0, 1.0, 0.72, 1.0]))
+            c.apply_translation(top + [0, 0, R*0.46])
+            col.append(c)
 
     return [
         ("stolons_rhizoids", finalize(trimesh.util.concatenate(hy), hypha_color, 0.70)),
         ("sporangia", finalize(trimesh.util.concatenate(sp), sporangium_color, 0.62)),
         ("columellae", finalize(trimesh.util.concatenate(col), columella_color, 0.68)),
+    ]
+
+
+def _tube(p0, p1, r0, r1, seg=10):
+    """A closed tapered tube between two points."""
+    d = np.asarray(p1, float) - np.asarray(p0, float)
+    L = np.linalg.norm(d)
+    if L < 1e-6:
+        return None
+    t = np.linspace(0, 1, 6)
+    rad = r0 + (r1 - r0) * t
+    m = revolve(np.concatenate([[0.0], rad, [0.0]]),
+                np.concatenate([[0.0], -L * t, [-L]]), seg=seg)
+    d = d / L
+    axis = np.cross([0, 0, -1.0], d)
+    if np.linalg.norm(axis) > 1e-9:
+        ang = np.arccos(np.clip(np.dot([0, 0, -1.0], d), -1, 1))
+        m.apply_transform(trimesh.transformations.rotation_matrix(ang, axis))
+    m.apply_translation(p0)
+    return m
+
+
+def conidial_mycelium(hypha_color, conidia_color, perithecium_color, seed=14,
+                      chain=5, branch_angle=42.0, include_perithecium=True):
+    """
+    Neurospora: septate branching mycelium carrying chains of macroconidia at the
+    hyphal tips -- the masses of orange conidia are what a colony actually looks
+    like, and what the oncom cake is permeated with. A perithecium is included
+    because the wild type is homothallic-fertile and forms them; the food form
+    does not.
+    """
+    rng = np.random.default_rng(seed)
+    hy, sep, con = [], [], []
+
+    def grow(origin, d, length, radius, depth):
+        if depth > 2 or length < 0.22:
+            return
+        d = np.asarray(d, float); d /= np.linalg.norm(d)
+        end = np.asarray(origin, float) + d * length
+        t = _tube(origin, end, radius, radius * 0.88)
+        if t is not None:
+            hy.append(t)
+        for i in range(1, max(int(length / 0.36), 1) + 1):      # septa
+            f = i / (max(int(length / 0.36), 1) + 1)
+            ring = revolve(np.concatenate([[0.0], [radius * 1.25] * 3, [0.0]]),
+                           np.array([0.0, 0.0, -0.012, -0.024, -0.024]), seg=10)
+            axis = np.cross([0, 0, -1.0], d)
+            if np.linalg.norm(axis) > 1e-9:
+                ring.apply_transform(trimesh.transformations.rotation_matrix(
+                    np.arccos(np.clip(np.dot([0, 0, -1.0], d), -1, 1)), axis))
+            ring.apply_translation(np.asarray(origin, float) + d * (length * f))
+            sep.append(ring)
+
+        ref = np.array([0.0, 0.0, 1.0])
+        if abs(np.dot(ref, d)) > 0.95:
+            ref = np.array([1.0, 0.0, 0.0])
+        u = np.cross(d, ref); u /= np.linalg.norm(u)
+        v = np.cross(d, u)
+        for _ in range(2 if depth < 2 else 1):
+            roll = rng.uniform(0, TAU)
+            th = np.radians(branch_angle * rng.uniform(0.8, 1.2))
+            nd = np.cos(th) * d + np.sin(th) * (np.cos(roll) * u + np.sin(roll) * v)
+            grow(np.asarray(origin, float) + d * (length * rng.uniform(0.5, 0.85)),
+                 nd, length * 0.62, radius * 0.85, depth + 1)
+
+        if depth >= 1:                                   # chains of macroconidia
+            for j in range(chain):
+                c = trimesh.creation.icosphere(subdivisions=1, radius=radius * 1.9)
+                c.apply_transform(np.diag([1.35, 1.0, 1.0, 1.0]))
+                c.apply_translation(end + d * (radius * 3.1 * j + radius * 2.0)
+                                    + (rng.random(3) - 0.5) * radius * 0.5)
+                con.append(c)
+        grow(end, d, length * 0.7, radius * 0.88, depth + 1)
+
+    for i in range(3):
+        a = TAU * i / 3 + 0.5
+        grow([0, 0, 0], [np.cos(a), np.sin(a), rng.uniform(-0.2, 0.5)], 1.0, 0.055, 0)
+
+    # Perithecium: a flask, globose below and drawn out into an ostiolar neck.
+    t = np.linspace(0, 1, 22)
+    pr = 0.34 * np.sin(np.pi * (0.06 + 0.80 * t)) ** 0.75 * (1 - 0.72 * np.clip((t - 0.62) / 0.38, 0, 1))
+    pz = 0.62 * t
+    per = revolve(np.concatenate([[0.0], pr, [0.0]]),
+                  np.concatenate([[0.0], pz, [pz[-1]]]), seg=28)
+    per.apply_translation([0.85, -0.55, 0.0])
+
+    parts = [
+        ("hyphal_filaments", finalize(trimesh.util.concatenate(hy), hypha_color, 0.66)),
+        ("septa_cross_walls", finalize(trimesh.util.concatenate(sep), hypha_color, 0.70)),
+        ("macroconidia", finalize(trimesh.util.concatenate(con), conidia_color, 0.55)),
+    ]
+    if include_perithecium:
+        parts.append(("perithecium", finalize(per, perithecium_color, 0.60)))
+    return parts
+
+
+def branched_conidiophore(hypha_color, phialide_color, conidia_color, seed=16):
+    """
+    Trichoderma: a repeatedly branched conidiophore carrying WHORLS of flask-
+    shaped phialides, with conidia held in slimy heads at their tips. There is no
+    vesicle -- that is Aspergillus -- and the pyramidal, verticillate branching
+    is what distinguishes the genus.
+    """
+    rng = np.random.default_rng(seed)
+    hy, ph, con = [], [], []
+    H = 1.55
+    hy.append(_tube([0, 0, 0], [0, 0, H], 0.075, 0.048, seg=14))
+
+    levels = [(0.30, 1.05), (0.50, 0.86), (0.70, 0.62), (0.88, 0.36)]
+    for f, reach in levels:
+        z = H * f
+        n_br = 3
+        for b in range(n_br):
+            a = TAU * b / n_br + f * 2.1
+            tip = np.array([reach * np.cos(a), reach * np.sin(a), z + reach * 0.55])
+            hy.append(_tube([0, 0, z], tip, 0.040, 0.028, seg=10))
+            # a whorl of phialides at each branch tip
+            for k in range(3):
+                pa = TAU * k / 3 + rng.uniform(-0.2, 0.2)
+                d = np.array([np.cos(a) * 0.45 + np.cos(pa) * 0.55,
+                              np.sin(a) * 0.45 + np.sin(pa) * 0.55, 0.62])
+                d /= np.linalg.norm(d)
+                L = 0.20
+                pt = revolve(np.concatenate([[0.0], [0.030, 0.034, 0.026, 0.014], [0.0]]),
+                             np.concatenate([[0.0], -L * np.linspace(0.12, 1.0, 4), [-L]]), seg=8)
+                axis = np.cross([0, 0, -1.0], d)
+                if np.linalg.norm(axis) > 1e-9:
+                    pt.apply_transform(trimesh.transformations.rotation_matrix(
+                        np.arccos(np.clip(np.dot([0, 0, -1.0], d), -1, 1)), axis))
+                pt.apply_translation(tip)
+                ph.append(pt)
+                head = trimesh.creation.icosphere(subdivisions=1, radius=0.055)
+                head.apply_translation(tip + d * (L + 0.035))
+                con.append(head)
+    return [
+        ("conidiophore_stipe", finalize(trimesh.util.concatenate([h for h in hy if h is not None]),
+                                        hypha_color, 0.68)),
+        ("phialide_whorls", finalize(trimesh.util.concatenate(ph), phialide_color, 0.64)),
+        ("conidial_heads", finalize(trimesh.util.concatenate(con), conidia_color, 0.52)),
     ]

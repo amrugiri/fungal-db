@@ -10,6 +10,7 @@ the cut face. `verify_and_export` refuses to write a file that would break it.
 Output is Z-up (trimesh convention); the viewer rotates it to Y-up on load.
 """
 import argparse
+import json
 import os
 import sys
 
@@ -20,7 +21,7 @@ from trimesh.visual.material import PBRMaterial
 TAU = np.pi * 2
 
 
-def revolve(profile_r, profile_z, seg=96, warp=None):
+def revolve(profile_r, profile_z, seg=96, warp=None, loop=False):
     """
     Revolve a 2D profile (r, z) about the z-axis into a closed surface.
 
@@ -32,6 +33,11 @@ def revolve(profile_r, profile_z, seg=96, warp=None):
     A profile that runs up the outside and back down the inside, meeting itself
     at the base, revolves into a closed *hollow* shell -- which is how the
     genuinely hollow species (morels) get an interior worth sectioning.
+
+    `loop=True` treats the profile as a closed cross-section outline that never
+    touches the axis (a ring), joining the last point back to the first. Without
+    it you would have to repeat the first point, which leaves duplicate vertices
+    at the seam and the mesh is no longer watertight.
 
     `warp(j, theta) -> (dr, dz)` optionally breaks the rotational symmetry,
     displacing profile point j at angle theta. Use it for pits, ridges and
@@ -70,9 +76,10 @@ def revolve(profile_r, profile_z, seg=96, warp=None):
         i2 = (i + 1) % seg
         if pole_start:
             faces.append([0, vid(i, 0), vid(i2, 0)])
-        for k in range(nring - 1):
-            a_, b_ = vid(i, k), vid(i, k + 1)
-            c_, d_ = vid(i2, k), vid(i2, k + 1)
+        for k in range(nring if loop else nring - 1):
+            k2 = (k + 1) % nring
+            a_, b_ = vid(i, k), vid(i, k2)
+            c_, d_ = vid(i2, k), vid(i2, k2)
             faces.append([a_, b_, d_])
             faces.append([a_, d_, c_])
         if pole_end:
@@ -284,7 +291,7 @@ def write_glb(parts, out_path):
           f"{round(os.path.getsize(out_path) / 1024, 1)} KB")
 
 
-def verify_and_export(parts, default_name):
+def verify_and_export(parts, default_name, vertex_colours=False):
     """
     Check every part is closed, then assemble and export a .glb.
 
@@ -301,3 +308,109 @@ def verify_and_export(parts, default_name):
         sys.exit(f"\nRefusing to export: {', '.join(failed)} not closed. "
                  "The viewer's stencil cross-section needs watertight parts.")
     write_glb(parts, args.out)
+    if vertex_colours:
+        rough = {n: m.metadata.get("roughness", 0.85) for n, m in parts}
+        patch_glb_material(args.out, roughness_by_node=rough)
+
+
+def annulus_skirt(stipe_r, outer_r, z, thickness, seg=64):
+    """
+    A membranous annulus: a skirt that flares off the stipe and droops, which is
+    what a ruptured partial veil actually leaves behind. A torus reads as a hoop
+    threaded onto the stem and sits oddly against the rest of the anatomy.
+
+    The profile is a closed cross-section outline (no point on the axis), so the
+    first point is repeated at the end to close the loop before revolving.
+    """
+    flare = max(outer_r - stipe_r, 1e-4)
+    droop = flare * 0.85
+    mid = stipe_r + flare * 0.45
+    pts = [
+        (stipe_r * 0.99, z + thickness * 1.5),      # collar, hugging the stipe
+        (mid,            z + thickness * 0.35),     # upper surface, flaring out
+        (outer_r,        z - droop * 0.75),         # margin, hanging down
+        (outer_r * 0.985, z - droop * 0.75 - thickness),
+        (mid,            z - droop * 0.18 - thickness),   # underside
+        (stipe_r * 1.01, z - thickness * 0.5),
+    ]
+    return revolve([p[0] for p in pts], [p[1] for p in pts], seg=seg, loop=True)
+
+
+def patch_glb_material(path, roughness=0.85, roughness_by_node=None,
+                       base_color=(1, 1, 1, 1), metallic=0.0):
+    """
+    Give the primitives in a .glb PBR materials, one per distinct roughness.
+
+    trimesh writes COLOR_0 when a mesh carries vertex colours but emits no
+    material at all, so the file falls back to the glTF default -- metallicFactor
+    1.0, which renders as dark metal.
+
+    `roughness_by_node` keeps per-part surface character that a single shared
+    material would flatten: Ganoderma's varnished crust against its matte pore
+    layer, nameko's viscid pileus against its dry stipe.
+    """
+    import struct
+
+    with open(path, "rb") as fh:
+        data = fh.read()
+    assert data[:4] == b"glTF", "not a binary glTF"
+    json_len = struct.unpack("<I", data[12:16])[0]
+    doc = json.loads(data[20:20 + json_len].decode("utf-8"))
+    rest = data[20 + json_len:]
+
+    node_of_mesh = {}
+    for node in doc.get("nodes", []):
+        if "mesh" in node:
+            node_of_mesh[node["mesh"]] = node.get("name", "")
+
+    materials, index_of = [], {}
+    for mi, mesh in enumerate(doc.get("meshes", [])):
+        r = (roughness_by_node or {}).get(node_of_mesh.get(mi, ""), roughness)
+        if r not in index_of:
+            index_of[r] = len(materials)
+            materials.append({
+                "pbrMetallicRoughness": {
+                    "baseColorFactor": list(base_color),
+                    "roughnessFactor": float(r),
+                    "metallicFactor": metallic,
+                },
+                "doubleSided": False,
+            })
+        for prim in mesh.get("primitives", []):
+            prim["material"] = index_of[r]
+    doc["materials"] = materials
+
+    blob = json.dumps(doc, separators=(",", ":")).encode("utf-8")
+    blob += b" " * ((4 - len(blob) % 4) % 4)
+    out = b"glTF" + struct.pack("<II", 2, 12 + 8 + len(blob) + len(rest))
+    out += struct.pack("<I", len(blob)) + b"JSON" + blob + rest
+    with open(path, "wb") as fh:
+        fh.write(out)
+
+
+def hex_rgb(h):
+    """sRGB 0-1 triple from a hex string, for vertex-colour work."""
+    h = h.lstrip("#")
+    return np.array([int(h[i:i + 2], 16) / 255.0 for i in (0, 2, 4)])
+
+
+def shade_vertices(mesh, fn):
+    """
+    Paint a mesh per-vertex. `fn(V)` takes an (N,3) vertex array and returns
+    (N,3) sRGB in 0-1.
+
+    Colour written straight as sRGB bytes: three.js converts COLOR_0 from sRGB
+    on load, so linear values (what srgb() produces for baseColorFactor) come
+    out darker than specified. Any species using this needs its .glb passed
+    through patch_glb_material afterwards, because trimesh emits COLOR_0 with
+    no material at all.
+    """
+    prior = getattr(getattr(mesh.visual, "material", None), "roughnessFactor", None)
+    if prior is not None:
+        mesh.metadata["roughness"] = float(prior)
+    rgb = np.clip(np.asarray(fn(np.asarray(mesh.vertices)), dtype=float), 0.0, 1.0)
+    cols = np.zeros((len(mesh.vertices), 4), dtype=np.uint8)
+    cols[:, :3] = np.round(rgb * 255).astype(np.uint8)
+    cols[:, 3] = 255
+    mesh.visual = trimesh.visual.ColorVisuals(mesh=mesh, vertex_colors=cols)
+    return mesh

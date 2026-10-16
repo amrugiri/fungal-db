@@ -181,6 +181,22 @@ const EXANNULATE_GILLED_FEATURES: MorphologyFeature[] = [
   { id: 5, title: "Mycelial Threads (Hyphae)", position: [0.22, -0.02, 0.2] },
 ];
 
+const NEUROSPORA_FEATURES: MorphologyFeature[] = [
+  { id: 1, title: "Macroconidial Chains", position: [0.36, 0.68, 0.14] },
+  { id: 2, title: "Septate Hyphae", position: [0.16, 0.5, 0.16] },
+  { id: 3, title: "Branching Mycelium", position: [-0.3, 0.34, 0.12] },
+  { id: 4, title: "Hyphal Tip", position: [0.28, 0.22, 0.1] },
+  { id: 5, title: "Cross-Wall (Septum)", position: [-0.1, 0.2, 0.14] },
+];
+
+const TRICHODERMA_FEATURES: MorphologyFeature[] = [
+  { id: 1, title: "Conidial Heads", position: [0.34, 0.76, 0.12] },
+  { id: 2, title: "Phialide Whorls", position: [0.26, 0.58, 0.16] },
+  { id: 3, title: "Branched Conidiophore", position: [-0.26, 0.44, 0.12] },
+  { id: 4, title: "Main Stipe", position: [0.06, 0.24, 0.14] },
+  { id: 5, title: "No Vesicle (cf. Aspergillus)", position: [0.4, 0.34, 0.06] },
+];
+
 export const speciesMorphologyConfig: Record<string, SpeciesMorphologyConfig> = {
   "agaricus-bisporus": {
     description:
@@ -255,23 +271,23 @@ export const speciesMorphologyConfig: Record<string, SpeciesMorphologyConfig> = 
   },
   "aspergillus-oryzae": {
     description:
-      "Koji mold mycelium — septate hyphae with characteristic conidial heads (not shown) used to saccharify starches in miso, sake, and soy sauce.",
-    features: MICROSCOPY_FEATURES,
+      "Rice koji — large yellow-green aspergillum: tall stipe, broad vesicle, long bright conidial chains. Distinct from the compact brown A. sojae head.",
+    features: CONIDIAL_HEAD_FEATURES,
   },
   "rhizopus-oligosporus": {
     description:
       "Tempeh mold — fast-growing rhizoidal mycelium that binds soybean cotyledons into a cohesive fermented cake.",
-    features: MICROSCOPY_FEATURES,
+    features: SPORANGIUM_FEATURES,
   },
   "neurospora-intermedia": {
     description:
       "Oncom mold — orange-pigmented Neurospora mycelium fermenting peanut or okara press cake in West Javanese tradition.",
-    features: MICROSCOPY_FEATURES,
+    features: NEUROSPORA_FEATURES,
   },
   "trichoderma-reesei": {
     description:
       "Industrial cellulase producer — highly branched septate hyphae used for enzyme manufacturing, not direct food biomass.",
-    features: MICROSCOPY_FEATURES,
+    features: TRICHODERMA_FEATURES,
   },
   "ustilago-maydis": {
     description:
@@ -363,7 +379,7 @@ export const speciesMorphologyConfig: Record<string, SpeciesMorphologyConfig> = 
   },
   "aspergillus-sojae": {
     description:
-      "Koji mold — filamentous aspergilli used to ferment soy; microscopy view of branching septate hyphae.",
+      "Soy koji — compact brown-olive aspergillum: shorter stipe, smaller vesicle, dark conidial chains. Distinct from the larger yellow-green A. oryzae head.",
     features: CONIDIAL_HEAD_FEATURES,
   },
   "rhizopus-oryzae": {
@@ -387,6 +403,70 @@ export const speciesMorphologyConfig: Record<string, SpeciesMorphologyConfig> = 
       "Almond mushroom — robust brown-capped agaric on thick stipe; compost-cultivated like button mushrooms.",
     features: GILLED_MUSHROOM_FEATURES,
     detailedGilledModel: true,
+  },
+  "pleurotus-pulmonarius": {
+    description:
+      "Phoenix oyster — pale cream to tan shelves with eccentric stipe and decurrent gills; warmer-weather oyster used as shredded meat analog.",
+    features: OYSTER_FEATURES,
+  },
+  "fusarium-sp-flavolapis": {
+    description:
+      "Fusarium strain flavolapis — septate branching mycelium of the Fy Protein organism. Same genus body plan as F. venenatum (canoe-shaped macroconidia in culture). Not Paecilomyces.",
+    features: MICROSCOPY_FEATURES,
+  },
+  "paecilomyces-variotii": {
+    description:
+      "Paecilomyces variotii (Pekilo) — irregularly branched conidiophores with elongated tapering phialides and chains of conidia. No vesicle (unlike Aspergillus) and no Fusarium-type macroconidia.",
+    features: [
+      { id: 1, title: "Conidial Chains", position: [0.4, 0.58, 0.13] },
+      { id: 2, title: "Tapering Phialides", position: [0.34, 0.46, 0.1] },
+      { id: 3, title: "Branched Conidiophore", position: [0.2, 0.32, 0.06] },
+      { id: 4, title: "Main Stipe", position: [0.06, -0.2, 0.04] },
+      { id: 5, title: "No Vesicle / Not Fusarium Macroconidia", position: [0.08, 0.16, 0.04] },
+    ],
+  },
+  "cyberlindnera-jadinii": {
+    description:
+      "Unicellular budding yeast (torula / Candida utilis). No hyphae — ovoid mother cells with smaller daughter buds. Schematic of the food organism, not a filamentous mould.",
+    features: [
+      { id: 1, title: "Mother Cell", position: [0.02, 0.02, 0.08] },
+      { id: 2, title: "Daughter Bud", position: [0.16, 0.24, 0.06] },
+      { id: 3, title: "Bud Neck", position: [0.1, 0.14, 0.04] },
+      { id: 4, title: "Cell Cluster", position: [-0.28, 0.08, -0.08] },
+      { id: 5, title: "No Hyphae", position: [0.36, 0.28, 0.02] },
+    ],
+  },
+  "tuber-borchii": {
+    description:
+      "Ectomycorrhizal mycelium schematic — septate branching hyphae. Published alt-protein work on this species is axenic mycelium aroma, not a fruiting-body model.",
+    features: MICROSCOPY_FEATURES,
+  },
+  "cantharellus-cibarius": {
+    description:
+      "Chanterelle — funnel pileus with a wavy margin, continuous with a downward-tapering stipe. Blunt forked ridges (false gills), not true lamellae.",
+    features: [
+      { id: 1, title: "Funnel Pileus", position: [0.42, 0.55, 0.06] },
+      { id: 2, title: "Ridges (False Gills)", position: [0.34, 0.22, 0.14] },
+      { id: 3, title: "Solid Stipe", position: [0.12, -0.15, 0.1] },
+      { id: 4, title: "Forked Ridges", position: [0.38, 0.36, 0.12] },
+      { id: 5, title: "Depressed Centre", position: [0.08, 0.48, 0.04] },
+    ],
+  },
+  "tricholoma-matsutake": {
+    description:
+      "Matsutake — convex pileus, true gills, thick fibrous stipe. No species-specific mesh; schematic gilled agaric only, not a scan.",
+    features: EXANNULATE_GILLED_FEATURES,
+  },
+  "aspergillus-niger": {
+    description:
+      "Black aspergillum: unbranched stipe, globose vesicle, phialides, dark conidia. Same body plan as koji, but not a yellow-green A. oryzae / A. sojae mesh.",
+    features: [
+      { id: 1, title: "Conidial Chains", position: [0.22, 0.52, 0.12] },
+      { id: 2, title: "Phialides", position: [0.16, 0.42, 0.1] },
+      { id: 3, title: "Vesicle (Swollen Apex)", position: [0.12, 0.36, 0.08] },
+      { id: 4, title: "Conidiophore Stipe", position: [0.06, 0.0, 0.06] },
+      { id: 5, title: "Foot Cell", position: [0.1, -0.48, 0.06] },
+    ],
   },
 };
 

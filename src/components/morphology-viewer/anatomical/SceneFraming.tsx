@@ -7,7 +7,13 @@ import * as THREE from "three";
 
 export const CAMERA_DISTANCE = 2.65;
 export const MODEL_OFFSET_Y = -0.1;
-export const FOCAL_BIAS_Y = 0.05;
+/**
+ * Headroom around the fitted specimen: 1.0 would touch the frame edges. It has
+ * to leave room for the annotation labels too, which are HTML drawn outward
+ * from their anchors -- fit too tightly and the label text clips off the right
+ * edge of the canvas.
+ */
+export const FIT_MARGIN = 1.5;
 
 export const VIEW_PRESET_OFFSETS: readonly (readonly [number, number, number])[] = [
   [0, 0, CAMERA_DISTANCE],
@@ -64,7 +70,12 @@ export function SceneFraming({
     group.updateWorldMatrix(true, true);
     group.traverse((o) => {
       const mesh = o as THREE.Mesh;
-      if (!mesh.isMesh || mesh.userData.noFrame) return;
+      if (!mesh.isMesh) return;
+      // Walk up: a flag on an annotation group has to exclude everything under
+      // it, since the leader line is a separate object from the marker.
+      for (let n: THREE.Object3D | null = o; n; n = n.parent) {
+        if (n.userData?.noFrame) return;
+      }
       if (!mesh.geometry.boundingBox) mesh.geometry.computeBoundingBox();
       b.copy(mesh.geometry.boundingBox!).applyMatrix4(mesh.matrixWorld);
       box.union(b);
@@ -78,19 +89,38 @@ export function SceneFraming({
 
     const center = new THREE.Vector3();
     box.getCenter(center);
-    center.y += FOCAL_BIAS_Y;
     focalPoint.current.copy(center);
 
-    const offset =
+    // Fit the specimen to the viewport instead of parking the camera at a fixed
+    // distance. A fixed distance frames whatever happens to be 1.15 units across
+    // — so a tall narrow enoki filled the frame while a wide, shallow Agaricus
+    // used barely half its height, and neither sat centred.
+    const size = box.getSize(new THREE.Vector3());
+    const cam = camera as THREE.PerspectiveCamera;
+    const vFov = THREE.MathUtils.degToRad(cam.fov);
+    const fitHeight = size.y / (2 * Math.tan(vFov / 2));
+    const fitWidth =
+      Math.max(size.x, size.z) / (2 * Math.tan(vFov / 2) * Math.max(cam.aspect, 0.001));
+    const dist = Math.max(fitHeight, fitWidth, 0.01) * FIT_MARGIN;
+
+    const raw =
       offsetOverride ?? VIEW_PRESET_OFFSETS[presetIndex] ?? VIEW_PRESET_OFFSETS[0]!;
-    camera.position.set(center.x + offset[0], center.y + offset[1], center.z + offset[2]);
+    const dir = new THREE.Vector3(raw[0], raw[1], raw[2]);
+    if (dir.lengthSq() < 1e-9) dir.set(0, 0, 1);
+    dir.normalize().multiplyScalar(dist);
+
+    camera.position.copy(center).add(dir);
     camera.lookAt(center);
 
     if (controlsRef.current) {
       controlsRef.current.target.copy(center);
+      // Zoom limits have to follow the fitted distance too, or a large specimen
+      // cannot be pulled back from and a small one cannot be approached.
+      controlsRef.current.minDistance = dist * 0.30;
+      controlsRef.current.maxDistance = dist * 3.0;
       controlsRef.current.update();
     }
-    framedSize.current = box.getSize(new THREE.Vector3()).length();
+    framedSize.current = size.length();
     return true;
   }, [camera, controlsRef, measure, presetIndex, offsetOverride]);
 

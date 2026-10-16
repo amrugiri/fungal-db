@@ -1,0 +1,133 @@
+{
+  "species": {
+    "slug": "cyberlindnera-jadinii",
+    "genus": "Cyberlindnera",
+    "speciesEpithet": "jadinii",
+    "scientificName": "Cyberlindnera jadinii",
+    "commonNames": [
+      "torula yeast",
+      "Candida utilis",
+      "fodder yeast"
+    ],
+    "synonyms": ["Candida utilis", "Torula utilis", "Pichia jadinii"],
+    "ncbiTaxonomyId": "4903",
+    "taxonomy": {
+      "kingdom": "Fungi",
+      "phylum": "Ascomycota",
+      "class": "Saccharomycetes",
+      "order": "Saccharomycetales",
+      "family": "Phaffomycetaceae",
+      "genus": "Cyberlindnera"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 5,
+        "savory": 4,
+        "neutral": 2
+      },
+      "textureAxes": {
+        "powdery": 4,
+        "creamy": 2,
+        "meat_like": 1
+      },
+      "aromaNotes": "Toasty, savory nutritional-yeast character when dried; used as a flavor and protein powder rather than a fibrous analog",
+      "meatAnalogPotential": "low",
+      "meatAnalogRationale": "Important food and feed single-cell protein and flavoring (torula), but it is a yeast powder, not a fibrous hyphal meat analog.",
+      "preparationContext": "Spray-dried or inactivated yeast biomass; also autolysates for savory flavor",
+      "confidenceNotes": "Long food-use history as torula / Candida utilis; meat-analog score is low by design.",
+      "citationKeys": ["buerth2016_jadinii"]
+    },
+    "morphology": {
+      "hyphalType": "unknown",
+      "cellWallComposition": "Beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "Unicellular budding yeast; no mushroom fruiting body",
+      "sporeCharacteristics": "Asci in the sexual state (Pichia/Cyberlindnera); food form is vegetative yeast",
+      "microscopyNotes": "Budding yeast cells; the food organism is the anamorph long known as Candida utilis"
+    },
+    "nutrition": {
+      "proteinPercent": 47,
+      "fiberPercent": 8,
+      "fatPercent": 6,
+      "moisturePercent": 6,
+      "aminoAcidBasis": "percent_of_protein",
+      "limitingAminoAcids": "Sulfur amino acids (typical of yeast SCP)",
+      "preparationContext": "Dried torula / C. utilis biomass used as food yeast",
+      "confidenceNotes": "Protein in the mid-40s % of dry matter is typical of food yeasts; confirm lot specs.",
+      "citationKeys": ["buerth2016_jadinii"]
+    },
+    "geographic": {
+      "nativeRange": "Environmental and industrial isolates",
+      "cultivatedRegions": "Global food-yeast and feed-yeast fermentation",
+      "habitat": "Saprotrophic ascomycete yeast; grown on molasses, wood sugars, or other residual carbon"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "9950",
+        "catalogUrl": "https://www.atcc.org/products/9950",
+        "availabilityNotes": "Widely used Candida utilis / C. jadinii type material — verify the current catalog listing."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/be/Cyberlindnera_jadinii.png",
+        "caption": "Cyberlindnera jadinii: budding cells (A–B) and cream colonies (C–D)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "microscopy",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Cyberlindnera_jadinii.png"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": false,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Torula / Candida utilis is a longstanding food yeast: savory flavor, inactive nutritional yeast, and feed protein. Relevant as an SCP benchmark next to filamentous mycoprotein.",
+      "companies": [
+        {
+          "name": "Food-yeast manufacturers (torula / inactive yeast)",
+          "region": "Global"
+        }
+      ],
+      "productionProcess": [
+        {
+          "title": "Aerobic yeast fermentation",
+          "description": "Grown on sugars or lignocellulosic hydrolysates, then inactivated and dried."
+        }
+      ],
+      "confidenceNotes": "Established food ingredient; not a fibrous meat analog.",
+      "citationKeys": ["buerth2016_jadinii"]
+    },
+    "morphology3D": {
+      "visualizationStyle": "microscopy",
+      "stainColor": "#c4a35a",
+      "backgroundColor": "#f4f1ea",
+      "hyphaeBranchAngle": 20,
+      "hyphaeThickness": 0.03,
+      "hyphaeColor": "#e8dcc8",
+      "hyphaeDensity": 6,
+      "fruitingBodyType": "none",
+      "capDiameter": 0,
+      "stipeLength": 0,
+      "capColor": "#e8dcc8",
+      "showMycelium": true,
+      "showFruitingBody": false
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "approved_safe",
+      "notes": "Torula / Candida utilis has a long history of use as food yeast and flavoring. Confirm the current listing for a specific strain or autolysate."
+    },
+    "speciesCitationKeys": ["buerth2016_jadinii", "ncbi_taxonomy"]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Cyberlindnera jadinii (Candida utilis): a yeast of biotechnological interest for food and feed protein",
+      "authors": "Buerth, Tielker & Ernst",
+      "journal": "Applied Microbiology and Biotechnology",
+      "year": 2016,
+      "doi": "10.1007/s00253-016-7782-3",
+      "summary": "Reviews C. jadinii as a food and feed protein organism and the taxonomic move from Candida utilis.",
+      "publishedAt": "2016-01-01"
+    }
+  ]
+}

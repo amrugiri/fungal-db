@@ -935,7 +935,7 @@ export const foodSpeciesBatch: FoodSpeciesBatchEntry[] = [
         authors: "Wösten et al.",
         journal: "Frontiers in Sustainable Food Systems",
         year: 2021,
-        doi: "10.3389/fsufs.2021.732685",
+        doi: "10.1016/j.fbr.2025.100431",
         summary:
           "Reviews cultivation, composition, and meat-analog potential of S. commune mycoprotein — key alt-protein citation.",
         publishedAt: "2021-01-01",

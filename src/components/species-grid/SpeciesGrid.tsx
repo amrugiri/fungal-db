@@ -11,7 +11,6 @@ import {
   useReactTable,
   type SortingState,
 } from "@tanstack/react-table";
-import { ScientificName } from "@/components/species/ScientificName";
 import { ThemedSelect } from "@/components/ui/ThemedSelect";
 import { formatEnumLabel, formatTagLabel } from "@/lib/format";
 import { parseCommonNames } from "@/lib/types";
@@ -205,17 +204,13 @@ export function SpeciesGrid({ data, initialSearch = "" }: SpeciesGridProps) {
             href={`/species/${info.row.original.slug}`}
             className="font-sans text-base font-extrabold text-sage hover:text-berry hover:underline"
           >
-            <ScientificName
-              genus={info.row.original.genus}
-              scientificName={info.getValue()}
-              className="font-extrabold"
-            />
+            {info.getValue()}
           </Link>
         ),
       }),
       columnHelper.accessor("genus", {
         header: "Genus",
-        cell: (info) => <em>{info.getValue()}</em>,
+        cell: (info) => info.getValue(),
       }),
       columnHelper.accessor((row) => parseCommonNames(row.commonNames).join(" · "), {
         id: "commonName",

@@ -19,7 +19,9 @@ const MODEL_ORDER = 3;
 
 /** Sagittal slider travel — a little wider than the model so the cut can clear it. */
 export function glbSectionRange(model: SpeciesMorphologyModel): number {
-  return (model.targetSize ?? DEFAULT_TARGET_SIZE) * 1.2;
+  // Prefer the per-species measured extent; the generic fallback is generous
+  // enough for any model but leaves dead travel on tall narrow specimens.
+  return model.sectionRange ?? (model.targetSize ?? DEFAULT_TARGET_SIZE) * 1.2;
 }
 
 /**

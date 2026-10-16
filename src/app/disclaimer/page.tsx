@@ -24,7 +24,7 @@ export default function DisclaimerPage() {
           3D models are schematic representations, not anatomically exact reconstructions.
         </p>
         <p className="text-muted">
-          Last updated: July 2026. For curation questions, see the admin interface and{" "}
+          Last updated: October 2026. For curation questions, see the admin interface and{" "}
           <code>docs/CURATION_GUIDE.md</code>.
         </p>
       </div>

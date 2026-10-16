@@ -13,9 +13,17 @@ export function Footer() {
             Amrutha Girivasan
           </a>
         </p>
-        <Link href="/admin" className="font-sans text-sm hover:text-gold">
-          Admin
-        </Link>
+        <div className="flex gap-4">
+          <Link href="/contribute" className="font-sans text-sm hover:text-gold">
+            Contribute
+          </Link>
+          <Link href="/sensory-literature.html" className="font-sans text-sm hover:text-gold">
+            Sensory sources
+          </Link>
+          <Link href="/admin" className="font-sans text-sm hover:text-gold">
+            Admin
+          </Link>
+        </div>
       </div>
     </footer>
   );

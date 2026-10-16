@@ -14,7 +14,9 @@ Shared helpers (and the watertight requirement they enforce) live in mesh_kit.py
 import numpy as np
 import trimesh
 
-from mesh_kit import TAU, revolve, finalize, srgb, verify_and_export
+from mesh_kit import (TAU, revolve, annulus_skirt, finalize, srgb,
+                      shade_vertices, verify_and_export)
+import shaders as sh
 
 # ---- shape parameters ------------------------------------------------------
 # Change these and re-run to get a different gilled species' base model.
@@ -107,17 +109,16 @@ gills = finalize(
 )
 
 # ---- 4. ANNULUS: ring on the upper stipe -----------------------------------
-ring = trimesh.creation.torus(major_radius=0.34, minor_radius=0.045,
-                              major_sections=64, minor_sections=16)
-ring.apply_translation([0, 0, -0.06])
-ring = finalize(ring, RING_COLOR, 0.9)
+# A drooping membranous skirt rather than a hoop threaded on the stipe.
+ring = finalize(annulus_skirt(0.30, 0.46, -0.06, 0.030), RING_COLOR, 0.9)
 
-verify_and_export(
-    [
-        ("pileus_cap", cap),
-        ("stipe_stem", stem),
-        ("lamellae_gills", gills),
-        ("annulus_ring", ring),
-    ],
-    "agaricus-bisporus.glb",
-)
+# Per-vertex colour: a button mushroom's pileus is faintly darker over the disc
+# and finely fibrillose, and the gills darken as the spores mature.
+SHADED = [
+    ("pileus_cap", shade_vertices(cap, sh.radial("#b9a68c", "#f2ece0", power=1.8, streak=0.04, k=26))),
+    ("stipe_stem", shade_vertices(stem, sh.fibrillose("#f3ede2", "#e2dacb", soil="#cfc3ad", soil_below=-0.55))),
+    ("lamellae_gills", shade_vertices(gills, sh.radial("#7a4f47", "#c9a29b", power=1.0))),
+    ("annulus_ring", shade_vertices(ring, sh.flat("#ede5d6", variation=0.06))),
+]
+
+verify_and_export(SHADED, "agaricus-bisporus.glb", vertex_colours=True)

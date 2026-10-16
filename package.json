@@ -12,6 +12,7 @@
     "db:reset": "prisma migrate reset --force",
     "species:scaffold": "tsx scripts/species-add.ts scaffold",
     "species:add": "tsx scripts/species-add.ts add",
+    "monthly:scan": "tsx scripts/monthly-literature-scan.ts",
     "postinstall": "prisma generate"
   },
   "prisma": {
@@ -26,6 +27,7 @@
     "better-sqlite3": "^12.11.1",
     "dotenv": "^17.4.2",
     "next": "16.2.10",
+    "nodemailer": "^10.1.2",
     "prisma": "^7.8.0",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -38,6 +40,7 @@
     "@tailwindcss/postcss": "^4",
     "@types/better-sqlite3": "^7.6.13",
     "@types/node": "^20",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/three": "^0.185.0",

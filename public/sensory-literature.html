@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sensory literature review — MycoProt</title>
+  <style>
+    :root {
+      --cream: #fff8ee;
+      --truffle: #1a1210;
+      --gold: #e6b84a;
+      --muted: #5a4a42;
+      --border: #e8d9c0;
+      --surface: #ffffff;
+    }
+    body {
+      margin: 0;
+      background: var(--cream);
+      color: var(--truffle);
+      font: 16px/1.5 system-ui, sans-serif;
+    }
+    main { max-width: 920px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    h1 { font-size: 1.75rem; margin: 0 0 0.5rem; }
+    h2 { font-size: 1.25rem; margin: 2rem 0 0.75rem; }
+    h3 { font-size: 1.05rem; margin: 1.5rem 0 0.5rem; }
+    p, li { color: var(--truffle); }
+    .muted { color: var(--muted); }
+    a { color: #1d4ed8; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem 0;
+    }
+    .bar-row { display: flex; align-items: center; gap: 0.75rem; margin: 0.6rem 0; }
+    .bar-label { width: 5.5rem; font-size: 0.9rem; }
+    .bar-track {
+      flex: 1;
+      height: 12px;
+      background: #f5ebd8;
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .bar-fill { height: 100%; background: #2563eb; border-radius: 99px; }
+    .bar-value { width: 3rem; font-size: 0.9rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; padding: 0.55rem 0.4rem; }
+    th { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.03em; }
+    .yes { font-weight: 600; }
+    .no { color: var(--muted); }
+    code { font-size: 0.86em; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="muted"><a href="/">MycoProt</a> · Phat 2016 umami bars are now on the 12 catalogue species below</p>
+    <h1>Can 0–5 bars come from papers?</h1>
+    <p>
+      Yes, but only when a paper reports a named scale or a quantity we can rescale
+      with a written formula. HPLC concentrations, EUC, and “tastes umami” sentences
+      stay in the published-measurements table. They are not turned into earthy or
+      fibrous bars.
+    </p>
+
+    <div class="card">
+      <h2 style="margin-top:0">Rule for a bar</h2>
+      <ol>
+        <li>Open the paper. Confirm species, sample, and the scale.</li>
+        <li>Copy the number as published (keep the original unit in the measurements table).</li>
+        <li>If the scale is not 0–5, rescale with a formula shown on the page. Example: Phat 2016 uses 1–11, so <code>(score − 1) × 5 / 10</code>.</li>
+        <li>One axis per measurement. A paper that only scored umami does not fill texture.</li>
+        <li>Do not average papers or batches unless the paper does.</li>
+      </ol>
+    </div>
+
+    <h2>Example: <i>Pleurotus ostreatus</i></h2>
+    <p>
+      Live page:
+      <a href="/species/pleurotus-ostreatus">/species/pleurotus-ostreatus</a>.
+      Only the umami bar is filled. Texture stays empty.
+    </p>
+    <div class="card">
+      <p class="muted" style="margin-top:0">Proposed 0–5 (literature, not curator guess)</p>
+      <div class="bar-row">
+        <div class="bar-label">Umami</div>
+        <div class="bar-track"><div class="bar-fill" style="width:84%"></div></div>
+        <div class="bar-value">4.2</div>
+      </div>
+      <p>
+        <strong>Source.</strong>
+        Phat, Moon &amp; Lee (2016) Table 3. Ten trained panellists scored a 1% boiling-water
+        extract of freeze-dried Korean market oyster mushroom on an 11-point umami scale
+        (1 = very weak, 6 = medium, 11 = very strong). Mean <strong>9.33 ± 1.51</strong>.
+      </p>
+      <p>
+        <strong>Rescale.</strong> (9.33 − 1) × 5 / 10 = <strong>4.2</strong> on 0–5.
+      </p>
+      <p>
+        <strong>Same paper, not used as extra bars.</strong>
+        Table 2 EUC = 3890 ± 833 mg MSG/g dry weight (highest of 17). Electronic tongue
+        umami = 13.81 ± 0.21 (different instrument scale — not mixed into the 0–5 bar).
+      </p>
+      <p>
+        <a href="https://doi.org/10.1016/j.foodchem.2015.07.113">DOI 10.1016/j.foodchem.2015.07.113</a>
+        ·
+        <a href="https://pubmed.ncbi.nlm.nih.gov/26304449/">PubMed 26304449</a>
+      </p>
+    </div>
+
+    <h2>Phat 2016 — catalogue species (now on live pages)</h2>
+    <p>
+      Same paper, same 11-point human panel, same rescale as oyster. These umami bars are on the live species pages.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th>Species</th>
+          <th>Human umami (1–11)</th>
+          <th>Proposed 0–5</th>
+          <th>EUC (mg MSG/g DW)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><i>Pleurotus ostreatus</i></td><td>9.33</td><td class="yes">4.2 (live)</td><td>3890</td></tr>
+        <tr><td><i>Agaricus bisporus</i></td><td>8.60</td><td>3.8</td><td>2480</td></tr>
+        <tr><td><i>Grifola frondosa</i></td><td>5.60</td><td>2.3</td><td>226</td></tr>
+        <tr><td><i>Hericium erinaceus</i></td><td>4.83</td><td>1.9</td><td>1160</td></tr>
+        <tr><td><i>Hypsizygus marmoreus</i></td><td>4.80</td><td>1.9</td><td>1280</td></tr>
+        <tr><td><i>Pleurotus citrinopileatus</i></td><td>4.67</td><td>1.8</td><td>252</td></tr>
+        <tr><td><i>Pleurotus eryngii</i></td><td>4.40</td><td>1.7</td><td>532</td></tr>
+        <tr><td><i>Flammulina velutipes</i></td><td>4.00</td><td>1.5</td><td>480</td></tr>
+        <tr><td><i>Lentinula edodes</i></td><td>4.00</td><td>1.5</td><td>243</td></tr>
+        <tr><td><i>Sparassis crispa</i></td><td>3.60</td><td>1.3</td><td>40.4</td></tr>
+        <tr><td><i>Auricularia auricula-judae</i></td><td>2.46</td><td>0.7</td><td>1.51</td></tr>
+        <tr><td><i>Tremella fuciformis</i></td><td>2.42</td><td>0.7</td><td>8.88</td></tr>
+      </tbody>
+    </table>
+    <p class="muted">
+      <i>Pleurotus salmoneostramineus</i> in that table scored 6.00 (proposed 2.5).
+      That is often treated as pink oyster / <i>P. djamor</i> — do not assign until the synonym is confirmed.
+    </p>
+
+    <h2>All 42 species — papers found this pass</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Species</th>
+          <th>Paper (DOI / link)</th>
+          <th>What it actually reports</th>
+          <th>0–5 bar?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><i>Agaricus bisporus</i></td>
+          <td>
+            <a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a><br />
+            <a href="https://doi.org/10.1016/j.fct.2011.10.056">Reis 2012</a><br />
+            <a href="https://doi.org/10.1016/j.foodchem.2006.10.069">Tsai 2007</a>
+          </td>
+          <td>Human umami 8.60 / 11; sugars; maturity taste chemistry</td>
+          <td class="yes">Umami only (proposed 3.8)</td>
+        </tr>
+        <tr>
+          <td><i>Agaricus subrufescens</i> (<i>A. blazei</i>)</td>
+          <td><a href="https://doi.org/10.1016/j.foodchem.2013.08.006">Li 2014</a></td>
+          <td>Citric acid 113.13 mg/g; “highly strong umami” (abstract)</td>
+          <td class="no">Chemistry / rank only</td>
+        </tr>
+        <tr>
+          <td><i>Aspergillus niger</i></td>
+          <td><a href="https://doi.org/10.1007/s00253-002-1032-6">Schuster 2002</a></td>
+          <td>Safety review, not a food panel</td>
+          <td class="no">No food sensory scale</td>
+        </tr>
+        <tr>
+          <td><i>Aspergillus oryzae</i> / <i>sojae</i></td>
+          <td>Koji / soy-sauce product papers exist</td>
+          <td>Usually the fermented food, not the mold biomass</td>
+          <td class="no">Not copied this pass</td>
+        </tr>
+        <tr>
+          <td><i>Auricularia auricula-judae</i></td>
+          <td><a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a></td>
+          <td>Human umami 2.46 / 11; lowest EUC in that set</td>
+          <td class="yes">Umami only (proposed 0.7)</td>
+        </tr>
+        <tr>
+          <td><i>Calocybe indica</i></td>
+          <td>—</td>
+          <td>No panel or EUC table opened this pass</td>
+          <td class="no">Empty</td>
+        </tr>
+        <tr>
+          <td><i>Calvatia gigantea</i></td>
+          <td>—</td>
+          <td>No panel opened this pass</td>
+          <td class="no">Empty</td>
+        </tr>
+        <tr>
+          <td><i>Cantharellus cibarius</i></td>
+          <td>Aroma / volatile papers exist</td>
+          <td>GC-MS identifications, not 0–5 axes</td>
+          <td class="no">Not copied this pass</td>
+        </tr>
+        <tr>
+          <td><i>Coprinus comatus</i></td>
+          <td>
+            <a href="https://doi.org/10.1016/j.foodchem.2013.08.006">Li 2014</a><br />
+            <a href="https://doi.org/10.1615/intjmedmushr.v9.i1.60">Tsai / Mau 2007</a>
+          </td>
+          <td>5′-nucleotides 3.79 mg/g; fruit-body EUC 103.22 g/100 g</td>
+          <td class="no">EUC is not a 0–5 panel</td>
+        </tr>
+        <tr>
+          <td><i>Cordyceps militaris</i></td>
+          <td>—</td>
+          <td>Functional / cultivation papers; no food panel opened</td>
+          <td class="no">Empty</td>
+        </tr>
+        <tr>
+          <td><i>Cyberlindnera jadinii</i></td>
+          <td>—</td>
+          <td>Yeast / feed literature; no food panel opened</td>
+          <td class="no">Empty</td>
+        </tr>
+        <tr>
+          <td><i>Cyclocybe aegerita</i></td>
+          <td>
+            <a href="https://doi.org/10.1016/j.foodchem.2013.08.006">Li 2014</a> (<i>A. cylindracea</i>)<br />
+            <a href="https://doi.org/10.1080/10942912.2015.1089891">Lin 2015</a><br />
+            <a href="https://doi.org/10.1039/d4fo01369g">Yang 2024</a>
+          </td>
+          <td>Umami rank / EUC by stage / peptides in hydrolysate</td>
+          <td class="no">No whole-mushroom 0–5</td>
+        </tr>
+        <tr>
+          <td><i>Flammulina velutipes</i></td>
+          <td>
+            <a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a><br />
+            <a href="https://doi.org/10.1016/s0308-8146(00)00262-4">Yang 2001</a><br />
+            <a href="https://doi.org/10.1016/j.fct.2011.10.056">Reis 2012</a>
+          </td>
+          <td>Human umami 4.00; e-tongue highest (14.35) — different scale; sugars</td>
+          <td class="yes">Human umami only (proposed 1.5)</td>
+        </tr>
+        <tr>
+          <td><i>Fusarium</i> flavolapis</td>
+          <td><a href="https://doi.org/10.2903/j.efsa.2025.9536">EFSA 2025</a></td>
+          <td>Composition / safety dossier, not a trained taste panel</td>
+          <td class="no">Empty</td>
+        </tr>
+        <tr>
+          <td><i>Fusarium venenatum</i></td>
+          <td>
+            <a href="https://doi.org/10.1093/cdn/nzz021">Finnigan 2019</a><br />
+            <a href="https://doi.org/10.1002/fsn3.3354">Food Sci Nutr 2023 (mycoprotein nugget hedonic)</a>
+          </td>
+          <td>Process / nutrition; hedonic scores are for formulated nuggets, not the fungus</td>
+          <td class="no">No species-level panel. Current page bars are curator estimates for you to compare.</td>
+        </tr>
+        <tr>
+          <td><i>Ganoderma lucidum</i></td>
+          <td><a href="https://doi.org/10.1016/s0963-9969(01)00067-9">Mau 2001 medicinal</a></td>
+          <td>Non-volatile taste chemistry; typically bitter / medicinal</td>
+          <td class="no">Chemistry only this pass</td>
+        </tr>
+        <tr>
+          <td><i>Grifola frondosa</i></td>
+          <td><a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a></td>
+          <td>Human umami 5.60 / 11</td>
+          <td class="yes">Umami only (proposed 2.3)</td>
+        </tr>
+        <tr>
+          <td><i>Hericium erinaceus</i></td>
+          <td><a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a></td>
+          <td>Human umami 4.83 / 11</td>
+          <td class="yes">Umami only (proposed 1.9)</td>
+        </tr>
+        <tr>
+          <td><i>Hypsizygus marmoreus</i></td>
+          <td>
+            <a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a><br />
+            <a href="https://doi.org/10.1016/s0308-8146(03)00093-1">Muraoka / Lee 2003</a>
+          </td>
+          <td>Human umami 4.80; free amino acids in another paper</td>
+          <td class="yes">Umami only (proposed 1.9)</td>
+        </tr>
+        <tr>
+          <td><i>Laetiporus sulphureus</i></td>
+          <td>—</td>
+          <td>Culinary “chicken of the woods” name is not a panel</td>
+          <td class="no">Empty</td>
+        </tr>
+        <tr>
+          <td><i>Lentinula edodes</i></td>
+          <td>
+            <a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a><br />
+            <a href="https://doi.org/10.1016/s0308-8146(00)00262-4">Yang 2001</a><br />
+            <a href="https://doi.org/10.1016/j.foodchem.2013.03.018">Dermiki 2013</a>
+          </td>
+          <td>Human umami 4.00; Yang ranks strain 271 highest; extract-in-meat study</td>
+          <td class="yes">Umami only (proposed 1.5)</td>
+        </tr>
+        <tr>
+          <td><i>Morchella</i> spp.</td>
+          <td>Aroma papers exist</td>
+          <td>Volatiles, not a 0–5 fruiting-body panel opened here</td>
+          <td class="no">Not copied this pass</td>
+        </tr>
+        <tr>
+          <td><i>Neurospora intermedia</i></td>
+          <td>Oncom fermentation literature</td>
+          <td>Product-level, not opened this pass</td>
+          <td class="no">Empty</td>
+        </tr>
+        <tr>
+          <td><i>Paecilomyces variotii</i></td>
+          <td>Pekilo / SCP reviews</td>
+          <td>Historical feed process</td>
+          <td class="no">Empty</td>
+        </tr>
+        <tr>
+          <td><i>Pholiota nameko</i></td>
+          <td><a href="https://doi.org/10.11428/jhej1987.53.1193">Kiribuchi 2002</a></td>
+          <td>Soup from log vs sawdust nameko — comparative liking, not a 0–5 species profile</td>
+          <td class="no">Comparative only</td>
+        </tr>
+        <tr>
+          <td><i>Pleurotus citrinopileatus</i></td>
+          <td><a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a></td>
+          <td>Human umami 4.67 / 11</td>
+          <td class="yes">Umami only (proposed 1.8)</td>
+        </tr>
+        <tr>
+          <td><i>Pleurotus djamor</i></td>
+          <td>Phat’s <i>P. salmoneostramineus</i> (6.00)</td>
+          <td>Confirm synonym before using</td>
+          <td class="no">Hold</td>
+        </tr>
+        <tr>
+          <td><i>Pleurotus eryngii</i></td>
+          <td>
+            <a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a><br />
+            <a href="https://doi.org/10.1016/j.foodchem.2013.08.006">Li 2014</a>
+          </td>
+          <td>Human umami 4.40; dried 5′-nucleotides 1.68 mg/g</td>
+          <td class="yes">Umami only (proposed 1.7)</td>
+        </tr>
+        <tr>
+          <td><i>Pleurotus ostreatus</i></td>
+          <td><a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a></td>
+          <td>Human umami 9.33 / 11</td>
+          <td class="yes">Live example 4.2</td>
+        </tr>
+        <tr>
+          <td><i>Pleurotus pulmonarius</i></td>
+          <td><a href="https://doi.org/10.1101/2025.07.02.662711">2025 mycelium EUC preprint</a></td>
+          <td>Mycelium EUC vs fruit body — chemistry</td>
+          <td class="no">EUC, not a 0–5 panel</td>
+        </tr>
+        <tr>
+          <td><i>Rhizopus oligosporus</i> / <i>oryzae</i></td>
+          <td>Tempeh sensory papers</td>
+          <td>Scores are for the cake (soy + mold), not the isolated fungus</td>
+          <td class="no">Product, not species biomass</td>
+        </tr>
+        <tr>
+          <td><i>Schizophyllum commune</i></td>
+          <td><a href="https://doi.org/10.3390/foods12203745">Laplamool 2023</a></td>
+          <td>Flavor of an aqueous extract / salt taste — not fruit-body 0–5</td>
+          <td class="no">Wrong sample for whole-mushroom bars</td>
+        </tr>
+        <tr>
+          <td><i>Sparassis crispa</i></td>
+          <td><a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a></td>
+          <td>Human umami 3.60 / 11</td>
+          <td class="yes">Umami only (proposed 1.3)</td>
+        </tr>
+        <tr>
+          <td><i>Stropharia rugosoannulata</i></td>
+          <td><a href="https://doi.org/10.1101/2025.07.02.662711">2025 mycelium EUC preprint</a></td>
+          <td>Mycelium EUC</td>
+          <td class="no">EUC only</td>
+        </tr>
+        <tr>
+          <td><i>Tremella fuciformis</i></td>
+          <td><a href="https://doi.org/10.1016/j.foodchem.2015.07.113">Phat 2016</a></td>
+          <td>Human umami 2.42 / 11 (lowest with wood ear)</td>
+          <td class="yes">Umami only (proposed 0.7)</td>
+        </tr>
+        <tr>
+          <td><i>Trichoderma reesei</i></td>
+          <td>—</td>
+          <td>Industrial enzyme organism, not a food sensory panel</td>
+          <td class="no">Empty</td>
+        </tr>
+        <tr>
+          <td><i>Tricholoma matsutake</i></td>
+          <td><a href="https://doi.org/10.1016/j.foodchem.2009.05.084">Cho 2009</a></td>
+          <td>Umami-active components, pileus vs stipe</td>
+          <td class="no">Chemistry; tables not copied this pass</td>
+        </tr>
+        <tr>
+          <td><i>Tuber borchii</i></td>
+          <td>Mustafa 2020; Vahdatzadeh &amp; Splivallo 2018</td>
+          <td>GC-MS volatiles already on the species page</td>
+          <td class="no">Volatiles ≠ 0–5 taste bars</td>
+        </tr>
+        <tr>
+          <td><i>Ustilago maydis</i></td>
+          <td><a href="https://doi.org/10.1016/j.funbio.2019.04.003">Castañeda 2019</a> (huitlacoche)</td>
+          <td>Descriptive flavor by strain (sweet / maize / umami vs bitter)</td>
+          <td class="no">Strain-dependent; no single species 0–5</td>
+        </tr>
+        <tr>
+          <td><i>Volvariella volvacea</i></td>
+          <td>
+            <a href="https://doi.org/10.1021/jf9703314">Mau 1997</a><br />
+            <a href="https://doi.org/10.1615/intjmedmushr.v7.i12.120">Mau 2005</a>
+          </td>
+          <td>High EUC in Mau’s review grouping</td>
+          <td class="no">Need the table before a bar</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>What I will not do</h2>
+    <ul>
+      <li>Fill earthy / fibrous / meat-like from “sounds like chicken.”</li>
+      <li>Turn EUC (mg MSG/g) into a 0–5 bar without a stated mapping you approve.</li>
+      <li>Mix Phat’s 11-point human scores with the electronic-tongue units on the same axis.</li>
+    </ul>
+  </main>
+</body>
+</html>

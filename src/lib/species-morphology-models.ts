@@ -37,6 +37,12 @@ export type SpeciesMorphologyModel = {
    * surface has none. Omit to disable capping entirely for this model.
    */
   solidParts?: string[];
+  /**
+   * Travel of the section slider, in scene units, measured from this model's
+   * own normalised x-extent. Without it every species shares one generous
+   * range and a tall narrow specimen wastes half the slider doing nothing.
+   */
+  sectionRange?: number;
   /** Colour of the cut face — the species' context (flesh). */
   sectionFleshColor?: string;
   provenance: ModelProvenance;
@@ -58,6 +64,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     // refuses to export otherwise — so every one of them gets a filled cut face,
     // including the lamellae, which read as thin slivers of flesh in section.
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills", "annulus_ring"],
+    sectionRange: 1.242,
     sectionFleshColor: "#f2ece0",
     provenance: "illustrative",
     sourceNote:
@@ -68,6 +75,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     upAxis: "z",
     solidParts: ["hymenial_layer", "abhymenial_layer", "attachment_base"],
     // Gelatinous context is pale and translucent against the dark brown faces.
+    sectionRange: 1.242,
     sectionFleshColor: "#c9a894",
     provenance: "illustrative",
     sourceNote:
@@ -81,6 +89,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/lentinula-edodes.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills"],
+    sectionRange: 1.242,
     sectionFleshColor: "#f0ebdf",
     provenance: "illustrative",
     sourceNote:
@@ -90,6 +99,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/volvariella-volvacea.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills", "volva_cup"],
+    sectionRange: 0.779,
     sectionFleshColor: "#f2ede2",
     provenance: "illustrative",
     sourceNote:
@@ -99,6 +109,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/coprinus-comatus.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills", "annulus_ring"],
+    sectionRange: 0.419,
     sectionFleshColor: "#f7f5f0",
     provenance: "illustrative",
     sourceNote:
@@ -108,24 +119,27 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/pleurotus-eryngii.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills"],
+    sectionRange: 1.075,
     sectionFleshColor: "#f4efe4",
     provenance: "illustrative",
     sourceNote:
-      "Procedural mesh proportioned from the 5 cm cap / 14 cm stipe on record — the inverted proportions that make this species mostly dense stipe tissue, which is what the meat-analog literature is interested in. Shallow cap with decurrent lamellae. Geometry is representative, not a scan of a measured specimen.",
+      "Procedural mesh with a broad flattened pileus over a thick WAISTED stipe — wide where it meets the cap, pinched a third of the way down, swelling into a bulbous belly, then tapering to a narrow base. Lamellae are genuinely decurrent: they continue onto the stipe as geometry rather than stopping at its edge. Proportions are measured from the reference photograph on this species' page, which deviates from the record's 14 cm stipe against a 5 cm cap. The dense stipe tissue is what the meat-analog literature is interested in. Colour is carried PER-VERTEX: the pileus grades from a dark centre to a pale margin and the stipe is fibrillose, neither of which one flat colour per part can express.",
   },
   "pleurotus-ostreatus": {
     url: "/models/pleurotus-ostreatus.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "lamellae_gills", "stipe_stem"],
+    sectionRange: 1.242,
     sectionFleshColor: "#f2ece0",
     provenance: "illustrative",
     sourceNote:
-      "Procedural shelf-form mesh: a laterally attached eccentric fan with decurrent lamellae running onto a rudimentary off-centre stipe, proportioned from the 9 cm cap / 2 cm stipe on record. Models a single basidiocarp rather than the imbricate cluster it usually fruits in. Geometry is representative, not a scan of a measured specimen.",
+      "Procedural shelf-form mesh: a laterally attached eccentric fan with decurrent lamellae running onto a rudimentary off-centre stipe, proportioned from the 9 cm cap / 2 cm stipe on record. Margin is strongly undulate and the lamellae are dense, following the reference photograph on this species' page, which is taken from below. Colour is carried PER-VERTEX, darkening toward the point of attachment to the wood. Models a single basidiocarp rather than the imbricate cluster it usually fruits in. Geometry is representative, not a scan of a measured specimen.",
   },
   "ganoderma-lucidum": {
     url: "/models/ganoderma-lucidum.glb",
     upAxis: "z",
     solidParts: ["pileus_crust", "pore_surface", "stipe_stem"],
+    sectionRange: 1.242,
     sectionFleshColor: "#c8a882",
     provenance: "illustrative",
     sourceNote:
@@ -135,6 +149,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/grifola-frondosa.glb",
     upAxis: "z",
     solidParts: ["pileus_fronds", "pore_surface", "stipe_stem"],
+    sectionRange: 1.242,
     sectionFleshColor: "#f0ebe0",
     provenance: "illustrative",
     sourceNote:
@@ -144,6 +159,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/hericium-erinaceus.glb",
     upAxis: "z",
     solidParts: ["context_mass", "hymenial_spines"],
+    sectionRange: 1.044,
     sectionFleshColor: "#f8f5ef",
     provenance: "illustrative",
     sourceNote:
@@ -153,6 +169,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/tremella-fuciformis.glb",
     upAxis: "z",
     solidParts: ["gelatinous_lobes"],
+    sectionRange: 1.242,
     sectionFleshColor: "#f6f2ee",
     provenance: "illustrative",
     sourceNote:
@@ -162,6 +179,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/calvatia-gigantea.glb",
     upAxis: "z",
     solidParts: ["peridium_wall", "gleba_mass"],
+    sectionRange: 1.242,
     sectionFleshColor: "#f0ece0",
     provenance: "illustrative",
     sourceNote:
@@ -171,10 +189,11 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/morchella-spp.glb",
     upAxis: "z",
     solidParts: ["ascocarp_body"],
+    sectionRange: 0.754,
     sectionFleshColor: "#efe6d2",
     provenance: "illustrative",
     sourceNote:
-      "Procedural mesh of a true morel: a pitted and ridged conical cap fused to the stipe, and continuously hollow from the cap apex through the base — the diagnostic feature separating Morchella from the false morels, and the reason the cross-section is worth opening on this genus. Cap and stipe share one material because they are one continuous shell. Proportions deviate from the record's 9 cm stipe against a 5 cm cap, which describes no Morchella; that figure is read as overall height, putting the cap at about half the fruiting body. Pit arrangement is representative and is not species-diagnostic within the genus.",
+      "Procedural mesh of a true morel: a pitted and ridged conical cap fused to the stipe, and continuously hollow from the cap apex through the base — the diagnostic feature separating Morchella from the false morels, and the reason the cross-section is worth opening on this genus. The head is ovoid — rounded and tapering at the apex, widest about two-thirds down — with a reticulate net of ridges enclosing irregular pits, and colour carried PER-VERTEX so the pale sterile ridges read against the dark fertile alveoli. Proportions are measured from the reference photograph on this species' page, deviating from the record's 9 cm stipe against a 5 cm cap. Pit arrangement is representative and is not species-diagnostic within the genus.",
   },
 
   // Microscopic species: PROTOTYPE, pending review before the other four moulds.
@@ -182,6 +201,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/fusarium-venenatum.glb",
     upAxis: "z",
     solidParts: ["hyphal_filaments", "septa_cross_walls"],
+    sectionRange: 1.242,
     sectionFleshColor: "#c4b49c",
     provenance: "illustrative",
     sourceNote:
@@ -191,6 +211,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/ustilago-maydis.glb",
     upAxis: "z",
     solidParts: ["smut_galls", "host_husk"],
+    sectionRange: 1.242,
     sectionFleshColor: "#6b5a48",
     provenance: "illustrative",
     sourceNote:
@@ -202,6 +223,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/flammulina-velutipes.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills"],
+    sectionRange: 0.925,
     sectionFleshColor: "#f5f1e4",
     provenance: "illustrative",
     sourceNote:
@@ -211,6 +233,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/hypsizygus-marmoreus.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills"],
+    sectionRange: 1.236,
     sectionFleshColor: "#f2ece0",
     provenance: "illustrative",
     sourceNote:
@@ -220,6 +243,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/pholiota-nameko.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills"],
+    sectionRange: 1.131,
     sectionFleshColor: "#f0e6d2",
     provenance: "illustrative",
     sourceNote:
@@ -229,6 +253,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/cyclocybe-aegerita.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills", "annulus_ring"],
+    sectionRange: 0.686,
     sectionFleshColor: "#f2ece0",
     provenance: "illustrative",
     sourceNote:
@@ -238,6 +263,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/calocybe-indica.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills"],
+    sectionRange: 1.218,
     sectionFleshColor: "#f7f4ec",
     provenance: "illustrative",
     sourceNote:
@@ -247,6 +273,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/stropharia-rugosoannulata.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills", "annulus_ring"],
+    sectionRange: 1.202,
     sectionFleshColor: "#f2ece0",
     provenance: "illustrative",
     sourceNote:
@@ -256,6 +283,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/agaricus-subrufescens.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "stipe_stem", "lamellae_gills", "annulus_ring"],
+    sectionRange: 1.145,
     sectionFleshColor: "#f2ece0",
     provenance: "illustrative",
     sourceNote:
@@ -265,6 +293,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/pleurotus-citrinopileatus.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "lamellae_gills", "stipe_stem"],
+    sectionRange: 1.121,
     sectionFleshColor: "#f6efd8",
     provenance: "illustrative",
     sourceNote:
@@ -274,6 +303,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/pleurotus-djamor.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "lamellae_gills", "stipe_stem"],
+    sectionRange: 1.118,
     sectionFleshColor: "#f6dfe6",
     provenance: "illustrative",
     sourceNote:
@@ -283,6 +313,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/laetiporus-sulphureus.glb",
     upAxis: "z",
     solidParts: ["pileus_crust", "pore_surface", "stipe_stem"],
+    sectionRange: 1.207,
     sectionFleshColor: "#f7e9b0",
     provenance: "illustrative",
     sourceNote:
@@ -292,6 +323,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/sparassis-crispa.glb",
     upAxis: "z",
     solidParts: ["crisped_lobes", "rooting_base"],
+    sectionRange: 1.164,
     sectionFleshColor: "#f2ece0",
     provenance: "illustrative",
     sourceNote:
@@ -301,6 +333,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/schizophyllum-commune.glb",
     upAxis: "z",
     solidParts: ["pileus_cap", "split_folds"],
+    sectionRange: 1.242,
     sectionFleshColor: "#efe6d6",
     provenance: "illustrative",
     sourceNote:
@@ -310,6 +343,7 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/cordyceps-militaris.glb",
     upAxis: "z",
     solidParts: ["clavate_stroma", "perithecia"],
+    sectionRange: 0.872,
     sectionFleshColor: "#e6a06a",
     provenance: "illustrative",
     sourceNote:
@@ -319,19 +353,93 @@ export const speciesMorphologyModels: Partial<Record<string, SpeciesMorphologyMo
     url: "/models/aspergillus-sojae.glb",
     upAxis: "z",
     solidParts: ["conidiophore_stipe", "vesicle_phialides", "conidial_chains"],
-    sectionFleshColor: "#d8c9ac",
+    sectionRange: 0.68,
+    sectionFleshColor: "#cbbba0",
     provenance: "illustrative",
     sourceNote:
-      "Procedural mesh of a single conidial head — the structure Aspergillus is identified by, and quite unlike a branching mycelium. Foot cell, unbranched stipe, globose vesicle, and phialides distributed over the whole vesicle on a Fibonacci sphere, each carrying a basipetal chain of conidia. Modelled uniseriate; A. sojae heads may be uniseriate or biseriate. Scale is relative only and not comparable to the macroscopic species.",
+      "Compact brown-olive conidial head of A. sojae: shorter thicker stipe, smaller vesicle, fewer phialides, short dark chains. Distinct from the larger yellow-green A. oryzae head. Scale is relative only.",
   },
   "rhizopus-oryzae": {
     url: "/models/rhizopus-oryzae.glb",
     upAxis: "z",
     solidParts: ["stolons_rhizoids", "sporangia", "columellae"],
+    sectionRange: 1.242,
     sectionFleshColor: "#cbbba0",
     provenance: "illustrative",
     sourceNote:
-      "Procedural mesh of the tempeh mould's characteristic architecture: arching stolons rooting at nodes by tufts of rhizoids, with sporangiophores rising opposite each node and bearing a globose sporangium over a columella — visible when sectioned. Rhizopus is COENOCYTIC, so no septa are modelled anywhere; the generic septate-hypha labels would be factually wrong for this genus. Scale is relative only.",
+      "Procedural mesh of the tempeh mould's characteristic architecture: arching stolons rooting at nodes by tufts of rhizoids, with sporangiophores rising opposite each node and each node raising a group of two or three sporangiophores (they are not borne singly), each tipped with a globose sporangium over a columella — visible when sectioned. Rhizopus is COENOCYTIC, so no septa are modelled anywhere; the generic septate-hypha labels would be factually wrong for this genus. Scale is relative only.",
+  },
+
+  // Reworked microscopy: each genus gets the structure it is identified by.
+  "aspergillus-oryzae": {
+    url: "/models/aspergillus-oryzae.glb",
+    upAxis: "z",
+    solidParts: ["conidiophore_stipe", "vesicle_phialides", "conidial_chains"],
+    sectionRange: 0.86,
+    sectionFleshColor: "#d8c9ac",
+    provenance: "illustrative",
+    sourceNote:
+      "Large yellow-green koji head: tall thin stipe, broad vesicle, many phialides, long bright conidial chains. Not the compact brown A. sojae head. Scale is relative only.",
+  },
+  "neurospora-intermedia": {
+    url: "/models/neurospora-intermedia.glb",
+    upAxis: "z",
+    solidParts: ["hyphal_filaments", "septa_cross_walls", "macroconidia"],
+    sectionRange: 1.242,
+    sectionFleshColor: "#e8d5b4",
+    provenance: "illustrative",
+    sourceNote:
+      "Septate branching mycelium with orange macroconidial chains — the food/oncom form. The sexual perithecium is omitted; it is not part of the food organism.",
+  },
+  "cantharellus-cibarius": {
+    url: "/models/cantharellus-cibarius.glb",
+    upAxis: "z",
+    solidParts: ["funnel_body", "false_gills"],
+    sectionRange: 1.2,
+    sectionFleshColor: "#f0d48a",
+    provenance: "illustrative",
+    sourceNote:
+      "Procedural funnel mesh from the species record (6 cm cap, 5 cm stipe, cap colour #e6b84a): depressed wavy pileus continuous with a downward-tapering stipe, and blunt forked ridges (false gills), not true lamellae. Modelled from the page photograph. Illustrative, not a scan.",
+  },
+  "trichoderma-reesei": {
+    url: "/models/trichoderma-reesei.glb",
+    upAxis: "z",
+    solidParts: ["conidiophore_stipe", "phialide_whorls", "conidial_heads"],
+    sectionRange: 0.843,
+    sectionFleshColor: "#e0dcc0",
+    provenance: "illustrative",
+    sourceNote:
+      "Procedural mesh of a repeatedly branched conidiophore carrying whorls of flask-shaped phialides with green conidia held in slimy heads at their tips. There is no vesicle — that is Aspergillus — and the pyramidal verticillate branching is the character that separates this genus. Conidial heads are modelled as single masses rather than individual conidia. Scale is relative only.",
+  },
+  "pleurotus-pulmonarius": {
+    url: "/models/pleurotus-ostreatus.glb",
+    upAxis: "z",
+    solidParts: ["pileus_cap", "lamellae_gills", "stipe_stem"],
+    sectionRange: 1.242,
+    sectionFleshColor: "#f2ece0",
+    provenance: "illustrative",
+    sourceNote:
+      "Uses the P. ostreatus shelf-form mesh as a stand-in for P. pulmonarius (pale phoenix oyster). Geometry is representative of the oyster habit, not a scan of this species.",
+  },
+  "fusarium-sp-flavolapis": {
+    url: "/models/fusarium-venenatum.glb",
+    upAxis: "z",
+    solidParts: ["hyphal_filaments", "septa_cross_walls"],
+    sectionRange: 1.242,
+    sectionFleshColor: "#c4b49c",
+    provenance: "illustrative",
+    sourceNote:
+      "Uses the F. venenatum septate-mycelium mesh as a genus-level stand-in for Fusarium strain flavolapis. Not a scan of the Fy production strain.",
+  },
+  "rhizopus-oligosporus": {
+    url: "/models/rhizopus-oligosporus.glb",
+    upAxis: "z",
+    solidParts: ["stolons_rhizoids", "sporangia", "columellae"],
+    sectionRange: 1.242,
+    sectionFleshColor: "#cbbba0",
+    provenance: "illustrative",
+    sourceNote:
+      "Procedural mesh of the tempeh mould: arching stolons rooting at nodes by tufts of rhizoids, each node raising a group of sporangiophores tipped with a globose sporangium over a columella — visible when sectioned. Coenocytic, so no septa are modelled anywhere. R. oligosporus bears smaller, fewer-spored sporangia than R. oryzae; that difference is not resolved at this scale. Scale is relative only.",
   },
 };
 

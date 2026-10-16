@@ -51,9 +51,9 @@ export function TaxonomyDiagram({
                 {level.rank}
               </span>
               <span
-                className={`mt-1 text-base text-black ${isSpecies || isGenus ? "font-bold italic" : "font-medium"}`}
+                className={`mt-1 text-base text-black ${isSpecies || isGenus ? "font-bold" : "font-medium"}`}
               >
-                {level.name}
+                {isSpecies || isGenus ? <em>{level.name}</em> : level.name}
               </span>
             </>
           );

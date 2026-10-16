@@ -1,0 +1,56 @@
+name: Monthly literature scan
+
+on:
+  schedule:
+    - cron: "0 12 1 * *"
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+      - run: npm ci
+      - name: Scan OpenAlex
+        run: npm run monthly:scan -- --since-days 35 --out monthly-scan.md
+      - name: Open curator issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const body = fs.readFileSync("monthly-scan.md", "utf8");
+            const now = new Date();
+            const month = now.toISOString().slice(0, 7);
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Monthly MycoProt update ${month} — review only, do not apply yet`,
+              body:
+                "To: Amrutha Girivasan (amruthagirivasan@gmail.com)\n\n" +
+                "The monthly OpenAlex scan is done. **No database or page changes have been applied.** " +
+                "Review the hits below, then copy table values into empty fields before they are written.\n\n" +
+                "Playbook: `docs/MONTHLY_UPDATE.md`\n\n" +
+                body,
+              assignees: ["amrugiri"],
+            });
+      - name: Email curator
+        if: ${{ secrets.GMAIL_APP_PASSWORD != '' }}
+        continue-on-error: true
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: amruthagirivasan@gmail.com
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          from: MycoProt monthly scan <amruthagirivasan@gmail.com>
+          to: amruthagirivasan@gmail.com
+          subject: MycoProt monthly scan is ready for your review
+          html_body: file://monthly-scan.md

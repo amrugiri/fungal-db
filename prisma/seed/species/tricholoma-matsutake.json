@@ -1,0 +1,121 @@
+{
+  "species": {
+    "slug": "tricholoma-matsutake",
+    "genus": "Tricholoma",
+    "speciesEpithet": "matsutake",
+    "scientificName": "Tricholoma matsutake",
+    "commonNames": [
+      "matsutake",
+      "pine mushroom"
+    ],
+    "ncbiTaxonomyId": "40145",
+    "taxonomy": {
+      "kingdom": "Fungi",
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Tricholomataceae",
+      "genus": "Tricholoma"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 3,
+        "spicy": 4,
+        "piney": 5
+      },
+      "textureAxes": {
+        "firm": 4,
+        "fibrous": 3,
+        "meat_like": 2
+      },
+      "aromaNotes": "Characteristic pine, cinnamon, and spicy notes (matsutake alcohol / related volatiles); prized as a flavor, not a neutral protein",
+      "meatAnalogPotential": "low",
+      "meatAnalogRationale": "Obligate ectomycorrhizal; fruiting bodies are not farmed at industrial scale. Firm stipe tissue is meaty in the culinary sense, but supply and price rule it out as analog bulk. The only plausible alt-protein role is a high-value aroma extract or limited mycelial flavor work — still research-scale.",
+      "preparationContext": "Wild-harvested fruiting bodies, grilled or in soup; not a fermentation protein",
+      "confidenceNotes": "Culinary flavor is undisputed. Do not list matsutake as a scalable mycoprotein.",
+      "citationKeys": ["kalac2016"]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans",
+      "fruitingBodyStructure": "Convex to umbonate pileus on a thick fibrous stipe; white gills; often with pine-duff debris at the base",
+      "sporeCharacteristics": "White spore print",
+      "microscopyNotes": "Ectomycorrhizal; no industrial fruiting-body farm exists"
+    },
+    "nutrition": {
+      "proteinPercent": 20,
+      "fiberPercent": 10,
+      "fatPercent": 4,
+      "moisturePercent": 88,
+      "preparationContext": "Wild fruiting-body ranges from edible-mushroom reviews",
+      "confidenceNotes": "Not a protein-spec ingredient. Values are order-of-magnitude only.",
+      "citationKeys": ["kalac2016"]
+    },
+    "geographic": {
+      "nativeRange": "East Asia, and related pine forests in western North America / Scandinavia (closely related taxa)",
+      "cultivatedRegions": "Not commercially cultivated as fruiting bodies; harvest is wild",
+      "habitat": "Ectomycorrhizal with pine and related conifers"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Mycorrhizal isolates exist; there is no production strain for fruiting-body biomass."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/3a/2014.11.15_matsutake.jpg",
+        "caption": "Matsutake (Tricholoma matsutake)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:2014.11.15_matsutake.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": false,
+      "commercialStatus": "traditional_food",
+      "applicationSummary": "Luxury wild mushroom. Alt-protein relevance is flavor (pine/spicy/umami), not protein tonnage. Treat as a seasoning analog, not a Quorn-class biomass.",
+      "companies": [
+        {
+          "name": "Wild-harvest exporters (Japan, Korea, Pacific Northwest)",
+          "region": "East Asia / western North America"
+        }
+      ],
+      "confidenceNotes": "Traditional food; supply is ecological, not industrial.",
+      "citationKeys": ["kalac2016"]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 6,
+      "fruitingBodyType": "mushroom",
+      "capDiameter": 10,
+      "stipeLength": 12,
+      "capColor": "#c4a574",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "traditional_food",
+      "notes": "Traditional wild edible. Look-alikes in Tricholoma include toxic species; any product use needs identity control."
+    },
+    "speciesCitationKeys": ["kalac2016", "ncbi_taxonomy"]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Edible mushrooms: chemical composition and nutritional value",
+      "authors": "Kalač P",
+      "journal": "Food Chemistry",
+      "year": 2016,
+      "summary": "Frames matsutake as a wild edible with distinctive aroma — relevant to flavor design, not industrial mycoprotein.",
+      "publishedAt": "2016-01-01"
+    }
+  ]
+}

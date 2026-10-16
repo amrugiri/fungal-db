@@ -44,7 +44,7 @@ export function SpeciesNavArrows({
             </span>
             <span className="min-w-0 text-left">
               <span className="block text-[11px] font-medium uppercase tracking-wide text-muted">Previous</span>
-              <em className="block truncate font-semibold not-italic group-hover:text-berry sm:italic">
+              <em className="block truncate font-semibold italic group-hover:text-berry">
                 {previous.scientificName}
               </em>
             </span>
@@ -59,7 +59,7 @@ export function SpeciesNavArrows({
           >
             <span className="min-w-0">
               <span className="block text-[11px] font-medium uppercase tracking-wide text-muted">Next</span>
-              <em className="block truncate font-semibold not-italic group-hover:text-berry sm:italic">
+              <em className="block truncate font-semibold italic group-hover:text-berry">
                 {next.scientificName}
               </em>
             </span>

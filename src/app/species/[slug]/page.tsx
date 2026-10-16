@@ -10,17 +10,20 @@ import { RegulatorySection } from "@/components/species/RegulatorySection";
 import { ScientificName, TaxonomyBreadcrumb } from "@/components/species/ScientificName";
 import { SpeciesNavArrows } from "@/components/species/SpeciesNavArrows";
 import { SensoryChart } from "@/components/sensory/SensoryChart";
+import { SensoryPublishedEvidence } from "@/components/sensory/SensoryPublishedEvidence";
 import { SpeciesImageFigure } from "@/components/species/SpeciesImageFigure";
 import { buildTaxonomyLevels, TaxonomyDiagram } from "@/components/taxonomy/TaxonomyDiagram";
 import { CollapsibleSection } from "@/components/ui/CollapsibleSection";
 import { SubHeading, labelClass } from "@/components/ui/headings";
 import { getCurrentSpotlightMonth } from "@/lib/alt-protein";
+import { isStrainProductUrl } from "@/lib/catalog-url";
 import { formatEnumLabel } from "@/lib/format";
 import { getSpeciesBySlug, getSpeciesNeighbors } from "@/lib/species";
 import {
   parseCommonNames,
   parseJsonField,
   type MorphologyParameters,
+  type SensoryPublishedMeasurement,
   type TasteAxes,
   type TextureAxes,
 } from "@/lib/types";
@@ -133,7 +136,7 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
     [img.caption, img.license, img.attributionText].filter(Boolean).join(" — ");
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8 text-foreground">
+    <div className="species-page mx-auto max-w-6xl px-4 py-8 text-foreground">
       <BackToTopButton />
       <SpeciesNavArrows previous={neighbors.previous} next={neighbors.next} />
       {species.taxonomy && (
@@ -150,7 +153,7 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
 
       <div className="grid gap-x-8 gap-y-2 lg:grid-cols-[minmax(0,1fr)_280px]">
         <div className="lg:col-span-2">
-          <h1 className="font-display text-3xl font-bold text-truffle">
+          <h1 className="font-display text-3xl font-bold italic text-truffle">
             <ScientificName genus={species.genus} speciesEpithet={species.speciesEpithet} />
           </h1>
           {commonNames.length > 0 && (
@@ -166,12 +169,13 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
                     : "bg-surface-muted text-muted"
                 }`}
               >
-                {commercial.commercialStatus === "none" && !commercial.meatAlternativeUse
-                  ? "No Commercial Product"
-                  : "In Commercial Use"}
+                {commercial.commercialStatus === "commercial_food" ||
+                commercial.commercialStatus === "commercial_meat_analog"
+                  ? "In Commercial Use"
+                  : "No Commercial Product"}
               </span>
             )}
-            {species.ncbiTaxonomyId && (
+            {species.ncbiTaxonomyId && species.ncbiTaxonomyId !== "000000" && (
               <a
                 href={`https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=${species.ncbiTaxonomyId}`}
                 className="rounded bg-surface-muted px-2 py-1 font-sans text-truffle hover:bg-gold/30"
@@ -250,6 +254,16 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
                   </p>
                 )}
               </div>
+              <SensoryPublishedEvidence
+                measurements={parseJsonField<SensoryPublishedMeasurement[]>(
+                  sensory.publishedEvidence,
+                  [],
+                )}
+                citations={uniqueCitations}
+              />
+              {sensory.confidenceNotes && (
+                <p className="mt-3 text-sm text-black">{sensory.confidenceNotes}</p>
+              )}
               <div className="mt-3 flex flex-wrap gap-1">
                 {sensory.citationLinks.map((l) => (
                   <CitationBadge key={l.id} citation={l.citation} />
@@ -332,14 +346,20 @@ export default async function SpeciesDetailPage({ params }: PageProps) {
               <ul className="space-y-3">
                 {species.cultureCollectionStrains.map((strain) => (
                   <li key={strain.id} className="text-sm">
-                    <a
-                      href={strain.catalogUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-bold text-berry hover:underline"
-                    >
-                      {strain.collectionName} {strain.strainId}
-                    </a>
+                    {isStrainProductUrl(strain.catalogUrl) ? (
+                      <a
+                        href={strain.catalogUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-berry hover:underline"
+                      >
+                        {strain.collectionName} {strain.strainId}
+                      </a>
+                    ) : (
+                      <span className="font-bold">
+                        {strain.collectionName} {strain.strainId}
+                      </span>
+                    )}
                     {strain.availabilityNotes && (
                       <p className="text-black">{strain.availabilityNotes}</p>
                     )}

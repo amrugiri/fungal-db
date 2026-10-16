@@ -14,6 +14,9 @@ export function Header() {
           <Link href="/compare" className="hover:text-berry">
             Compare
           </Link>
+          <Link href="/contribute" className="hover:text-berry">
+            Contribute
+          </Link>
           <Link href="/disclaimer" className="hover:text-berry">
             Disclaimer
           </Link>

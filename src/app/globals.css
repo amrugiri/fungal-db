@@ -42,6 +42,10 @@ h1 {
   font-family: var(--font-fraunces), Georgia, serif;
 }
 
+.species-page em {
+  font-style: italic;
+}
+
 h2,
 h3,
 h4,

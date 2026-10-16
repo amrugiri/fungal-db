@@ -33,7 +33,8 @@ Usage:
 import numpy as np
 import trimesh
 
-from mesh_kit import shell_cap, finalize, srgb, verify_and_export
+from mesh_kit import shell_cap, finalize, srgb, shade_vertices, verify_and_export
+import shaders as sh
 
 # ---- shape parameters ------------------------------------------------------
 PHI0 = 1.02        # base polar half-angle of the cup (radians)
@@ -132,11 +133,15 @@ min_z = min(m.bounds[0][2] for m in (hymenium, abhymenium, boss))
 for mesh in (hymenium, abhymenium, boss):
     mesh.apply_translation([0, 0, -min_z])
 
-verify_and_export(
-    [
-        ("hymenial_layer", finalize(hymenium, HYMENIUM_COLOR, 0.38)),
-        ("abhymenial_layer", finalize(abhymenium, ABHYMENIUM_COLOR, 0.92)),
-        ("attachment_base", finalize(boss, ATTACH_COLOR, 0.88)),
-    ],
-    "auricularia-auricula-judae.glb",
-)
+# Per-vertex colour: the fertile face is darkest in the folds and the sterile
+# face is unevenly tomentose, neither of which one flat colour can carry.
+SHADED = [
+    ("hymenial_layer", shade_vertices(finalize(hymenium, HYMENIUM_COLOR, 0.38),
+                                      sh.marbled("#3d2116", "#8a5c48", seed=41, coarse=4.5, fine=10.0))),
+    ("abhymenial_layer", shade_vertices(finalize(abhymenium, ABHYMENIUM_COLOR, 0.92),
+                                        sh.marbled("#7c6354", "#c4ac9a", seed=43, coarse=5.5, fine=12.0))),
+    ("attachment_base", shade_vertices(finalize(boss, ATTACH_COLOR, 0.88),
+                                       sh.flat("#8a7361", variation=0.12))),
+]
+
+verify_and_export(SHADED, "auricularia-auricula-judae.glb", vertex_colours=True)

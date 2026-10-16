@@ -1,0 +1,131 @@
+{
+  "species": {
+    "slug": "paecilomyces-variotii",
+    "genus": "Paecilomyces",
+    "speciesEpithet": "variotii",
+    "scientificName": "Paecilomyces variotii",
+    "commonNames": [
+      "Pekilo fungus",
+      "Pekilo mycoprotein"
+    ],
+    "ncbiTaxonomyId": "264951",
+    "taxonomy": {
+      "kingdom": "Fungi",
+      "phylum": "Ascomycota",
+      "class": "Eurotiomycetes",
+      "order": "Eurotiales",
+      "family": "Thermoascaceae",
+      "genus": "Paecilomyces"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "neutral": 4,
+        "umami": 2,
+        "earthy": 2
+      },
+      "textureAxes": {
+        "fibrous": 4,
+        "chewy": 3,
+        "meat_like": 3
+      },
+      "aromaNotes": "Historic Pekilo product was a bland, protein-rich powder or biomass rather than a fruiting-body food",
+      "meatAnalogPotential": "moderate",
+      "meatAnalogRationale": "Pekilo was a full-scale Finnish single-cell protein process in the 1970s; modern work revisits the strain as a circular mycoprotein from residual sugars.",
+      "preparationContext": "Submerged fermentation biomass; historically used as feed protein, with renewed food-SCP interest",
+      "confidenceNotes": "Sensory of a modern food-grade ingredient is not well published; scores are conservative.",
+      "citationKeys": ["romantschuk1978_pekilo", "sillman2021_pekilo"]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "No food fruiting body; identification is by culture and microscopy, not a mushroom",
+      "sporeCharacteristics": "Smooth phialoconidia in long dry chains; no canoe-shaped Fusarium macroconidia",
+      "microscopyNotes": "Irregularly branched conidiophores; phialides elongated and tapering (flask-to-awl). Distinct from Fusarium (macroconidia) and Aspergillus (vesicle). Pekilo literature uses the name P. variotii; the species complex has been revised."
+    },
+    "nutrition": {
+      "proteinPercent": 52,
+      "fiberPercent": 10,
+      "fatPercent": 5,
+      "moisturePercent": 70,
+      "aminoAcidBasis": "percent_of_protein",
+      "limitingAminoAcids": "Sulfur amino acids (typical of fungal SCP)",
+      "preparationContext": "Historic Pekilo biomass was a high-protein SCP from spent sulfite liquor",
+      "confidenceNotes": "Protein range from process literature; attach a primary proximate table before using in formulation specs.",
+      "citationKeys": ["romantschuk1978_pekilo", "sillman2021_pekilo"]
+    },
+    "geographic": {
+      "nativeRange": "Cosmopolitan saprotroph and industrial isolate",
+      "cultivatedRegions": "Finland (historic Pekilo mills); research fermentations",
+      "habitat": "Soil, compost, and industrial residual streams"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Confirm the Pekilo production strain accession before citing a catalog number."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Paecilomyces_variotii_culture.jpg",
+        "caption": "Paecilomyces variotii in culture (the Pekilo organism)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Paecilomyces_variotii_culture.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "research_only",
+      "applicationSummary": "Pekilo was an industrial SCP process in Finland; not a current mainstream retail meat analog, but it is a documented mycoprotein platform on residual sugars.",
+      "companies": [
+        {
+          "name": "Historic Pekilo mills (Tampella / Finnish pulp industry)",
+          "region": "Finland"
+        }
+      ],
+      "productionProcess": [
+        {
+          "title": "Submerged fermentation on residual sugars",
+          "description": "Continuous culture on spent sulfite liquor or other sugar streams; biomass dried as protein."
+        }
+      ],
+      "confidenceNotes": "Historic commercial SCP; current food-grade status must be checked per jurisdiction.",
+      "citationKeys": ["romantschuk1978_pekilo", "sillman2021_pekilo"]
+    },
+    "morphology3D": {
+      "visualizationStyle": "microscopy",
+      "stainColor": "#8a6b2a",
+      "backgroundColor": "#f4f1ea",
+      "hyphaeBranchAngle": 38,
+      "hyphaeThickness": 0.01,
+      "hyphaeColor": "#c4a35a",
+      "hyphaeDensity": 11,
+      "fruitingBodyType": "none",
+      "capDiameter": 0,
+      "stipeLength": 0,
+      "capColor": "#8b7355",
+      "showMycelium": true,
+      "showFruitingBody": false
+    },
+    "regulatory": {
+      "fda": "not_evaluated",
+      "efsa": "not_evaluated",
+      "notes": "Historic feed/SCP use in Finland. Do not treat as an authorized novel food without checking the current dossier."
+    },
+    "speciesCitationKeys": ["romantschuk1978_pekilo", "sillman2021_pekilo", "ncbi_taxonomy"]
+  },
+  "altProteinResearch": [
+    {
+      "title": "A life cycle environmental sustainability analysis of microbial protein production via the Pekilo process",
+      "authors": "Sillman et al.",
+      "journal": "Journal of Cleaner Production",
+      "year": 2021,
+      "doi": "10.1016/j.jclepro.2020.124986",
+      "summary": "Revisits Pekilo as a circular microbial protein route and frames environmental performance versus other protein systems.",
+      "publishedAt": "2021-01-01"
+    }
+  ]
+}

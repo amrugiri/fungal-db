@@ -27,14 +27,18 @@ Open [http://localhost:3000](http://localhost:3000).
 | `npm run dev` | Start development server |
 | `npm run build` | Production build |
 | `npm run db:migrate` | Run Prisma migrations |
-| `npm run db:seed` | Seed 19 MVP species with citations |
+| `npm run db:seed` | Seed 42 species with citations |
 | `npm run db:reset` | Reset database and re-seed |
+| `npm run monthly:scan` | OpenAlex scan of new papers (monthly living-resource update) |
 
 ## Environment variables
 
 ```env
 DATABASE_URL="file:./dev.db"
 ADMIN_PASSWORD="your-secure-password"
+ADMIN_NOTIFY_EMAIL="amruthagirivasan@gmail.com"
+GMAIL_USER="amruthagirivasan@gmail.com"
+GMAIL_APP_PASSWORD=""   # or RESEND_API_KEY for /contribute emails
 ```
 
 ## Features
@@ -44,6 +48,8 @@ ADMIN_PASSWORD="your-secure-password"
 - **Compare** — side-by-side comparison of 2–4 species with CSV export
 - **Search** — full-text on scientific name, common names, genus
 - **Admin** — password-protected CRUD, DOI lookup (OpenAlex), NCBI taxonomy helper
+- **Contribute** — `/contribute` SME form (sensory + alt-protein usage). Submissions are emailed for review; nothing is published until a source is checked
+- **Monthly literature scan** — GitHub Action on the 1st of each month; empty fields are filled only from papers
 
 ## Database
 
@@ -72,6 +78,7 @@ npm run build   # verify locally first
 - `docs/GLOSSARY.md` — coding and mycology terms
 - `docs/MYCOLOGY_PRIMER.md` — fungi basics for food scientists
 - `docs/CURATION_GUIDE.md` — how to verify and add species
+- `docs/MONTHLY_UPDATE.md` — monthly OpenAlex scan and empty-field fill playbook
 
 ## License
 

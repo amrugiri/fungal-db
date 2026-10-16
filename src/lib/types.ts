@@ -15,6 +15,25 @@ export type ProductionProcessStep = {
 
 export type TasteAxes = Record<string, number>;
 export type TextureAxes = Record<string, number>;
+
+/** Published chemical, instrumental, or panel measurement — not a curator 0–5 score. */
+export type SensoryEvidenceKind =
+  | "taste_compound"
+  | "volatile"
+  | "texture_instrumental"
+  | "panel_score";
+
+export type SensoryPublishedMeasurement = {
+  kind: SensoryEvidenceKind;
+  name: string;
+  value?: number;
+  unit?: string;
+  method: string;
+  sample?: string;
+  notes?: string;
+  citationKey: string;
+  doi?: string;
+};
 export type AminoAcidBasis = "per_100g_protein" | "per_100g_food" | "percent_of_protein";
 
 export type AminoAcids = Record<string, number>;

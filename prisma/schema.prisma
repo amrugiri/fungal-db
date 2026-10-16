@@ -127,6 +127,7 @@ model SensoryProfile {
   meatAnalogPotential MeatAnalogPotential @default(unknown) @map("meat_analog_potential")
   meatAnalogRationale String?             @map("meat_analog_rationale")
   preparationContext  String?             @map("preparation_context")
+  publishedEvidence   String?             @map("published_evidence")
   verificationStatus  VerificationStatus  @default(draft) @map("verification_status")
   confidenceNotes     String?             @map("confidence_notes")
   createdAt           DateTime            @default(now()) @map("created_at")

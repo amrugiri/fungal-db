@@ -1,0 +1,151 @@
+{
+  "species": {
+    "slug": "tuber-borchii",
+    "genus": "Tuber",
+    "speciesEpithet": "borchii",
+    "scientificName": "Tuber borchii",
+    "commonNames": [
+      "bianchetto truffle",
+      "whitish truffle",
+      "spring white truffle"
+    ],
+    "ncbiTaxonomyId": "42251",
+    "taxonomy": {
+      "kingdom": "Fungi",
+      "phylum": "Ascomycota",
+      "class": "Pezizomycetes",
+      "order": "Pezizales",
+      "family": "Tuberaceae",
+      "genus": "Tuber"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 4,
+        "sulfurous": 4,
+        "earthy": 3
+      },
+      "textureAxes": {
+        "firm": 3,
+        "meat_like": 1
+      },
+      "aromaNotes": "Sulfur/garlic and fermented notes from mycelial cultures, especially when methionine is fed; fruiting bodies share the Tuber sulfur-volatile signature",
+      "meatAnalogPotential": "low",
+      "meatAnalogRationale": "Not a bulk protein or fibrous analog. Relevant as a mycelial flavor system: axenic T. borchii cultures produce human-detectable truffle aroma (Ehrlich-pathway sulfur volatiles). Related Tuber fruiting bodies also yield umami peptides studied for clean-label flavor. Do not treat fruiting-body harvest as a scalable protein ingredient.",
+      "preparationContext": "Culinary fruiting bodies (mycorrhizal, orchard-grown or wild); R&D path is submerged/solid-state mycelium for aroma, not meat texture",
+      "confidenceNotes": "0–5 axes are a curator synthesis. Published rows below are GC-MS identifications from Mustafa et al. (2020) and Vahdatzadeh & Splivallo (2018), not converted panel scores.",
+      "publishedEvidence": [
+        {
+          "kind": "volatile",
+          "name": "2-Methyl-4,5-dihydrothiophene and 3-methyl-4,5-dihydrothiophene",
+          "method": "GC-MS review of fruiting-body volatiles",
+          "sample": "Tuber borchii ascomata",
+          "notes": "Reported as species-characteristic thiophene derivatives and important contributors to the human-sensed bianchetto aroma.",
+          "citationKey": "mustafa2020_truffle",
+          "doi": "10.3390/molecules25245948"
+        },
+        {
+          "kind": "volatile",
+          "name": "Dimethyl sulfide, 2-methylbutanal, 3-methylbutanal, 1-octen-3-ol",
+          "method": "GC-MS review of fruiting-body volatiles",
+          "sample": "White and black Tuber species including T. borchii",
+          "notes": "Common across most Tuber species; not unique to bianchetto.",
+          "citationKey": "mustafa2020_truffle",
+          "doi": "10.3390/molecules25245948"
+        },
+        {
+          "kind": "volatile",
+          "name": "Ehrlich-pathway Strecker aldehydes (2-methylbutanal and related C5 alcohols)",
+          "method": "GC-MS of axenic mycelium; methionine feeding",
+          "sample": "T. borchii mycelial cultures",
+          "notes": "Mycelium produces human-detectable truffle aroma; methionine increases sulfur volatiles. This is the published R&D path for flavor without fruiting bodies.",
+          "citationKey": "vahdatzadeh2018_tuber",
+          "doi": "10.1038/s41598-018-27620-w"
+        }
+      ],
+      "citationKeys": ["vahdatzadeh2018_tuber", "mustafa2020_truffle"]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans",
+      "fruitingBodyStructure": "Hypogeous ascoma (truffle) with gleba and pale peridium; ectomycorrhizal, not a gilled mushroom",
+      "sporeCharacteristics": "Ornamented ascospores in asci",
+      "microscopyNotes": "Food-flavor R&D uses vegetative mycelium in axenic culture, not the ascoma"
+    },
+    "nutrition": {
+      "proteinPercent": 20,
+      "fatPercent": 5,
+      "moisturePercent": 75,
+      "preparationContext": "Fruiting-body proximate values vary widely; mycelial flavor biomass is not a protein ingredient",
+      "confidenceNotes": "Protein is not the use-case. Do not use these figures for formulation specs.",
+      "citationKeys": ["mustafa2020_truffle", "kalac2016"]
+    },
+    "geographic": {
+      "nativeRange": "Southern Europe (Italy and neighboring regions)",
+      "cultivatedRegions": "European truffle orchards; mycelial flavor cultures in the lab",
+      "habitat": "Ectomycorrhizal on oaks and other hosts; ascomata subterranean"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Flavor work uses axenic T. borchii isolates; add a verified accession before citing a catalog number."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Tartufo_marzuolo.jpg",
+        "caption": "Bianchetto / spring white truffle (Tuber borchii)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Tartufo_marzuolo.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": false,
+      "commercialStatus": "traditional_food",
+      "applicationSummary": "Culinary truffle and a documented mycelial source of natural truffle aroma (patents and strain-selection papers). Alt-protein role is flavor (umami / sulfur meaty notes), not fibrous protein. Black truffle (T. melanosporum) is the larger culinary market; T. borchii is the species with the strongest published mycelial-aroma data.",
+      "companies": [
+        {
+          "name": "European truffle orchards / mycelial aroma research groups",
+          "region": "Europe"
+        }
+      ],
+      "confidenceNotes": "Flavor adjunct, not a meat analog biomass.",
+      "citationKeys": ["vahdatzadeh2018_tuber", "mustafa2020_truffle"]
+    },
+    "morphology3D": {
+      "visualizationStyle": "microscopy",
+      "stainColor": "#8a7048",
+      "backgroundColor": "#f4f1ea",
+      "hyphaeBranchAngle": 40,
+      "hyphaeThickness": 0.015,
+      "hyphaeColor": "#c4b49c",
+      "hyphaeDensity": 10,
+      "fruitingBodyType": "none",
+      "capDiameter": 0,
+      "stipeLength": 0,
+      "capColor": "#e8d9c0",
+      "showMycelium": true,
+      "showFruitingBody": false
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "traditional_food",
+      "notes": "Traditional culinary ascomata. Mycelial aroma preparations would need their own composition and labeling review."
+    },
+    "speciesCitationKeys": ["vahdatzadeh2018_tuber", "mustafa2020_truffle", "ncbi_taxonomy"]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Improving truffle mycelium flavour through strain selection targeting volatiles of the Ehrlich pathway",
+      "authors": "Vahdatzadeh & Splivallo",
+      "journal": "Scientific Reports",
+      "year": 2018,
+      "doi": "10.1038/s41598-018-27620-w",
+      "summary": "Axenic T. borchii mycelium produces human-detectable truffle aroma; methionine feeding increases sulfur volatiles. This is the main published path for truffle flavor without harvesting fruiting bodies.",
+      "publishedAt": "2018-06-18"
+    }
+  ]
+}

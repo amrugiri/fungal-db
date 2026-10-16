@@ -14,12 +14,17 @@ import {
   MICROSCOPY_SECTION_RANGE,
 } from "@/components/morphology-viewer/anatomical/MicroscopyAnatomy";
 import { AnatomicalFruitingBody } from "@/components/morphology-viewer/anatomical/AnatomicalFruitingBodies";
+import { AspergillusAnatomy } from "@/components/morphology-viewer/anatomical/AspergillusAnatomy";
 import {
   GlbAnatomy,
   glbSectionRange,
 } from "@/components/morphology-viewer/anatomical/GlbAnatomy";
+import { PaecilomycesAnatomy } from "@/components/morphology-viewer/anatomical/PaecilomycesAnatomy";
+import { YeastAnatomy } from "@/components/morphology-viewer/anatomical/YeastAnatomy";
 import { getMorphologyReferenceAssets } from "@/lib/species-morphology-assets";
 import { getSpeciesMorphologyModel } from "@/lib/species-morphology-models";
+
+const YEAST_SLUGS = new Set(["cyberlindnera-jadinii"]);
 
 export function getSectionRange(
   slug: string,
@@ -68,6 +73,38 @@ export function AnatomicalBody({
           showSection={showSection}
         />
       </Suspense>
+    );
+  }
+
+  if (slug === "paecilomyces-variotii") {
+    return (
+      <PaecilomycesAnatomy
+        stipeColor="#d4b56a"
+        conidiaColor={parameters.stainColor ?? "#6b7c3a"}
+        sectionOffset={sectionOffset}
+        showSection={showSection}
+      />
+    );
+  }
+
+  if (slug === "aspergillus-niger") {
+    return (
+      <AspergillusAnatomy
+        stipeColor="#c4b49a"
+        conidiaColor="#1a1a1a"
+        sectionOffset={sectionOffset}
+        showSection={showSection}
+      />
+    );
+  }
+
+  if (YEAST_SLUGS.has(slug)) {
+    return (
+      <YeastAnatomy
+        color={parameters.stainColor ?? parameters.hyphaeColor}
+        sectionOffset={sectionOffset}
+        showSection={showSection}
+      />
     );
   }
 

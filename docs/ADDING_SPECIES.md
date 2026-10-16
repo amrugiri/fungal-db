@@ -50,4 +50,4 @@ Options: `--no-db` (JSON only), `--full-reseed` (rebuild entire DB).
 
 ## Admin page vs CLI
 
-The admin UI (`/admin`) only creates a sparse record. Use `species:scaffold` + `species:add` for a full page like the existing 19 species.
+The admin UI (`/admin`) only creates a sparse record. Use `species:scaffold` + `species:add` for a full page like the existing 42 species.

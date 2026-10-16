@@ -238,6 +238,64 @@ export const speciesImageUrls: Record<
     attributionText: "Wikimedia Commons",
     sourceUrl: "https://commons.wikimedia.org/wiki/File:Agaricus_subrufescens.jpg",
   },
+  "tuber-borchii": {
+    url: "https://upload.wikimedia.org/wikipedia/commons/b/b6/Tartufo_marzuolo.jpg",
+    caption: "Bianchetto / spring white truffle (Tuber borchii)",
+    license: "CC (see Commons file page)",
+    attributionText: "Wikimedia Commons",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Tartufo_marzuolo.jpg",
+  },
+  "cantharellus-cibarius": {
+    url: "https://upload.wikimedia.org/wikipedia/commons/e/e5/2007-07-14_Cantharellus_cibarius_cropped.jpg",
+    caption: "Golden chanterelle (Cantharellus cibarius)",
+    license: "CC (see Commons file page)",
+    attributionText: "Wikimedia Commons",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:2007-07-14_Cantharellus_cibarius_cropped.jpg",
+  },
+  "tricholoma-matsutake": {
+    url: "https://upload.wikimedia.org/wikipedia/commons/3/3a/2014.11.15_matsutake.jpg",
+    caption: "Matsutake (Tricholoma matsutake)",
+    license: "CC (see Commons file page)",
+    attributionText: "Wikimedia Commons",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:2014.11.15_matsutake.jpg",
+  },
+  "aspergillus-niger": {
+    url: "https://upload.wikimedia.org/wikipedia/commons/7/74/Aspergillus_niger_01.jpg",
+    caption: "Aspergillus niger culture",
+    license: "CC (see Commons file page)",
+    attributionText: "Wikimedia Commons",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Aspergillus_niger_01.jpg",
+  },
+  "cyberlindnera-jadinii": {
+    url: "https://upload.wikimedia.org/wikipedia/commons/b/be/Cyberlindnera_jadinii.png",
+    caption: "Cyberlindnera jadinii: budding cells (A–B) and cream colonies (C–D)",
+    license: "CC (see Commons file page)",
+    attributionText: "Wikimedia Commons",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Cyberlindnera_jadinii.png",
+  },
+  "fusarium-sp-flavolapis": {
+    url: "https://upload.wikimedia.org/wikipedia/commons/8/86/Microconidia_and_conidiophores_of_Fusarium.png",
+    caption:
+      "Fusarium microconidia and conidiophores (genus-level; not a photograph of strain flavolapis)",
+    license: "CC BY-SA 4.0",
+    attributionText: "Wikimedia Commons",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Microconidia_and_conidiophores_of_Fusarium.png",
+  },
+  "paecilomyces-variotii": {
+    url: "https://upload.wikimedia.org/wikipedia/commons/3/32/Paecilomyces_variotii_culture.jpg",
+    caption: "Paecilomyces variotii in culture (the Pekilo organism)",
+    license: "CC (see Commons file page)",
+    attributionText: "Wikimedia Commons",
+    sourceUrl: "https://commons.wikimedia.org/wiki/File:Paecilomyces_variotii_culture.jpg",
+  },
+  "pleurotus-pulmonarius": {
+    url: "https://upload.wikimedia.org/wikipedia/commons/c/ce/2012-08-07_Pleurotus_pulmonarius_%28Jacq.%29_P._Kumm_246231.jpg",
+    caption: "Phoenix oyster (Pleurotus pulmonarius)",
+    license: "CC (see Commons file page)",
+    attributionText: "Wikimedia Commons",
+    sourceUrl:
+      "https://commons.wikimedia.org/wiki/File:2012-08-07_Pleurotus_pulmonarius_(Jacq.)_P._Kumm_246231.jpg",
+  },
 };
 
 export function applySpeciesImages<T extends { slug: string; images: { url: string }[] }>(

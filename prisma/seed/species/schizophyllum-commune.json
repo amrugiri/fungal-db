@@ -31,7 +31,7 @@
       "meatAnalogPotential": "high",
       "meatAnalogRationale": "Emerging mycoprotein platform: fibrous hyphal biomass and traditional edible fruiting bodies; peer-reviewed meat-analog potential.",
       "preparationContext": "Fruiting bodies cooked; or submerged/solid-state mycelial biomass for analogs",
-      "confidenceNotes": "Frontiers review frames S. commune as novel mycoprotein source.",
+      "confidenceNotes": "0–5 axes are a curator synthesis. Kleijburg & Wösten (2025) review biology and applications of S. commune; they do not report a trained sensory panel.",
       "citationKeys": [
         "wosten2021_schizophyllum",
         "valverde2015"
@@ -148,13 +148,13 @@
   },
   "altProteinResearch": [
     {
-      "title": "Schizophyllum commune as a novel source of mycoprotein",
-      "authors": "W\u00f6sten et al.",
-      "journal": "Frontiers in Sustainable Food Systems",
-      "year": 2021,
-      "doi": "10.3389/fsufs.2021.732685",
-      "summary": "Reviews cultivation, composition, and meat-analog potential of S. commune mycoprotein \u2014 key alt-protein citation.",
-      "publishedAt": "2021-01-01"
+      "title": "The versatility of Schizophyllum commune in nature and application",
+      "authors": "Kleijburg FEL, Wösten HAB",
+      "journal": "Fungal Biology Reviews",
+      "year": 2025,
+      "doi": "10.1016/j.fbr.2025.100431",
+      "summary": "Reviews biology and applications of S. commune, including food use of fruiting bodies and mycelium-material work. Not a Frontiers mycoprotein trial.",
+      "publishedAt": "2025-01-01"
     }
   ]
 }

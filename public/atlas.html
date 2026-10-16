@@ -1,0 +1,1342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fungal Morphology Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --soil:#15100c; --soil-2:#1d1610; --soil-3:#271e16;
+    --line:#3a2d21;
+    --bone:#e9dfd0; --bone-dim:#a89684;
+    --accent:#c98a7d;          /* pink-ochre, taken from Agaricus gills */
+    --accent-dim:#8d5e55;
+    --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+    --serif:"EB Garamond",Georgia,serif;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:var(--soil);color:var(--bone);
+    font-family:var(--mono);font-size:13px;-webkit-font-smoothing:antialiased}
+  #app{display:grid;grid-template-columns:224px 1fr 300px;height:100%}
+  @media (max-width:1100px){#app{grid-template-columns:190px 1fr}#info{display:none}}
+  @media (max-width:760px){#app{grid-template-columns:1fr}#rail{display:none}}
+
+  aside{background:var(--soil-2);overflow-y:auto}
+  #rail{border-right:1px solid var(--line);padding:18px 0 40px}
+  #info{border-left:1px solid var(--line);padding:20px 18px 40px}
+
+  .brand{padding:0 16px 16px;border-bottom:1px solid var(--line);margin-bottom:12px}
+  .brand h1{font-family:var(--serif);font-size:19px;font-weight:600;margin:0;letter-spacing:.01em}
+  .brand p{margin:5px 0 0;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--bone-dim)}
+
+  .phylum{padding:14px 16px 6px;font-size:9.5px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--accent-dim)}
+  .sp{display:block;width:100%;text-align:left;background:none;border:0;cursor:pointer;
+    padding:7px 16px;color:var(--bone-dim);border-left:2px solid transparent;line-height:1.35}
+  .sp:hover{color:var(--bone);background:#ffffff06}
+  .sp.on{color:var(--bone);border-left-color:var(--accent);background:#ffffff09}
+  .sp .bi{font-family:var(--serif);font-style:italic;font-size:15px;display:block}
+  .sp .cn{font-size:10px;letter-spacing:.03em;opacity:.72}
+
+  #stage{position:relative;overflow:hidden;background:
+    radial-gradient(120% 90% at 50% 8%,#241a13 0%,var(--soil) 62%)}
+  canvas{display:block;width:100%;height:100%;touch-action:none}
+
+  #labels{position:absolute;inset:0;pointer-events:none}
+  .lab{position:absolute;transform:translate(0,-50%);white-space:nowrap;
+    font-size:10.5px;letter-spacing:.04em;color:var(--bone);
+    text-shadow:0 1px 4px #000,0 0 12px #000;transition:opacity .12s linear}
+  .lab i{display:inline-block;width:5px;height:5px;border-radius:50%;
+    background:var(--accent);margin-right:7px;vertical-align:middle;
+    box-shadow:0 0 0 3px #c98a7d22}
+  .lab .µ{color:var(--bone-dim);margin-left:7px}
+
+  #hud{position:absolute;left:18px;bottom:16px;pointer-events:none}
+  #barwrap{display:flex;align-items:center;gap:9px}
+  #bar{height:8px;border:1px solid var(--bone);border-top:0;
+    box-shadow:0 1px 0 #0008}
+  #barlabel{font-size:10.5px;letter-spacing:.06em;color:var(--bone)}
+  #hint{margin-top:9px;font-size:9.5px;color:#7d6c5c;letter-spacing:.05em}
+
+  #toolbar{position:absolute;right:16px;top:14px;display:flex;flex-wrap:wrap;
+    gap:6px;justify-content:flex-end;max-width:330px}
+  .tg{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+    padding:6px 10px;border:1px solid var(--line);border-radius:2px;background:#0d0906cc;
+    color:var(--bone-dim);cursor:pointer;backdrop-filter:blur(6px)}
+  .tg:hover{color:var(--bone);border-color:#54402f}
+  .tg.on{color:var(--soil);background:var(--accent);border-color:var(--accent)}
+
+  #sliders{position:absolute;left:18px;right:18px;bottom:64px;display:flex;
+    gap:22px;flex-wrap:wrap;pointer-events:none}
+  .sl{pointer-events:auto;min-width:210px;flex:1;max-width:330px;
+    background:#0d0906cc;border:1px solid var(--line);border-radius:3px;
+    padding:9px 12px 10px;backdrop-filter:blur(6px)}
+  .sl.hide{display:none}
+  .sl label{display:flex;justify-content:space-between;font-size:9.5px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--bone-dim);margin-bottom:7px}
+  .sl label b{color:var(--accent);font-weight:400;text-transform:none;letter-spacing:.02em}
+  input[type=range]{width:100%;-webkit-appearance:none;background:transparent;margin:0}
+  input[type=range]::-webkit-slider-runnable-track{height:2px;background:#4a3a2b}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:12px;height:12px;
+    border-radius:50%;background:var(--accent);margin-top:-5px;cursor:pointer}
+  input[type=range]::-moz-range-track{height:2px;background:#4a3a2b}
+  input[type=range]::-moz-range-thumb{width:12px;height:12px;border:0;border-radius:50%;
+    background:var(--accent);cursor:pointer}
+
+  #info h2{font-family:var(--serif);font-style:italic;font-weight:600;
+    font-size:25px;margin:0 0 2px;line-height:1.14}
+  #info .common{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--bone-dim);margin-bottom:16px}
+  #info h3{font-size:9.5px;letter-spacing:.17em;text-transform:uppercase;
+    color:var(--accent-dim);margin:20px 0 8px;font-weight:400}
+  #info p{margin:0 0 10px;line-height:1.62;color:#cbbba8;font-size:12px}
+  table{width:100%;border-collapse:collapse;font-size:11.5px}
+  td{padding:5px 0;border-bottom:1px solid #2b211826;vertical-align:top}
+  td:first-child{color:var(--bone-dim);padding-right:10px}
+  td:last-child{text-align:right;white-space:nowrap}
+  .src{font-size:10px;line-height:1.55;color:#8d7d6c}
+  .src b{color:var(--bone-dim);font-weight:400}
+  .flag{color:var(--accent);font-size:9px;letter-spacing:.08em;text-transform:uppercase}
+  .warn{border:1px solid #4a3325;background:#2a1c1288;padding:9px 10px;border-radius:3px;
+    font-size:10.5px;line-height:1.6;color:#c0a893;margin-top:14px}
+  #loading{position:absolute;inset:0;display:grid;place-items:center;
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bone-dim)}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="rail">
+    <div class="brand">
+      <h1>Morphology Atlas</h1>
+      <p>Procedural · three.js</p>
+    </div>
+    <nav id="list"></nav>
+  </aside>
+
+  <main id="stage">
+    <canvas id="gl"></canvas>
+    <div id="labels"></div>
+    <div id="toolbar">
+      <button class="tg on" data-t="labels">Labels</button>
+      <button class="tg on" data-t="substrate">Substrate</button>
+      <button class="tg" data-t="wire">Wireframe</button>
+      <button class="tg" data-t="spin">Auto-rotate</button>
+      <button class="tg" data-t="reset">Reset</button>
+    </div>
+    <div id="sliders">
+      <div class="sl hide" id="stageSl">
+        <label>Development <b id="stageVal">mature</b></label>
+        <input type="range" id="stageRange" min="0" max="300" value="300">
+      </div>
+      <div class="sl" id="cutSl">
+        <label>Section <b id="cutVal">off</b></label>
+        <input type="range" id="cutRange" min="0" max="100" value="0">
+      </div>
+    </div>
+    <div id="hud">
+      <div id="barwrap"><div id="bar" style="width:120px"></div><span id="barlabel">—</span></div>
+      <div id="hint">drag orbit · wheel/pinch zoom · arrows nudge</div>
+    </div>
+    <div id="loading">loading three.js…</div>
+  </main>
+
+  <aside id="info"></aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+"use strict";
+/* ============================================================================
+   FUNGAL MORPHOLOGY ATLAS
+   Every specimen is generated procedurally from named morphological
+   parameters. There are no imported meshes and no primitives dressed up as
+   mushrooms: pilei are solids of revolution from explicit profile functions,
+   lamellae are individually generated blades whose attachment is a real
+   geometric property, and repeated elements are merged into single buffers.
+   ========================================================================= */
+
+/* ---------- seeded PRNG: specimens are reproducible between reloads ------- */
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    let t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+const V2 = (x,y) => new THREE.Vector2(x,y);
+const lerp = (a,b,t) => a + (b-a)*t;
+const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
+const smooth = t => t*t*(3-2*t);
+
+/* ---------- geometry helpers -------------------------------------------- */
+/* Merge repeated elements into one buffer geometry: scales, warts, spores,
+   blades and hyphae all collapse to a single draw call this way. */
+function mergeGeoms(list){
+  const flat = list.filter(Boolean).map(g => g.index ? g.toNonIndexed() : g);
+  let n = 0;
+  for (const g of flat){ if(!g.attributes.normal) g.computeVertexNormals(); n += g.attributes.position.count; }
+  const pos = new Float32Array(n*3), nor = new Float32Array(n*3);
+  let o = 0;
+  for (const g of flat){
+    pos.set(g.attributes.position.array, o*3);
+    nor.set(g.attributes.normal.array, o*3);
+    o += g.attributes.position.count;
+  }
+  const out = new THREE.BufferGeometry();
+  out.setAttribute('position', new THREE.BufferAttribute(pos,3));
+  out.setAttribute('normal',   new THREE.BufferAttribute(nor,3));
+  return out;
+}
+
+/* A solid of revolution built from an explicit profile. `pts` runs from the
+   apex on the axis, out over the upper surface, round the margin and back
+   along the underside to the axis, so the result is a closed solid. */
+function lathe(pts, seg){
+  /* LatheGeometry's winding follows the order of the profile, so a profile
+     authored apex-first comes out inside-out: the outer surface is back-face
+     culled and you see straight through the cap to the gills. Normalise by the
+     signed area of the (r,y) polygon so every profile revolves outward,
+     whatever order it was written in. */
+  let a = 0;
+  for (let i=0;i<pts.length;i++){
+    const p = pts[i], q = pts[(i+1)%pts.length];
+    a += p.x*q.y - q.x*p.y;
+  }
+  return new THREE.LatheGeometry(a > 0 ? pts.slice().reverse() : pts, seg || 96);
+}
+
+/* Sample a profile function r -> y between two radii. */
+function profile(r0, r1, n, yOf){
+  const out = [];
+  for (let i=0;i<n;i++){ const r = lerp(r0, r1, i/(n-1)); out.push(V2(Math.max(r,0), yOf(r))); }
+  return out;
+}
+
+/* One lamella. The shape is drawn in the (radius, height) plane and extruded
+   tangentially, so gill ATTACHMENT is geometry: a free gill simply starts
+   outside the stipe, a decurrent one carries its inner edge down the stipe. */
+function blade(angle, pts, thickness){
+  const s = new THREE.Shape();
+  s.moveTo(pts[0][0], pts[0][1]);
+  for (let i=1;i<pts.length;i++) s.lineTo(pts[i][0], pts[i][1]);
+  s.closePath();
+  const g = new THREE.ExtrudeGeometry(s, {depth:thickness, bevelEnabled:false, curveSegments:2});
+  g.translate(0,0,-thickness/2);
+  g.rotateY(-angle);
+  return g;
+}
+
+/* A closed hollow shell of revolution whose radius may be warped by angle --
+   the morel's alveolate head, and its continuous internal chamber. */
+function hollowWarped(prof, warp, wall, seg){
+  const N = prof.length, S = seg;
+  const pos = [], idx = [];
+  const push = (x,y,z)=>{ pos.push(x,y,z); return pos.length/3 - 1; };
+  const outer = [], inner = [];
+  const topO = push(0, prof[0].y, 0);
+  for (let i=1;i<N;i++){
+    const ring=[];
+    for (let j=0;j<S;j++){
+      const th = j/S*Math.PI*2;
+      const r = Math.max(prof[i].x + (warp ? warp(i/(N-1), th) : 0), 0.001);
+      ring.push(push(r*Math.cos(th), prof[i].y, r*Math.sin(th)));
+    }
+    outer.push(ring);
+  }
+  const topI = push(0, prof[0].y - wall*0.9, 0);
+  for (let i=1;i<N;i++){
+    const ring=[];
+    for (let j=0;j<S;j++){
+      const th = j/S*Math.PI*2;
+      const r = Math.max(prof[i].x + (warp ? warp(i/(N-1), th) : 0) - wall, 0.001);
+      ring.push(push(r*Math.cos(th), prof[i].y + wall*0.15, r*Math.sin(th)));
+    }
+    inner.push(ring);
+  }
+  const tri=(a,b,c)=>idx.push(a,b,c);
+  for (let j=0;j<S;j++) tri(topO, outer[0][j], outer[0][(j+1)%S]);
+  for (let i=0;i<outer.length-1;i++)
+    for (let j=0;j<S;j++){
+      const a=outer[i][j], b=outer[i][(j+1)%S], c=outer[i+1][j], d=outer[i+1][(j+1)%S];
+      tri(a,c,d); tri(a,d,b);
+    }
+  for (let j=0;j<S;j++) tri(topI, inner[0][(j+1)%S], inner[0][j]);
+  for (let i=0;i<inner.length-1;i++)
+    for (let j=0;j<S;j++){
+      const a=inner[i][j], b=inner[i][(j+1)%S], c=inner[i+1][j], d=inner[i+1][(j+1)%S];
+      tri(a,d,c); tri(a,b,d);
+    }
+  const lo=outer[outer.length-1], li=inner[inner.length-1];
+  for (let j=0;j<S;j++){
+    const a=lo[j], b=lo[(j+1)%S], c=li[j], d=li[(j+1)%S];
+    tri(a,b,d); tri(a,d,c);
+  }
+  const g = new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos,3));
+  g.setIndex(idx);
+  g.computeVertexNormals();
+  return g;
+}
+
+/* ---------- palette ------------------------------------------------------ */
+/* r128 predates ColorManagement, so material colours are consumed as LINEAR.
+   Feeding sRGB hex straight in washes everything out; convert explicitly. */
+/* DoubleSide throughout. A closed profile that doubles back on itself -- apex,
+   out to the margin, then back along the underside -- cannot be given a single
+   consistent winding by LatheGeometry, so half the cap renders inside-out under
+   back-face culling. It is also what the section slider needs in order to show
+   an interior at all. */
+const MAT = (hex, rough, opts) => new THREE.MeshStandardMaterial(Object.assign({
+  color:new THREE.Color(hex).convertSRGBToLinear(), roughness:rough, metalness:0.0,
+  side:THREE.DoubleSide
+}, opts||{}));
+
+/* ============================================================================
+   LAMELLAE
+   Two tiers of lamellulae are inserted between the full-length gills, which
+   is how a real hymenophore keeps spore-bearing area roughly constant as the
+   cap expands. `attachment` changes the shape's inner edge, nothing else.
+   ========================================================================= */
+function lamellae(o){
+  const {count, rOuter, rInnerFree, stipeR, underOf, depthOf, thickness,
+         attachment, tiers} = o;
+  const geoms = [];
+  const total = count * (tiers ? 4 : 1);
+  for (let k=0;k<total;k++){
+    const angle = k/total*Math.PI*2;
+    const tier = tiers ? (k % 4 === 0 ? 0 : (k % 2 === 0 ? 1 : 2)) : 0;
+    const reach = tier===0 ? 1.0 : (tier===1 ? 0.58 : 0.3);
+    const rIn = lerp(rOuter, attachment==='decurrent' ? stipeR*0.92 : rInnerFree, reach);
+    if (rOuter - rIn < 0.02) continue;
+    const n = 7, pts = [];
+    for (let i=0;i<n;i++){
+      const r = lerp(rIn, rOuter, i/(n-1));
+      pts.push([r, underOf(r)]);
+    }
+    for (let i=n-1;i>=0;i--){
+      const r = lerp(rIn, rOuter, i/(n-1));
+      pts.push([r, underOf(r) - depthOf(r) * (tier===0?1:0.86)]);
+    }
+    if (attachment === 'decurrent' && tier === 0){
+      /* the inner edge runs down the stipe instead of stopping at it */
+      pts.push([stipeR*0.92, underOf(rIn) - depthOf(rIn) - 0.30]);
+      pts.push([stipeR*0.86, underOf(rIn) - depthOf(rIn) - 0.34]);
+    }
+    geoms.push(blade(angle, pts, thickness));
+  }
+  return mergeGeoms(geoms);
+}
+
+/* ============================================================================
+   SPECIMEN BUILDERS
+   ========================================================================= */
+const SPECIMENS = {};
+
+/* ---- the centrepiece: Agaricus bisporus, four developmental stages ------- */
+SPECIMENS['agaricus'] = function(stage){
+  /* stage 0 primordium · 1 button, partial veil intact · 2 veil rupture · 3 mature */
+  const rnd = mulberry32(7);
+  const g = new THREE.Group();
+  const t = clamp(stage,0,3);
+
+  /* Expansion: the pileus flattens and widens; the stipe elongates. */
+  const expand = smooth(clamp((t-0.6)/2.4,0,1));
+  const R      = lerp(0.42, 1.00, expand);
+  const domeH  = lerp(0.50, 0.46, expand);
+  const flat   = lerp(0.62, 1.05, expand);      /* profile exponent: globose -> convex */
+  const stipeL = lerp(0.42, 1.35, smooth(clamp(t/3,0,1)));
+  const stipeR = lerp(0.20, 0.26, expand);
+  const rim    = 0.075;
+
+  /* The margin curls under. Without it the rim is a knife edge and the gills
+     show from above, which no button mushroom does. */
+  const curl = lerp(0.26, 0.17, expand);
+  const upper = r => domeH * Math.pow(Math.max(1-Math.pow(r/R,2),0), flat*0.72)
+                     - curl * Math.pow(clamp(r/R,0,1), 6);
+  const yRim  = upper(R);
+  const under = r => (yRim - rim) + 0.20 * (1 - Math.pow(clamp(r/R,0,1),1.6));
+
+  const capPts = profile(0,R,34,upper)
+    .concat([V2(R, yRim-rim*0.45), V2(R, yRim-rim)])
+    .concat(profile(R,0,30,under));
+  const cap = new THREE.Mesh(lathe(capPts,96), MAT('#c8b09a',0.88));
+  g.add(cap);
+
+  const stipePts = [V2(0, under(0)*0.9)];
+  for (let i=0;i<16;i++){
+    const f = i/15;
+    stipePts.push(V2(stipeR*(1+0.10*Math.pow(f,3)), lerp(under(0)*0.9, -stipeL, f)));
+  }
+  stipePts.push(V2(stipeR*0.55,-stipeL), V2(0,-stipeL));
+  g.add(new THREE.Mesh(lathe(stipePts,64), MAT('#efe7da',0.9)));
+
+  /* Gills: FREE — they stop short of the stipe and never touch it. Colour
+     interpolates pink -> chocolate as the spores mature. */
+  const gillCol = new THREE.Color('#e7bcbe').lerp(new THREE.Color('#3a281c'),
+                                                  smooth(clamp((t-1.1)/1.9,0,1)));
+  const gills = new THREE.Mesh(lamellae({
+    count:22, tiers:true, rOuter:R*0.88, rInnerFree:Math.max(stipeR*1.5,0.30),
+    stipeR, underOf:under, depthOf:r=>0.085*(1-0.35*(r/R)),
+    thickness:0.011, attachment:'free'
+  }), MAT(gillCol,0.95,{side:THREE.DoubleSide}));
+  gills.visible = t > 0.35;
+  g.add(gills);
+
+  /* Partial veil. Intact it is a continuous membrane from margin to stipe;
+     between t=1.6 and t=2.4 each radial sector tears back independently, so
+     the membrane genuinely rips and leaves a ragged pendant annulus. */
+  const tear = clamp((t-1.55)/0.85, 0, 1);
+  if (tear < 1){
+    const S = 72, secs = [];
+    for (let j=0;j<S;j++){
+      const a0 = j/S*Math.PI*2, a1 = (j+1)/S*Math.PI*2;
+      const jitter = 0.55 + rnd()*0.45;
+      const rOut = lerp(R*0.99, stipeR*1.12, clamp(tear*jitter*1.6,0,1));
+      if (rOut <= stipeR*1.16) continue;
+      const yAt = r => lerp(under(R)-0.02, -stipeL*0.30, Math.pow((rOut-r)/(rOut-stipeR*0.9+1e-6),0.8)) - tear*0.12;
+      const pos = [], idx = [];
+      const M = 8;
+      for (let i=0;i<M;i++){
+        const r = lerp(stipeR*0.94, rOut, i/(M-1)), y = yAt(r);
+        pos.push(r*Math.cos(a0), y, r*Math.sin(a0));
+        pos.push(r*Math.cos(a1), y, r*Math.sin(a1));
+      }
+      for (let i=0;i<M-1;i++){
+        const b=i*2; idx.push(b,b+2,b+3, b,b+3,b+1);
+      }
+      const gg = new THREE.BufferGeometry();
+      gg.setAttribute('position', new THREE.Float32BufferAttribute(pos,3));
+      gg.setIndex(idx); gg.computeVertexNormals();
+      secs.push(gg);
+    }
+    if (secs.length){
+      g.add(new THREE.Mesh(mergeGeoms(secs), MAT('#f2ece1',0.92,{side:THREE.DoubleSide})));
+    }
+  }
+
+  /* The pendant annulus: what the torn veil becomes. */
+  if (t > 1.75){
+    const f = smooth(clamp((t-1.75)/1.0,0,1));
+    /* a skirt, not a plate: the outer edge hangs below where it meets the stipe */
+    const aR = stipeR*lerp(1.12,1.48,f), aY = -stipeL*0.30 - 0.02, drop = 0.13*f;
+    const ring = lathe([
+      V2(stipeR*0.98, aY+0.05), V2(aR*0.72, aY+0.01), V2(aR, aY-drop),
+      V2(aR*0.985, aY-drop-0.035), V2(aR*0.70, aY-0.03), V2(stipeR*1.02, aY-0.01)
+    ], 64);
+    g.add(new THREE.Mesh(ring, MAT('#efe6d6',0.9,{side:THREE.DoubleSide})));
+  }
+
+  const labels = [
+    {t:'Pileus',            p:[R*0.55, upper(R*0.55)+0.02, 0]},
+    {t:'Lamellae (free)',   p:[R*0.72, under(R*0.72)-0.07, 0.12]},
+    {t:'Stipe',             p:[stipeR, -stipeL*0.55, 0.05]},
+  ];
+  if (t > 1.9) labels.push({t:'Annulus', p:[stipeR*1.5, -stipeL*0.30, 0.05]});
+  else if (t > 0.5) labels.push({t:'Partial veil', p:[R*0.6, under(R*0.6)-0.14, 0.05]});
+  if (t < 0.6) labels.push({t:'Primordium', p:[0, upper(0)+0.05, 0]});
+  return {group:g, labels};
+};
+
+/* ---- Agaricus bisporus hymenium, 1 unit = 1 µm --------------------------- */
+SPECIMENS['agaricus-hymenium'] = function(){
+  const rnd = mulberry32(31);
+  const g = new THREE.Group();
+  const W = 30, D = 15;                    /* µm of gill face shown */
+
+  /* Trama: the sterile core of the gill. */
+  const trama = new THREE.Mesh(new THREE.BoxGeometry(W, 6, D), MAT('#e2d3bd',0.95));
+  g.add(trama);
+
+  /* Subhymenium: a layer of small inflated cells either side of the trama. */
+  const sub = [];
+  for (let i=0;i<18;i++) for (let j=0;j<8;j++){
+    const s = new THREE.SphereGeometry(1.5+rnd()*0.5, 8, 6);
+    s.translate(-W/2+2+i*(W-4)/17, (3.0+1.1)*(j%2?1:-1), -D/2+2+j*(D-4)/7);
+    sub.push(s);
+  }
+  g.add(new THREE.Mesh(mergeGeoms(sub), MAT('#dccbb2',0.95)));
+
+  /* Palisade of clavate basidia. Each carries exactly TWO sterigmata and two
+     spores -- the character the species is named for. */
+  const basidia = [], sterig = [], spores = [];
+  for (let side of [1,-1]) for (let i=0;i<12;i++) for (let j=0;j<6;j++){
+    const x = -W/2+2.5+i*(W-5)/11 + (rnd()-0.5)*0.4;
+    const z = -D/2+2.5+j*(D-5)/5 + (rnd()-0.5)*0.4;
+    const L = 22 + rnd()*5;                       /* basidium length, µm */
+    const rB = 3.4 + rnd()*0.5;                   /* basidium width, µm */
+    const pts = [];
+    for (let k=0;k<12;k++){
+      const f = k/11;
+      pts.push(V2(rB*Math.sin(Math.PI*(0.16+0.72*f))*(0.62+0.5*f), L*f));
+    }
+    pts.unshift(V2(0,0)); pts.push(V2(0,L));
+    const b = lathe(pts, 10);
+    b.scale(1, side, 1); b.translate(x, side*3.6, z);
+    basidia.push(b);
+    for (let s2=0;s2<2;s2++){
+      const dx = (s2? 1:-1)*1.5;
+      const st = new THREE.ConeGeometry(0.45, 3.2, 6);
+      st.translate(0,1.6,0); st.rotateZ((s2?-1:1)*0.36);
+      st.translate(x+dx, side*(3.6+L+1.2), z); st.scale(1,side,1);
+      sterig.push(st);
+      const sp = new THREE.SphereGeometry(1, 10, 8);
+      sp.scale(3.1, 2.4, 2.4);
+      sp.translate(x+dx*1.9, side*(3.6+L+4.6), z);
+      spores.push(sp);
+    }
+  }
+  g.add(new THREE.Mesh(mergeGeoms(basidia), MAT('#efe3cd',0.86)));
+  g.add(new THREE.Mesh(mergeGeoms(sterig),  MAT('#e6d6bb',0.86)));
+  g.add(new THREE.Mesh(mergeGeoms(spores),  MAT('#6b4a33',0.62)));
+
+  /* Cheilocystidia: sterile cells crowding the gill EDGE only. */
+  const ch = [];
+  for (let j=0;j<6;j++) for (let side of [1,-1]){
+    const z = -D/2+2+j*(D-4)/5;
+    const L = 26+rnd()*6, rC = 5.0;
+    const pts=[V2(0,0)];
+    for (let k=0;k<10;k++){ const f=k/9; pts.push(V2(rC*(0.35+0.72*Math.sin(Math.PI*0.5*f)), L*f)); }
+    pts.push(V2(0,L));
+    const c = lathe(pts,10); c.scale(1,side,1); c.translate(W/2-1.2, side*3.6, z);
+    ch.push(c);
+  }
+  g.add(new THREE.Mesh(mergeGeoms(ch), MAT('#f6ecda',0.8)));
+
+  return {group:g, labels:[
+    {t:'Trama',              p:[-W*0.36, 0, D*0.42]},
+    {t:'Subhymenium',        p:[-W*0.12, 4.4, D*0.44]},
+    {t:'Basidium (clavate)', p:[0, 16, D*0.42]},
+    {t:'2 sterigmata',       p:[3.5, 28.5, 0]},
+    {t:'Basidiospores',      p:[8, 33, 0]},
+    {t:'Cheilocystidia',     p:[W/2-1, 24, 0]},
+  ]};
+};
+
+/* ---- shared gilled agaric ----------------------------------------------- */
+function agaric(o){
+  const g = new THREE.Group();
+  const R = 1.0, rim = o.rim || 0.035;
+  const curl = o.curl !== undefined ? o.curl : 0.16;
+  const upper = r => o.domeH * Math.pow(Math.max(1-Math.pow(r/R,2),0), o.domeP||0.75)
+                     - curl * Math.pow(clamp(r/R,0,1), 6);
+  const yRim = upper(R);
+  const under = r => (yRim - rim) + o.underRise * (1 - Math.pow(clamp(r/R,0,1),1.6));
+  let capPts = profile(0,R,34,upper).concat([V2(R,yRim-rim*0.45), V2(R,yRim-rim)])
+                 .concat(profile(R,0,30,under));
+  const cap = new THREE.Mesh(lathe(capPts,96), MAT(o.capColor, o.capRough||0.86));
+  g.add(cap);
+
+  const sr = o.stipeR;
+  const sp = [V2(0,under(0)*0.9)];
+  for (let i=0;i<16;i++){ const f=i/15; sp.push(V2(sr*(1+(o.flare||0.1)*Math.pow(f,3)), lerp(under(0)*0.9,-o.stipeL,f))); }
+  sp.push(V2(sr*0.55,-o.stipeL), V2(0,-o.stipeL));
+  g.add(new THREE.Mesh(lathe(sp,64), MAT(o.stipeColor,0.9)));
+
+  g.add(new THREE.Mesh(lamellae({
+    count:o.gillCount||20, tiers:true, rOuter:R*0.95,
+    rInnerFree:Math.max(sr*1.45,0.28), stipeR:sr, underOf:under,
+    depthOf:r=>o.gillDepth*(1-0.35*(r/R)), thickness:0.011,
+    attachment:o.attachment||'free'
+  }), MAT(o.gillColor,0.95,{side:THREE.DoubleSide})));
+
+  if (o.annulus){
+    const aY = -o.stipeL*0.32;
+    g.add(new THREE.Mesh(lathe([V2(sr*0.98,aY+0.04),V2(sr*1.55,aY+0.01),
+      V2(sr*1.52,aY-0.06),V2(sr*1.02,aY-0.02)],64),
+      MAT(o.stipeColor,0.9,{side:THREE.DoubleSide})));
+  }
+  if (o.volva){
+    const vy = -o.stipeL, vr = sr*2.3, vh = 0.30;
+    const pts=[V2(0,vy)];
+    for(let i=0;i<12;i++){ const f=i/11; pts.push(V2(vr*(0.5+0.5*Math.sin(f*Math.PI*0.5)), vy+vh*f)); }
+    for(let i=11;i>=0;i--){ const f=i/11; pts.push(V2(vr*0.8*(0.5+0.5*Math.sin(f*Math.PI*0.5)), vy+vh*f+0.02)); }
+    pts.push(V2(0,vy+0.02));
+    g.add(new THREE.Mesh(lathe(pts,48), MAT('#c3b8a6',0.9,{side:THREE.DoubleSide})));
+  }
+  if (o.scales){
+    const rnd = mulberry32(o.seed||3), sc=[];
+    for (let i=0;i<o.scales;i++){
+      const rr = 0.18 + rnd()*0.74, a = rnd()*Math.PI*2;
+      const s = new THREE.ConeGeometry(0.045+rnd()*0.02, 0.10+rnd()*0.06, 5);
+      s.rotateX(-0.5 - rnd()*0.4);
+      s.translate(rr*Math.cos(a), upper(rr*R)+0.02, rr*Math.sin(a));
+      sc.push(s);
+    }
+    g.add(new THREE.Mesh(mergeGeoms(sc), MAT(o.scaleColor||'#b09070',0.9)));
+  }
+
+  const labels = [
+    {t:'Pileus', p:[0.55, upper(0.55)+0.02, 0]},
+    {t:o.attachment==='decurrent'?'Lamellae (decurrent)':'Lamellae (free)', p:[0.72, under(0.72)-0.07, 0.12]},
+    {t:'Stipe', p:[sr, -o.stipeL*0.55, 0.05]},
+  ];
+  if (o.annulus) labels.push({t:'Annulus', p:[sr*1.5, -o.stipeL*0.32, 0.04]});
+  if (o.volva)   labels.push({t:'Volva',   p:[sr*2.1, -o.stipeL+0.12, 0.04]});
+  return {group:g, labels};
+}
+
+/* ---- fan / bracket sheets ----------------------------------------------- */
+function fanSheet(o){
+  const {phi0, ecc, lobes, flatten, rIn, rOut, seg, nf} = o;
+  const phiMax = th => phi0*(ecc + (1-ecc)*(1+Math.cos(th))/2)*(1+lobes*Math.sin(3*th+0.5));
+  const pos=[], idx=[];
+  const push=(x,y,z)=>{pos.push(x,y,z);return pos.length/3-1;};
+  const build = (rad, flip) => {
+    const pole = push(0, rad*flatten, 0), rings=[];
+    for (let i=1;i<=nf;i++){
+      const ring=[];
+      for (let j=0;j<seg;j++){
+        const th=j/seg*Math.PI*2, ph=(i/nf)*phiMax(th);
+        ring.push(push(rad*Math.sin(ph)*Math.cos(th), rad*Math.cos(ph)*flatten, rad*Math.sin(ph)*Math.sin(th)));
+      }
+      rings.push(ring);
+    }
+    for (let j=0;j<seg;j++){
+      const a=rings[0][j], b=rings[0][(j+1)%seg];
+      flip?idx.push(pole,b,a):idx.push(pole,a,b);
+    }
+    for (let i=0;i<nf-1;i++) for (let j=0;j<seg;j++){
+      const a=rings[i][j],b=rings[i][(j+1)%seg],c=rings[i+1][j],d=rings[i+1][(j+1)%seg];
+      if(flip){idx.push(a,d,c);idx.push(a,b,d);} else {idx.push(a,c,d);idx.push(a,d,b);}
+    }
+    return rings[nf-1];
+  };
+  const lo = build(rOut,false), li = build(rIn,true);
+  for (let j=0;j<seg;j++){
+    const a=lo[j],b=lo[(j+1)%seg],c=li[j],d=li[(j+1)%seg];
+    idx.push(a,b,d); idx.push(a,d,c);
+  }
+  const g=new THREE.BufferGeometry();
+  g.setAttribute('position', new THREE.Float32BufferAttribute(pos,3));
+  g.setIndex(idx); g.computeVertexNormals();
+  return {geom:g, phiMax};
+}
+
+/* ---- Pleurotus ostreatus: imbricate on a log, gills truly decurrent ------ */
+SPECIMENS['ostreatus'] = function(){
+  const g = new THREE.Group();
+  const rnd = mulberry32(17);
+  for (let k=0;k<3;k++){
+    const sh = new THREE.Group();
+    const s = 1.0 - k*0.22;
+    const {geom, phiMax} = fanSheet({phi0:1.16, ecc:0.20, lobes:0.13, flatten:0.60,
+                                     rIn:0.91, rOut:1.0, seg:88, nf:22});
+    sh.add(new THREE.Mesh(geom, MAT('#c8b08c',0.84,{side:THREE.DoubleSide})));
+
+    const blades=[];
+    for (let i=0;i<64;i++){
+      const a=i/64*Math.PI*2, pm=phiMax(a);
+      const pts=[], n=7;
+      for (let j=0;j<n;j++){ const ph=lerp(0.10,0.88,j/(n-1))*pm;
+        pts.push([0.88*Math.sin(ph), 0.88*Math.cos(ph)*0.60]); }
+      for (let j=n-1;j>=0;j--){ const ph=lerp(0.10,0.88,j/(n-1))*pm;
+        pts.push([0.88*Math.sin(ph), 0.88*Math.cos(ph)*0.60-0.075]); }
+      blades.push(blade(a, pts, 0.010));
+    }
+    sh.add(new THREE.Mesh(mergeGeoms(blades), MAT('#efe8d8',0.94,{side:THREE.DoubleSide})));
+
+    /* vestigial lateral stipe at the narrow heel */
+    const ph=phiMax(Math.PI);
+    const st=new THREE.CylinderGeometry(0.07,0.10,0.34,20);
+    st.rotateZ(0.5);
+    st.translate(-0.91*Math.sin(ph)-0.10, 0.91*Math.cos(ph)*0.60-0.14, 0);
+    sh.add(new THREE.Mesh(st, MAT('#e8e0cc',0.9)));
+
+    sh.scale.setScalar(s);
+    sh.rotation.y = (k-1)*0.55 + (rnd()-0.5)*0.2;
+    sh.rotation.x = -0.42;
+    sh.position.set(-0.15+k*0.05, k*0.34 - 0.2, k*0.10);
+    g.add(sh);
+  }
+  return {group:g, labels:[
+    {t:'Pileus (flabelliform)', p:[0.35,0.42,0.35]},
+    {t:'Lamellae (decurrent)',  p:[0.15,-0.05,0.5]},
+    {t:'Vestigial stipe',       p:[-0.85,-0.30,0]},
+    {t:'Imbricate habit',       p:[0.1,0.78,-0.2]},
+  ], substrate:'log'};
+};
+
+/* ---- Morchella: alveolate head, one continuous hollow chamber ------------ */
+SPECIMENS['morchella'] = function(){
+  const capH = 1.55, stipeL = 1.15, sr = 0.40;
+  const prof = [];
+  for (let i=0;i<30;i++){
+    const f=i/29;
+    prof.push(V2(0.98*Math.sin(Math.PI*0.5*Math.pow(1-f,0.85)), capH*(1-f)));
+  }
+  for (let i=0;i<14;i++){
+    const f=i/13;
+    prof.push(V2(sr*(1+0.24*f*f), -stipeL*f));
+  }
+  const warp = (f, th) => {
+    if (f > 0.66) return 0;                       /* ridges are on the head only */
+    const env = Math.pow(Math.sin(Math.PI*clamp(f/0.66,0,1)), 0.7);
+    const u = f/0.66;
+    /* a ridge field: sharp crests between pits, not smooth swelling */
+    const cell = Math.cos(13*th) * Math.cos(11*Math.PI*u);
+    return 0.115*env*Math.sign(cell)*Math.pow(Math.abs(cell),0.55);
+  };
+  const geom = hollowWarped(prof, warp, 0.11, 96);
+  const g = new THREE.Group();
+  g.add(new THREE.Mesh(geom, MAT('#c2a04a',0.86,{side:THREE.DoubleSide})));
+  return {group:g, labels:[
+    {t:'Alveolate head', p:[0.75, capH*0.55, 0]},
+    {t:'Ridges',         p:[0.85, capH*0.30, 0.2]},
+    {t:'Pits (alveoli)', p:[0.55, capH*0.78, 0.2]},
+    {t:'Hollow chamber', p:[0, capH*0.2, 0]},
+    {t:'Stipe',          p:[sr, -stipeL*0.55, 0]},
+  ]};
+};
+
+/* ---- remaining macroscopic species -------------------------------------- */
+SPECIMENS['lentinula'] = () => agaric({domeH:0.44, domeP:0.75, underRise:0.20,
+  stipeL:1.0, stipeR:0.17, gillDepth:0.10, gillCount:22,
+  capColor:'#7a5326', stipeColor:'#d8cbb0', gillColor:'#efe6d2'});
+
+SPECIMENS['volvariella'] = () => agaric({domeH:0.52, domeP:0.68, underRise:0.22,
+  stipeL:2.0, stipeR:0.15, gillDepth:0.11, gillCount:20,
+  capColor:'#b3a894', stipeColor:'#f0e8d8', gillColor:'#e3c2b4', volva:true});
+
+SPECIMENS['coprinus'] = () => {
+  const R=1.0, H=1.9, sr=0.14, sl=2.6, rim=0.03;
+  const curl=0.10;
+  const upper = r => H*Math.pow(Math.max(1-Math.pow(r/R,2.6),0),0.62)-curl*Math.pow(r/R,6);
+  const yRim = upper(R);
+  const under = r => (yRim-rim) + 1.30*(1-Math.pow(clamp(r/R,0,1),1.6));
+  const g=new THREE.Group();
+  g.add(new THREE.Mesh(lathe(profile(0,R,34,upper).concat([V2(R,yRim-rim)])
+        .concat(profile(R,0,30,under)),96), MAT('#f2f0ea',0.9)));
+  const sp=[V2(0,under(0)*0.9)];
+  for(let i=0;i<16;i++){const f=i/15;sp.push(V2(sr*(1+0.35*Math.pow(f,3)),lerp(under(0)*0.9,-sl,f)));}
+  sp.push(V2(sr*0.55,-sl), V2(0,-sl));
+  g.add(new THREE.Mesh(lathe(sp,48), MAT('#f7f4ee',0.9)));
+  g.add(new THREE.Mesh(lamellae({count:26,tiers:true,rOuter:R*0.93,rInnerFree:0.26,
+    stipeR:sr,underOf:under,depthOf:()=>0.42,thickness:0.010,attachment:'free'}),
+    MAT('#cfc7c7',0.95,{side:THREE.DoubleSide})));
+  /* shaggy recurved scales */
+  const rnd=mulberry32(9), sc=[];
+  for(let i=0;i<160;i++){
+    const f=0.12+rnd()*0.82, a=rnd()*Math.PI*2, r=f*R;
+    const s=new THREE.ConeGeometry(0.035,0.16+rnd()*0.07,5);
+    s.rotateX(-1.15-rnd()*0.35);
+    s.translate(r*Math.cos(a), upper(r)+0.03, r*Math.sin(a));
+    sc.push(s);
+  }
+  g.add(new THREE.Mesh(mergeGeoms(sc), MAT('#e5ddd0',0.92)));
+  g.add(new THREE.Mesh(lathe([V2(sr*0.98,-sl*0.33+0.03),V2(sr*1.7,-sl*0.33),
+    V2(sr*1.66,-sl*0.33-0.06),V2(sr*1.02,-sl*0.33-0.02)],48),
+    MAT('#efece5',0.9,{side:THREE.DoubleSide})));
+  return {group:g, labels:[
+    {t:'Pileus (cylindric)',p:[0.55,upper(0.55),0]},
+    {t:'Shaggy scales',     p:[0.8,upper(0.8)+0.05,0.2]},
+    {t:'Lamellae (free)',   p:[0.7,under(0.7)-0.2,0.12]},
+    {t:'Annulus (movable)', p:[sr*1.7,-sl*0.33,0.03]},
+    {t:'Stipe',             p:[sr,-sl*0.62,0.03]},
+  ]};
+};
+
+SPECIMENS['eryngii'] = () => agaric({domeH:0.24, domeP:1.1, underRise:0.16, rim:0.05,
+  stipeL:2.8, stipeR:0.60, flare:0.06, gillDepth:0.07, gillCount:18,
+  capColor:'#d4c4a8', stipeColor:'#f0e8d8', gillColor:'#ece5d6',
+  attachment:'decurrent'});
+
+SPECIMENS['ganoderma'] = function(){
+  const g=new THREE.Group();
+  const crust=fanSheet({phi0:1.05,ecc:0.30,lobes:0.08,flatten:0.46,rIn:1.0,rOut:1.20,seg:96,nf:24});
+  const pore =fanSheet({phi0:1.05,ecc:0.30,lobes:0.08,flatten:0.46,rIn:0.82,rOut:1.0,seg:96,nf:24});
+  const m1=new THREE.Mesh(crust.geom, MAT('#a63d2a',0.20,{side:THREE.DoubleSide}));
+  const m2=new THREE.Mesh(pore.geom,  MAT('#ded6c4',0.95,{side:THREE.DoubleSide}));
+  const ph=crust.phiMax(Math.PI);
+  const st=new THREE.CylinderGeometry(0.07,0.09,0.42,20); st.rotateZ(0.85);
+  st.translate(-Math.sin(ph)-0.14, Math.cos(ph)*0.30-0.05, 0);
+  const m3=new THREE.Mesh(st, MAT('#6b2f22',0.35));
+  [m1,m2,m3].forEach(m=>{m.rotation.x=-0.34;g.add(m);});
+  return {group:g, labels:[
+    {t:'Pileus (lacquered crust)',p:[0.5,0.30,0.35]},
+    {t:'Concentric zonation',     p:[0.9,0.10,0.25]},
+    {t:'Poroid hymenium',         p:[0.2,-0.25,0.45]},
+    {t:'Lateral stipe',           p:[-1.05,-0.20,0]},
+  ], substrate:'log'};
+};
+
+SPECIMENS['grifola'] = function(){
+  const g=new THREE.Group(), rnd=mulberry32(23);
+  for(let k=0;k<9;k++){
+    const a=k/9*Math.PI*2+(rnd()-0.5)*0.3;
+    const {geom}=fanSheet({phi0:1.10,ecc:0.58,lobes:0.16,flatten:0.42,rIn:0.86,rOut:1.0,seg:52,nf:16});
+    const m=new THREE.Mesh(geom, MAT('#9a8b72',0.88,{side:THREE.DoubleSide}));
+    const s=0.60+0.16*((k+1)%3)/2;
+    m.scale.setScalar(s); m.rotation.x=-1.16; m.rotation.y=a;
+    m.position.set(0.42*Math.cos(a), 0.06+0.26*(k%3)/2, 0.42*Math.sin(a));
+    g.add(m);
+  }
+  const st=new THREE.CylinderGeometry(0.18,0.26,0.66,24); st.translate(0,-0.30,0);
+  g.add(new THREE.Mesh(st, MAT('#e8e0cf',0.9)));
+  return {group:g, labels:[
+    {t:'Imbricate pilei',p:[0.55,0.55,0.3]},
+    {t:'Poroid underside',p:[0.4,0.05,0.5]},
+    {t:'Branched stipe', p:[0.2,-0.4,0]},
+  ]};
+};
+
+SPECIMENS['hericium'] = function(){
+  const rnd=mulberry32(11), g=new THREE.Group();
+  const core=new THREE.SphereGeometry(0.62,32,24);
+  const p=core.attributes.position;
+  for(let i=0;i<p.count;i++){
+    const x=p.getX(i),y=p.getY(i),z=p.getZ(i);
+    const d=1+0.16*Math.sin(x*2.1+1)*Math.cos(y*1.7)*Math.cos(z*2.4)
+             +0.07*Math.sin(x*3.6)*Math.cos(y*4.1)*Math.cos(z*3.2);
+    p.setXYZ(i,x*d,y*d*0.9,z*d*0.88);
+  }
+  core.computeVertexNormals();
+  g.add(new THREE.Mesh(core, MAT('#f2ece2',0.9)));
+  const teeth=[];
+  for(let i=0;i<190;i++){
+    const u=rnd()*Math.PI*2, v=rnd();
+    const phi=Math.acos(1-v*0.95);
+    const d=new THREE.Vector3(Math.sin(phi)*Math.cos(u),-Math.cos(phi),Math.sin(phi)*Math.sin(u));
+    const L=0.20+rnd()*0.26;
+    const t=new THREE.ConeGeometry(0.030*(0.8+rnd()*0.4),L,6);
+    t.translate(0,-L/2,0);
+    t.translate(d.x*0.55,d.y*0.50,d.z*0.52);
+    teeth.push(t);
+  }
+  g.add(new THREE.Mesh(mergeGeoms(teeth), MAT('#faf7f1',0.9)));
+  return {group:g, labels:[
+    {t:'Context cushion',p:[0,0.55,0.3]},
+    {t:'Pendant spines (hymenophore)',p:[0.3,-0.55,0.25]},
+    {t:'No pileus, no gills',p:[-0.55,0.15,0.25]},
+  ]};
+};
+
+SPECIMENS['tremella'] = function(){
+  const rnd=mulberry32(5), g=new THREE.Group();
+  for(let k=0;k<7;k++){
+    const a=k/7*Math.PI*2+(rnd()-0.5)*0.4;
+    const {geom}=fanSheet({phi0:1.15,ecc:0.55,lobes:0.18,flatten:0.85,rIn:0.978,rOut:1.022,seg:64,nf:16});
+    const m=new THREE.Mesh(geom, MAT('#f8f4f0',0.32,{side:THREE.DoubleSide}));
+    const s=0.55+0.22*((k+1)%3)/2;
+    m.scale.setScalar(s);
+    m.rotation.y=a; m.rotation.x=-1.25-0.45*(k%3);
+    m.position.set(0.22*Math.cos(a),0.10+0.12*(k%2),0.22*Math.sin(a));
+    g.add(m);
+  }
+  return {group:g, labels:[
+    {t:'Gelatinous lobes',p:[0.5,0.35,0.3]},
+    {t:'Undulate margin', p:[-0.5,0.2,0.4]},
+    {t:'Common base',     p:[0,-0.2,0]},
+  ]};
+};
+
+SPECIMENS['calvatia'] = function(){
+  const g=new THREE.Group();
+  const pts=[];
+  for(let i=0;i<44;i++){
+    const t=i/43*Math.PI;
+    const r=Math.sin(t)*(1-0.42*Math.pow(Math.max(Math.cos(t),0),1.6));
+    pts.push(V2(Math.max(r,0), -Math.cos(t)*(1-0.30*Math.max(Math.cos(t),0))));
+  }
+  g.add(new THREE.Mesh(lathe(pts,88), MAT('#f5f0e6',0.88,{side:THREE.DoubleSide})));
+  const inner=pts.map(p=>V2(p.x*0.945,p.y*0.965));
+  g.add(new THREE.Mesh(lathe(inner,88), MAT('#ede8d8',0.95,{side:THREE.DoubleSide})));
+  return {group:g, labels:[
+    {t:'Peridium (outer wall)',p:[0.85,0.35,0.2]},
+    {t:'Gleba (spore mass)',   p:[0.2,0.1,0.3]},
+    {t:'Sterile base',         p:[0.35,-0.85,0.2]},
+  ]};
+};
+
+SPECIMENS['ustilago'] = function(){
+  const rnd=mulberry32(19), g=new THREE.Group(), lobes=[];
+  for(let k=0;k<5;k++){
+    const s=new THREE.SphereGeometry(0.42+rnd()*0.2,20,16);
+    const p=s.attributes.position;
+    for(let i=0;i<p.count;i++){
+      const x=p.getX(i),y=p.getY(i),z=p.getZ(i);
+      const d=1+0.20*Math.sin(x*2.4+k)*Math.cos(y*2.8)*Math.cos(z*2.2)
+               +0.08*Math.sin(x*5.1)*Math.cos(y*4.4);
+      p.setXYZ(i,x*d,y*d,z*d);
+    }
+    s.computeVertexNormals();
+    const a=k/5*Math.PI*2;
+    s.translate(0.36*Math.cos(a)*(0.7+rnd()*0.5),0.34+0.30*rnd(),0.30*Math.sin(a)*(0.7+rnd()*0.5));
+    lobes.push(s);
+  }
+  g.add(new THREE.Mesh(mergeGeoms(lobes), MAT('#5a4a3a',0.92)));
+  const husk=[];
+  for(let i=0;i<18;i++){const f=i/17;husk.push(V2(0.55*(1-0.55*Math.pow(f,1.8)),f*0.6));}
+  husk.unshift(V2(0,0)); husk.push(V2(0,0.6));
+  g.add(new THREE.Mesh(lathe(husk,48), MAT('#cfc9a8',0.9)));
+  return {group:g, labels:[
+    {t:'Smut galls (hypertrophied host tissue)',p:[0.5,0.7,0.2]},
+    {t:'Teliospore mass',p:[-0.4,0.55,0.2]},
+    {t:'Host husk',      p:[0.4,0.25,0.25]},
+  ]};
+};
+
+SPECIMENS['auricularia'] = function(){
+  const g=new THREE.Group();
+  const phiMax = th => 1.02*(1+0.22*Math.cos(th)+0.07*Math.cos(2*th+0.7)
+                        +0.06*Math.sin(3*th+0.4)+0.035*Math.sin(5*th));
+  const seg=100,nf=26,pos=[],idx=[];
+  const push=(x,y,z)=>{pos.push(x,y,z);return pos.length/3-1;};
+  const rMid=(f,th)=>{const e=Math.pow(f,1.4)*Math.pow(1-f,0.8)/0.235;
+    return 1+0.10*e*(0.55*Math.cos(4*th+0.3)+0.30*Math.cos(7*th+2)+0.15*Math.cos(11*th));};
+  const build=(off,flip)=>{
+    const pole=push(0,rMid(0,0)+off,0),rings=[];
+    for(let i=1;i<=nf;i++){const ring=[];
+      for(let j=0;j<seg;j++){const th=j/seg*Math.PI*2,ph=(i/nf)*phiMax(th),r=rMid(i/nf,th)+off;
+        ring.push(push(r*Math.sin(ph)*Math.cos(th),r*Math.cos(ph),r*Math.sin(ph)*Math.sin(th)));}
+      rings.push(ring);}
+    for(let j=0;j<seg;j++){const a=rings[0][j],b=rings[0][(j+1)%seg];
+      flip?idx.push(pole,b,a):idx.push(pole,a,b);}
+    for(let i=0;i<nf-1;i++)for(let j=0;j<seg;j++){
+      const a=rings[i][j],b=rings[i][(j+1)%seg],c=rings[i+1][j],d=rings[i+1][(j+1)%seg];
+      if(flip){idx.push(a,d,c);idx.push(a,b,d);}else{idx.push(a,c,d);idx.push(a,d,b);}}
+    return rings[nf-1];
+  };
+  const lo=build(0.028,false), li=build(-0.028,true);
+  for(let j=0;j<seg;j++){const a=lo[j],b=lo[(j+1)%seg],c=li[j],d=li[(j+1)%seg];
+    idx.push(a,b,d);idx.push(a,d,c);}
+  const geom=new THREE.BufferGeometry();
+  geom.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));
+  geom.setIndex(idx); geom.computeVertexNormals();
+  const m=new THREE.Mesh(geom, MAT('#7a5a4c',0.42,{side:THREE.DoubleSide}));
+  m.rotation.x=Math.PI-0.95;
+  g.add(m);
+  return {group:g, labels:[
+    {t:'Hymenial surface (fertile)',p:[0.1,0.35,0.35]},
+    {t:'Abhymenial surface',        p:[-0.5,-0.3,0.3]},
+    {t:'Undulate lobed margin',     p:[0.75,0.1,0.2]},
+    {t:'Gelatinous context',        p:[0.3,-0.35,0.4]},
+  ]};
+};
+
+/* ============================================================================
+   SPECIES TABLE
+   `mmPerUnit` sets the scale bar. Every figure carries a source; nothing here
+   is presented as literature-cited unless it genuinely is.
+   ========================================================================= */
+const SPECIES = [
+ {id:'agaricus', phylum:'Basidiomycota', bi:'Agaricus bisporus', cn:'button mushroom',
+  build:SPECIMENS['agaricus'], stages:true, mmPerUnit:35,
+  note:'The centrepiece. Four developmental stages: primordium, button with the partial veil intact, veil rupture, and the mature basidiocarp. The veil tears sector by sector into a pendant annulus, and the lamellae — which are free, never reaching the stipe — interpolate from pink to chocolate as the spores mature.',
+  facts:[['Pileus diameter','70 mm','db'],['Stipe length','50 mm','db'],
+         ['Hymenophore','free lamellae','db'],['Lamellulae','2 tiers','model'],
+         ['Cap colour','#e8e0d4','db']]},
+
+ {id:'agaricus-hymenium', phylum:'Basidiomycota', bi:'Agaricus bisporus', cn:'hymenium · 1 unit = 1 µm',
+  build:SPECIMENS['agaricus-hymenium'], mmPerUnit:0.001, micro:true,
+  note:'A transverse block of one gill at cellular scale: sterile trama, an inflated subhymenium, and a palisade of clavate basidia. Each basidium carries exactly two sterigmata and two spores — the character the epithet bisporus refers to, and what separates it from the four-spored Agaricus species. Cheilocystidia crowd the gill edge only.',
+  facts:[['Basidium length','22–27 µm','recall'],['Basidium width','3.4–3.9 µm','recall'],
+         ['Sterigmata per basidium','2','recall'],['Basidiospore','6.2 × 4.8 µm','recall'],
+         ['Cheilocystidia','gill edge only','recall']]},
+
+ {id:'auricularia', phylum:'Basidiomycota', bi:'Auricularia auricula-judae', cn:'wood ear',
+  build:SPECIMENS['auricularia'], mmPerUnit:35,
+  note:'A sessile auriculate cup with an undulating lobed margin. The two faces are the diagnostic feature: a darker, veined, fertile hymenium inside and a paler, finely tomentose sterile face outside.',
+  facts:[['Fruiting body','70 mm','db'],['Stipe','absent (sessile)','db'],
+         ['Hymenophore','smooth, veined','db'],['Colour','#3d2817','db']]},
+
+ {id:'calvatia', phylum:'Basidiomycota', bi:'Calvatia gigantea', cn:'giant puffball',
+  build:SPECIMENS['calvatia'], mmPerUnit:60,
+  note:'A gasteroid basidiocarp: subglobose, narrowing to a sterile base, with a thin peridium enclosing a solid gleba. Section it to see the spore mass inside its wall. Modelled at the immature white stage, the only edible one.',
+  facts:[['Body diameter','120 mm','db'],['Stipe','absent','db'],
+         ['Hymenophore','enclosed gleba','db'],['Wall','peridium','model']]},
+
+ {id:'coprinus', phylum:'Basidiomycota', bi:'Coprinus comatus', cn:'shaggy ink cap',
+  build:SPECIMENS['coprinus'], mmPerUnit:25,
+  note:'Elongate, near-cylindric pileus with recurved shaggy scales, very crowded free lamellae filling the cap interior, and a movable annulus. Shown young and edible; deliquescence is not modelled.',
+  facts:[['Pileus diameter','50 mm','db'],['Stipe length','100 mm','db'],
+         ['Hymenophore','free, crowded','db'],['Annulus','movable','model']]},
+
+ {id:'ganoderma', phylum:'Basidiomycota', bi:'Ganoderma lucidum', cn:'reishi',
+  build:SPECIMENS['ganoderma'], mmPerUnit:50,
+  note:'A reniform, laterally stalked polypore. Two plies separate the varnished upper crust from the pale poroid hymenium beneath. Individual pores are below the resolution of the mesh and are carried by the surface material.',
+  facts:[['Pileus diameter','100 mm','db'],['Stipe length','20 mm','db'],
+         ['Hymenophore','poroid','db'],['Crust','#a63d2a lacquered','db']]},
+
+ {id:'grifola', phylum:'Basidiomycota', bi:'Grifola frondosa', cn:'maitake',
+  build:SPECIMENS['grifola'], mmPerUnit:45,
+  note:'A rosette of imbricate spoon-shaped pilei arising from a branched basal stipe. Frond count is representative; wild clusters vary widely.',
+  facts:[['Cluster width','90 mm','db'],['Stipe length','30 mm','db'],
+         ['Hymenophore','poroid','db'],['Pilei modelled','9','model']]},
+
+ {id:'hericium', phylum:'Basidiomycota', bi:'Hericium erinaceus', cn:"lion's mane",
+  build:SPECIMENS['hericium'], mmPerUnit:35,
+  note:'A tooth fungus: an irregular context cushion whose entire lower surface hangs in pendant spines. There is no pileus and there are no gills — the spines are the hymenophore.',
+  facts:[['Body diameter','70 mm','db'],['Stipe','absent','db'],
+         ['Hymenophore','pendant spines','db'],['Spines modelled','190','model']]},
+
+ {id:'lentinula', phylum:'Basidiomycota', bi:'Lentinula edodes', cn:'shiitake',
+  build:SPECIMENS['lentinula'], mmPerUnit:40,
+  note:'Convex pileus, adnexed lamellae and a tough fibrous stipe. Exannulate at maturity. Cap colour follows the record’s own description of a brown cap rather than its stored hex, which renders olive-gold.',
+  facts:[['Pileus diameter','80 mm','db'],['Stipe length','40 mm','db'],
+         ['Hymenophore','adnexed lamellae','db'],['Annulus','absent','model']]},
+
+ {id:'eryngii', phylum:'Basidiomycota', bi:'Pleurotus eryngii', cn:'king oyster',
+  build:SPECIMENS['eryngii'], mmPerUnit:25,
+  note:'Inverted proportions: a small shallow pileus on a thick club-shaped stipe that makes up most of the biomass — which is exactly the tissue the meat-analog literature is interested in. Lamellae are decurrent, running onto the stipe.',
+  facts:[['Pileus diameter','50 mm','db'],['Stipe length','140 mm','db'],
+         ['Hymenophore','decurrent lamellae','db'],['Stipe : cap','2.8 : 1','db']]},
+
+ {id:'ostreatus', phylum:'Basidiomycota', bi:'Pleurotus ostreatus', cn:'oyster mushroom',
+  build:SPECIMENS['ostreatus'], mmPerUnit:45,
+  note:'Flabelliform lobed pilei with truly decurrent lamellae running onto a vestigial lateral stipe, shown imbricate on a log as it fruits in the wild.',
+  facts:[['Pileus diameter','90 mm','db'],['Stipe length','20 mm','db'],
+         ['Hymenophore','decurrent lamellae','db'],['Habit','imbricate','model']]},
+
+ {id:'tremella', phylum:'Basidiomycota', bi:'Tremella fuciformis', cn:'snow fungus',
+  build:SPECIMENS['tremella'], mmPerUnit:40,
+  note:'A rosette of thin, strongly undulating gelatinous lobes radiating from a common base. Rendered opaque; fresh material is markedly translucent.',
+  facts:[['Body diameter','80 mm','db'],['Stipe','absent','db'],
+         ['Hymenophore','smooth, on lobes','db'],['Lobes modelled','7','model']]},
+
+ {id:'ustilago', phylum:'Basidiomycota', bi:'Ustilago maydis', cn:'huitlacoche',
+  build:SPECIMENS['ustilago'], mmPerUnit:30,
+  note:'Irregular fused galls swelling from the host ear. Ustilago has no fruiting body of its own — the gall is hypertrophied host tissue filled with teliospores, which is why this looks unlike everything else here.',
+  facts:[['Gall diameter','60 mm','db'],['Stipe','absent','db'],
+         ['Structure','host gall','db'],['Lobes modelled','5','model']]},
+
+ {id:'volvariella', phylum:'Basidiomycota', bi:'Volvariella volvacea', cn:'straw mushroom',
+  build:SPECIMENS['volvariella'], mmPerUnit:30,
+  note:'Free lamellae, pink at maturity, and the prominent basal volva left by the universal veil — the character that separates the genus. Exannulate.',
+  facts:[['Pileus diameter','60 mm','db'],['Stipe length','80 mm','db'],
+         ['Hymenophore','free lamellae','db'],['Volva','present','db']]},
+
+ {id:'morchella', phylum:'Ascomycota', bi:'Morchella esculenta', cn:'morel',
+  build:SPECIMENS['morchella'], mmPerUnit:25,
+  note:'An alveolate head generated from a procedural ridge-and-pit field. Cap and stipe form one continuous hollow chamber — the character separating true morels from the false morels, and the reason the section slider is worth using here.',
+  facts:[['Pileus diameter','50 mm','db'],['Stipe length','90 mm','db'],
+         ['Hymenophore','alveolate','db'],['Interior','continuously hollow','model']]},
+];
+
+const SRC = {
+  db:    ['DB', 'this project’s own species record — checkable'],
+  model: ['MODEL', 'a modelling decision, not a measurement'],
+  recall:['RECALLED', 'from general mycological knowledge, NOT cited — verify before use'],
+};
+
+/* ============================================================================
+   SCENE
+   ========================================================================= */
+const canvas = document.getElementById('gl');
+const renderer = new THREE.WebGLRenderer({canvas, antialias:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.98;
+renderer.localClippingEnabled = true;
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#15100c');
+scene.fog = new THREE.Fog('#15100c', 8, 22);
+
+const camera = new THREE.PerspectiveCamera(34, 1, 0.01, 200);
+
+scene.add(new THREE.HemisphereLight('#fff4e6', '#2a1d13', 0.38));
+const key = new THREE.DirectionalLight('#fff1de', 1.05); key.position.set(3.2,5.4,3.0);
+const fill = new THREE.DirectionalLight('#cfe0ff', 0.26); fill.position.set(-3.6,1.8,-2.0);
+const rim = new THREE.DirectionalLight('#ffd9b0', 0.38);  rim.position.set(-1.2,2.2,-4.2);
+scene.add(key, fill, rim);
+
+/* Ground: deep soil-brown, with a soft contact shadow generated on a canvas. */
+const substrate = new THREE.Group();
+const gTex = (()=>{const c=document.createElement('canvas');c.width=c.height=256;
+  const x=c.getContext('2d');const gr=x.createRadialGradient(128,128,4,128,128,124);
+  gr.addColorStop(0,'rgba(0,0,0,.62)');gr.addColorStop(1,'rgba(0,0,0,0)');
+  x.fillStyle=gr;x.fillRect(0,0,256,256);return new THREE.CanvasTexture(c);})();
+const shadow = new THREE.Mesh(new THREE.PlaneGeometry(5,5),
+  new THREE.MeshBasicMaterial({map:gTex,transparent:true,depthWrite:false}));
+shadow.rotation.x = -Math.PI/2; shadow.position.y = -0.003;
+substrate.add(shadow);
+const ground = new THREE.Mesh(new THREE.CircleGeometry(9,64),
+  new THREE.MeshStandardMaterial({color:new THREE.Color('#24190f').convertSRGBToLinear(),roughness:1}));
+ground.rotation.x = -Math.PI/2; ground.position.y = -0.012;
+substrate.add(ground);
+const log = new THREE.Mesh(new THREE.CylinderGeometry(0.62,0.62,4.2,28),
+  new THREE.MeshStandardMaterial({color:new THREE.Color('#3a2a1c').convertSRGBToLinear(),roughness:1}));
+log.rotation.z = Math.PI/2; log.position.set(0,-0.62,-0.55); log.visible=false;
+substrate.add(log);
+scene.add(substrate);
+
+const clipPlane = new THREE.Plane(new THREE.Vector3(0,0,1), 999);
+let clipOn = false;
+
+let current = null, currentSpec = null, modelRadius = 1, modelCenter = new THREE.Vector3();
+let isMicro = false;   /* cellular specimens get no soil or log */
+const labelEls = [];
+
+function disposeGroup(g){
+  g.traverse(o=>{ if(o.geometry) o.geometry.dispose();
+                  if(o.material) (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>m.dispose()); });
+}
+
+function applyMaterialState(){
+  if(!current) return;
+  current.traverse(o=>{
+    if(!o.material) return;
+    (Array.isArray(o.material)?o.material:[o.material]).forEach(m=>{
+      m.wireframe = state.wire;
+      m.clippingPlanes = clipOn ? [clipPlane] : [];
+      m.side = clipOn ? THREE.DoubleSide : (m.userData.side ?? m.side);
+      m.needsUpdate = true;
+    });
+  });
+}
+
+function load(spec, stageVal){
+  if (current){ scene.remove(current); disposeGroup(current); }
+  labelEls.forEach(e=>e.remove()); labelEls.length = 0;
+
+  const built = spec.build(stageVal);
+  current = built.group; currentSpec = spec;
+  current.traverse(o=>{ if(o.material) o.material.userData.side = o.material.side; });
+  scene.add(current);
+
+  const box = new THREE.Box3().setFromObject(current);
+  const size = new THREE.Vector3(); box.getSize(size);
+  box.getCenter(modelCenter);
+  modelRadius = Math.max(size.length()/2, 1e-4);
+  /* seat the specimen on the substrate */
+  current.position.y -= box.min.y;
+  modelCenter.y -= box.min.y;
+
+  const holder = document.getElementById('labels');
+  built.labels.forEach(l=>{
+    const el = document.createElement('div');
+    el.className = 'lab';
+    el.innerHTML = '<i></i>' + (l.t || '');
+    el.dataset.x = l.p[0]; el.dataset.y = l.p[1]; el.dataset.z = l.p[2];
+    holder.appendChild(el); labelEls.push(el);
+  });
+
+  shadow.scale.setScalar(Math.max(modelRadius*1.6,0.5));
+
+  /* Fog and ground are scale-relative: a fixed range is opaque at the
+     hymenium's working distance and microscopic at the puffball's. */
+  scene.fog.near = modelRadius*2.4;
+  scene.fog.far  = modelRadius*8.0;
+  ground.scale.setScalar(clamp(modelRadius/1.7, 0.5, 30));
+  isMicro = !!spec.micro;
+
+  applyMaterialState();
+  frameCamera();
+  renderInfo(spec);
+}
+
+/* ---------- hand-rolled orbit controls ----------------------------------- */
+const orbit = {theta:0.62, phi:1.04, dist:4, target:new THREE.Vector3()};
+function frameCamera(){
+  orbit.target.copy(modelCenter);
+  orbit.dist = modelRadius / Math.tan(THREE.MathUtils.degToRad(camera.fov/2)) * 1.42;
+  orbit.theta = 0.62; orbit.phi = 1.04;
+}
+function updateCamera(){
+  const s = Math.sin(orbit.phi);
+  camera.position.set(
+    orbit.target.x + orbit.dist*s*Math.sin(orbit.theta),
+    orbit.target.y + orbit.dist*Math.cos(orbit.phi),
+    orbit.target.z + orbit.dist*s*Math.cos(orbit.theta));
+  camera.lookAt(orbit.target);
+}
+let dragging=false, lastX=0, lastY=0, pinch=0;
+canvas.addEventListener('pointerdown', e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;canvas.setPointerCapture(e.pointerId);});
+canvas.addEventListener('pointerup',   e=>{dragging=false;});
+canvas.addEventListener('pointercancel',()=>{dragging=false;});
+canvas.addEventListener('pointermove', e=>{
+  if(!dragging) return;
+  orbit.theta -= (e.clientX-lastX)*0.0062;
+  orbit.phi    = clamp(orbit.phi - (e.clientY-lastY)*0.0062, 0.12, Math.PI-0.12);
+  lastX=e.clientX; lastY=e.clientY;
+});
+canvas.addEventListener('wheel', e=>{
+  e.preventDefault();
+  orbit.dist = clamp(orbit.dist * (1 + Math.sign(e.deltaY)*0.09), modelRadius*0.35, modelRadius*14);
+},{passive:false});
+canvas.addEventListener('touchmove', e=>{
+  if(e.touches.length!==2) return;
+  const dx=e.touches[0].clientX-e.touches[1].clientX, dy=e.touches[0].clientY-e.touches[1].clientY;
+  const d=Math.hypot(dx,dy);
+  if(pinch) orbit.dist = clamp(orbit.dist*(pinch/d), modelRadius*0.35, modelRadius*14);
+  pinch=d;
+},{passive:true});
+canvas.addEventListener('touchend', ()=>{pinch=0;});
+addEventListener('keydown', e=>{
+  const k=e.key;
+  if(k==='ArrowLeft')  orbit.theta -= 0.09;
+  else if(k==='ArrowRight') orbit.theta += 0.09;
+  else if(k==='ArrowUp')    orbit.phi = clamp(orbit.phi-0.07,0.12,Math.PI-0.12);
+  else if(k==='ArrowDown')  orbit.phi = clamp(orbit.phi+0.07,0.12,Math.PI-0.12);
+  else return;
+  e.preventDefault();
+});
+
+/* ---------- labels: project, fade when behind, avoid collisions ----------- */
+const _v = new THREE.Vector3(), _c = new THREE.Vector3();
+function updateLabels(w,h){
+  if(!state.labels){ labelEls.forEach(e=>e.style.opacity=0); return; }
+  const placed = [];
+  const items = labelEls.map(el=>{
+    _v.set(+el.dataset.x, +el.dataset.y, +el.dataset.z);
+    current.localToWorld(_v);
+    const world = _v.clone();
+    _v.project(camera);
+    const x = (_v.x*0.5+0.5)*w, y = (-_v.y*0.5+0.5)*h;
+    /* fade as the anchor rotates behind the specimen */
+    _c.copy(world).sub(modelCenter).normalize();
+    const toCam = camera.position.clone().sub(world).normalize();
+    const facing = _c.dot(toCam);
+    return {el, x, y, z:_v.z, op: clamp((facing+0.35)/0.5,0,1)};
+  }).sort((a,b)=>a.y-b.y);
+
+  for(const it of items){
+    if(it.z>1 || it.op<=0.02){ it.el.style.opacity=0; continue; }
+    let y = it.y;
+    for(const p of placed) if(Math.abs(y-p)<17) y = p+17;   /* vertical avoidance */
+    placed.push(y);
+    it.el.style.transform = `translate(0,-50%)`;
+    it.el.style.left = Math.round(it.x+11)+'px';
+    it.el.style.top  = Math.round(y)+'px';
+    it.el.style.opacity = it.op.toFixed(2);
+  }
+}
+
+/* ---------- scale bar: recomputed from camera distance, snapped 1/2/5 ----- */
+const barEl = document.getElementById('bar'), barLabel = document.getElementById('barlabel');
+function updateScaleBar(h){
+  if(!currentSpec) return;
+  const dist = camera.position.distanceTo(orbit.target);
+  const worldPerPx = 2*Math.tan(THREE.MathUtils.degToRad(camera.fov/2))*dist / h;
+  const mmPerPx = worldPerPx * currentSpec.mmPerUnit;
+  const micro = !!currentSpec.micro;
+  const perPx = micro ? mmPerPx*1000 : mmPerPx;          /* µm or mm */
+  let target = perPx*130;                                 /* aim for ~130 px */
+  const pow = Math.pow(10, Math.floor(Math.log10(target)));
+  const m = target/pow;
+  const snapped = (m<1.5?1:m<3.5?2:m<7.5?5:10)*pow;
+  const px = snapped/perPx;
+  barEl.style.width = Math.round(px)+'px';
+  const unit = micro ? 'µm' : (snapped>=10 ? 'mm' : 'mm');
+  const show = snapped>=1 ? snapped.toFixed(0) : snapped.toFixed(snapped>=0.1?1:2);
+  barLabel.textContent = `${show} ${unit}`;
+}
+
+/* ---------- info panel ---------------------------------------------------- */
+function renderInfo(spec){
+  const rows = spec.facts.map(([k,v,s])=>{
+    const [tag] = SRC[s];
+    return `<tr><td>${k}</td><td>${v} <span class="flag">${tag}</span></td></tr>`;
+  }).join('');
+  const used = [...new Set(spec.facts.map(f=>f[2]))];
+  const legend = used.map(u=>`<div><b>${SRC[u][0]}</b> — ${SRC[u][1]}</div>`).join('');
+  document.getElementById('info').innerHTML = `
+    <h2>${spec.bi}</h2>
+    <div class="common">${spec.cn}</div>
+    <p>${spec.note}</p>
+    <h3>Measurements</h3>
+    <table>${rows}</table>
+    <h3>Sources</h3>
+    <div class="src">${legend}</div>
+    ${used.includes('recall') ? `<div class="warn">Figures tagged RECALLED were written from general mycological knowledge with no literature lookup performed for this build. They are plausible but unverified — check them against a monograph before citing.</div>` : ''}
+    <h3>Construction</h3>
+    <div class="src">Solids of revolution from explicit profile functions; lamellae generated blade by blade with attachment as real geometry; repeated elements merged into single buffers; specimen seeded for reproducibility.</div>`;
+}
+
+/* ---------- UI ------------------------------------------------------------ */
+const state = {labels:true, substrate:true, wire:false, spin:false};
+let logWanted = false;      /* wood-dwellers get a log instead of soil */
+document.querySelectorAll('.tg').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    const t = b.dataset.t;
+    if(t==='reset'){ frameCamera(); return; }
+    state[t] = !state[t];
+    b.classList.toggle('on', state[t]);
+    if(t==='wire') applyMaterialState();
+    if(t==='substrate') applySubstrate();
+  });
+});
+function applySubstrate(){
+  const on = state.substrate && !isMicro;
+  shadow.visible = on;
+  ground.visible = on && !logWanted;
+  log.visible    = on && logWanted;
+}
+
+const listEl = document.getElementById('list');
+const byPhylum = {};
+SPECIES.forEach(s=>{ (byPhylum[s.phylum] = byPhylum[s.phylum]||[]).push(s); });
+Object.keys(byPhylum).forEach(ph=>{
+  const h = document.createElement('div'); h.className='phylum'; h.textContent=ph;
+  listEl.appendChild(h);
+  byPhylum[ph].forEach(s=>{
+    const b = document.createElement('button');
+    b.className='sp'; b.dataset.id=s.id;
+    b.innerHTML = `<span class="bi">${s.bi}</span><span class="cn">${s.cn}</span>`;
+    b.addEventListener('click', ()=>select(s));
+    listEl.appendChild(b);
+  });
+});
+
+const stageSl = document.getElementById('stageSl'), stageRange = document.getElementById('stageRange'),
+      stageVal = document.getElementById('stageVal');
+const cutRange = document.getElementById('cutRange'), cutVal = document.getElementById('cutVal');
+const STAGE_NAMES = ['primordium','button · veil intact','veil rupture','mature'];
+
+function select(s){
+  document.querySelectorAll('.sp').forEach(b=>b.classList.toggle('on', b.dataset.id===s.id));
+  stageSl.classList.toggle('hide', !s.stages);
+  logWanted = (s.id === 'ostreatus' || s.id === 'ganoderma');
+  if (s.stages) stageVal.textContent = STAGE_NAMES[Math.round((+stageRange.value)/100)];
+  load(s, s.stages ? (+stageRange.value)/100 : undefined);
+  applySubstrate();
+}
+stageRange.addEventListener('input', ()=>{
+  const v = (+stageRange.value)/100;
+  stageVal.textContent = STAGE_NAMES[Math.round(v)];
+  if(currentSpec && currentSpec.stages) load(currentSpec, v);
+});
+cutRange.addEventListener('input', ()=>{
+  const v = +cutRange.value;
+  clipOn = v > 0;
+  cutVal.textContent = clipOn ? `${v}%` : 'off';
+  const extent = modelRadius*1.15;
+  clipPlane.constant = clipOn ? lerp(extent, -extent, v/100) : 999;
+  applyMaterialState();
+});
+
+/* ---------- loop ---------------------------------------------------------- */
+function resize(){
+  const r = canvas.getBoundingClientRect();
+  renderer.setSize(r.width, r.height, false);
+  camera.aspect = r.width/Math.max(r.height,1);
+  camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize);
+
+let last = performance.now();
+function tick(now){
+  const dt = Math.min((now-last)/1000, 0.05); last = now;
+  if(state.spin && !dragging) orbit.theta += dt*0.32;
+  updateCamera();
+  const r = canvas.getBoundingClientRect();
+  if(Math.abs(r.width - renderer.domElement.width/renderer.getPixelRatio())>1 ||
+     Math.abs(r.height - renderer.domElement.height/renderer.getPixelRatio())>1) resize();
+  renderer.render(scene, camera);
+  updateLabels(r.width, r.height);
+  updateScaleBar(r.height);
+  requestAnimationFrame(tick);
+}
+
+resize();
+select(SPECIES[0]);
+document.getElementById('loading').remove();
+requestAnimationFrame(tick);
+</script>
+</body>
+</html>

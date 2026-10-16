@@ -6,7 +6,12 @@ import type {
   VerificationStatus,
 } from "../../src/generated/prisma/client";
 import type { RegulatoryStatus } from "../../src/generated/prisma/client";
-import type { AminoAcidBasis, AminoAcids, MorphologyParameters } from "../../src/lib/types";
+import type {
+  AminoAcidBasis,
+  AminoAcids,
+  MorphologyParameters,
+  SensoryPublishedMeasurement,
+} from "../../src/lib/types";
 
 export type SpeciesSeed = {
   slug: string;
@@ -33,6 +38,7 @@ export type SpeciesSeed = {
     meatAnalogRationale?: string;
     preparationContext?: string;
     confidenceNotes?: string;
+    publishedEvidence?: SensoryPublishedMeasurement[];
     citationKeys: string[];
   };
   morphology: {
@@ -193,7 +199,7 @@ export const speciesData: SpeciesSeed[] = [
       {
         collectionName: "CBS",
         strainId: "130.52",
-        catalogUrl: "https://www.westerdijkinstitute.nl/Collections/Details/227484",
+        catalogUrl: "https://wi.knaw.nl/",
         availabilityNotes: "Westerdijk collection",
       },
     ],
@@ -299,7 +305,7 @@ export const speciesData: SpeciesSeed[] = [
       {
         collectionName: "CBS",
         strainId: "144.97",
-        catalogUrl: "https://www.westerdijkinstitute.nl/Collections/Details/227484",
+        catalogUrl: "https://wi.knaw.nl/",
       },
     ],
     images: [
@@ -483,7 +489,31 @@ export const speciesData: SpeciesSeed[] = [
       textureAxes: { tender: 3, firm: 3, juicy: 2 },
       meatAnalogPotential: "low",
       meatAnalogRationale: "Baseline culinary mushroom; moderate fiber but soft texture",
-      citationKeys: ["shah2014", "valverde2015"],
+      confidenceNotes:
+        "0–5 axes are a curator synthesis. Published measurements below are HPLC taste-active compounds from Yang, Lin & Mau (2001), not instrument-to-axis conversions.",
+      publishedEvidence: [
+        {
+          kind: "taste_compound",
+          name: "MSG-like amino acids (Asp + Glu)",
+          method: "HPLC of free amino acids",
+          sample: "Commercial fruiting bodies, dry-weight basis",
+          notes:
+            "Quantified among several cultivated species; umami intensity is attributed to these residues plus 5′-nucleotides, not to a 0–5 panel score.",
+          citationKey: "yang2013_enoki",
+          doi: "10.1016/s0308-8146(00)00262-4",
+        },
+        {
+          kind: "taste_compound",
+          name: "5′-nucleotides (including 5′-GMP)",
+          method: "HPLC of 5′-nucleotides",
+          sample: "Commercial fruiting bodies, dry-weight basis",
+          notes:
+            "5′-GMP is the principal nucleotide umami synergist reported for A. bisporus in this study.",
+          citationKey: "yang2013_enoki",
+          doi: "10.1016/s0308-8146(00)00262-4",
+        },
+      ],
+      citationKeys: ["shah2014", "valverde2015", "yang2013_enoki"],
     },
     morphology: {
       hyphalType: "septate",
@@ -984,7 +1014,7 @@ export const speciesData: SpeciesSeed[] = [
       {
         collectionName: "CBS",
         strainId: "564.65",
-        catalogUrl: "https://www.westerdijkinstitute.nl/Collections/Details/227484",
+        catalogUrl: "https://wi.knaw.nl/",
       },
     ],
     images: [
@@ -1057,7 +1087,7 @@ export const speciesData: SpeciesSeed[] = [
       {
         collectionName: "CBS",
         strainId: "810.71",
-        catalogUrl: "https://www.westerdijkinstitute.nl/Collections/Details/227484",
+        catalogUrl: "https://wi.knaw.nl/",
       },
     ],
     images: [

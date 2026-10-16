@@ -1,4 +1,28 @@
+import type { ReactNode } from "react";
 import { formatScientificNameParts } from "@/lib/format";
+
+const GENERA =
+  "Agaricus|Aspergillus|Auricularia|Calocybe|Calvatia|Candida|Cantharellus|Coprinus|Cordyceps|Cyberlindnera|Cyclocybe|Flammulina|Fusarium|Ganoderma|Grifola|Hericium|Hypsizygus|Laetiporus|Lentinula|Morchella|Neurospora|Paecilomyces|Penicillium|Pholiota|Pleurotus|Rhizopus|Saccharomyces|Schizophyllum|Sparassis|Stropharia|Tremella|Trichoderma|Tricholoma|Tuber|Ustilago|Volvariella";
+
+const TAXON_RE = new RegExp(
+  `\\b(?:${GENERA})(?:\\s+(?:sp\\.|spp\\.|[a-z][a-z-]+))*\\b`,
+  "g",
+);
+
+/** Italicize binomials and comparison genera in running copy. */
+export function ItalicizeTaxa({ text }: { text: string }) {
+  const nodes: ReactNode[] = [];
+  let last = 0;
+  const re = new RegExp(TAXON_RE.source, "g");
+  for (const match of text.matchAll(re)) {
+    const index = match.index ?? 0;
+    if (index > last) nodes.push(text.slice(last, index));
+    nodes.push(<em key={index}>{match[0]}</em>);
+    last = index + match[0].length;
+  }
+  if (last < text.length) nodes.push(text.slice(last));
+  return <>{nodes}</>;
+}
 
 type ScientificNameProps = {
   genus: string;
@@ -16,20 +40,20 @@ export function ScientificName({
 }: ScientificNameProps) {
   if (speciesEpithet) {
     return (
-      <em className={className}>{formatScientificNameParts(genus, speciesEpithet)}</em>
+      <em className={`italic ${className}`}>{formatScientificNameParts(genus, speciesEpithet)}</em>
     );
   }
 
   const parts = (scientificName ?? genus).trim().split(/\s+/);
   if (parts.length >= 2) {
     return (
-      <em className={className}>
+      <em className={`italic ${className}`}>
         {parts[0]} {parts.slice(1).join(" ")}
       </em>
     );
   }
 
-  return <em className={className}>{genus}</em>;
+  return <em className={`italic ${className}`}>{genus}</em>;
 }
 
 /** Taxonomic ranks above species are roman; genus and species are italic. */

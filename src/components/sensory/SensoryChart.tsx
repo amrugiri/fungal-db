@@ -68,7 +68,7 @@ export function SensoryChart({ tasteAxes, textureAxes }: SensoryChartProps) {
   const textureData = toChartData(textureAxes);
 
   if (tasteData.length === 0 && textureData.length === 0) {
-    return <p className="text-sm text-black">No quantified sensory data available.</p>;
+    return null;
   }
 
   return (

@@ -1,0 +1,122 @@
+{
+  "species": {
+    "slug": "cantharellus-cibarius",
+    "genus": "Cantharellus",
+    "speciesEpithet": "cibarius",
+    "scientificName": "Cantharellus cibarius",
+    "commonNames": [
+      "chanterelle",
+      "golden chanterelle",
+      "girolle"
+    ],
+    "ncbiTaxonomyId": "36066",
+    "taxonomy": {
+      "kingdom": "Fungi",
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Cantharellales",
+      "family": "Cantharellaceae",
+      "genus": "Cantharellus"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 3,
+        "fruity": 4,
+        "peppery": 3
+      },
+      "textureAxes": {
+        "chewy": 4,
+        "fibrous": 2,
+        "meat_like": 2
+      },
+      "aromaNotes": "Apricot / dried-fruit aroma with a mild pepper finish; used as a culinary flavor, not a neutral analog base",
+      "meatAnalogPotential": "low",
+      "meatAnalogRationale": "Ectomycorrhizal; not industrially cultivated at protein scale. Chewy fruiting bodies can add bite in blends, but the realistic alt-protein role is aroma/umami, not bulk mycoprotein. True chanterelles have ridges (false gills), not oyster-style shreddable lamellae.",
+      "preparationContext": "Wild or woodland-harvested fruiting bodies, sautéed or dried; cultivation remains unreliable",
+      "confidenceNotes": "Flavor chemistry is documented in edible-mushroom reviews. No commercial meat-analog product is built on C. cibarius biomass.",
+      "citationKeys": ["kalac2016", "valverde2015"]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans",
+      "fruitingBodyStructure": "Funnel-shaped pileus with blunt, forked ridges (not true gills) running down a solid stipe",
+      "sporeCharacteristics": "Pale yellow to cream spore print",
+      "microscopyNotes": "Ridges are folds of hymenium, not detachable lamellae"
+    },
+    "nutrition": {
+      "proteinPercent": 21,
+      "fiberPercent": 11,
+      "fatPercent": 3,
+      "moisturePercent": 89,
+      "preparationContext": "Typical wild-chanterelle proximate ranges from edible-mushroom reviews (dry-matter protein often cited ~15–25%)",
+      "confidenceNotes": "Composition varies by site and drying. Not a formulation protein spec.",
+      "citationKeys": ["kalac2016"]
+    },
+    "geographic": {
+      "nativeRange": "Temperate Northern Hemisphere woodlands",
+      "cultivatedRegions": "Not a reliable industrial crop; mostly wild harvest and limited experimental culture",
+      "habitat": "Ectomycorrhizal with oaks, birch, conifers"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Mycorrhizal; culture collections hold isolates, not a production strain."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/e/e5/2007-07-14_Cantharellus_cibarius_cropped.jpg",
+        "caption": "Golden chanterelle (Cantharellus cibarius)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:2007-07-14_Cantharellus_cibarius_cropped.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": false,
+      "commercialStatus": "traditional_food",
+      "applicationSummary": "Gourmet wild mushroom sold fresh or dried. In alt-protein it is a flavor/texture accent (apricot, pepper, chew), not a scalable analog base.",
+      "companies": [
+        {
+          "name": "Wild-mushroom foragers and specialty grocers",
+          "region": "Europe, North America"
+        }
+      ],
+      "confidenceNotes": "Traditional food; not a mycoprotein platform.",
+      "citationKeys": ["kalac2016", "valverde2015"]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 6,
+      "fruitingBodyType": "mushroom",
+      "capDiameter": 6,
+      "stipeLength": 5,
+      "capColor": "#e6b84a",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "traditional_food",
+      "notes": "Traditional wild edible. Confirm local look-alike warnings (false chanterelles) for any consumer product."
+    },
+    "speciesCitationKeys": ["kalac2016", "ncbi_taxonomy"]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Edible mushrooms: chemical composition and nutritional value",
+      "authors": "Kalač P",
+      "journal": "Food Chemistry",
+      "year": 2016,
+      "summary": "Places chanterelles among wild edibles with documented aroma and proximate composition — flavor adjuncts, not industrial protein biomass.",
+      "publishedAt": "2016-01-01"
+    }
+  ]
+}

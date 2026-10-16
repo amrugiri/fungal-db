@@ -1,0 +1,122 @@
+{
+  "species": {
+    "slug": "aspergillus-niger",
+    "genus": "Aspergillus",
+    "speciesEpithet": "niger",
+    "scientificName": "Aspergillus niger",
+    "commonNames": [
+      "black aspergilli",
+      "citric acid mould"
+    ],
+    "ncbiTaxonomyId": "5061",
+    "taxonomy": {
+      "kingdom": "Fungi",
+      "phylum": "Ascomycota",
+      "class": "Eurotiomycetes",
+      "order": "Eurotiales",
+      "family": "Aspergillaceae",
+      "genus": "Aspergillus"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "neutral": 3,
+        "sour": 4
+      },
+      "textureAxes": {
+        "meat_like": 0
+      },
+      "aromaNotes": "Not used as an eating mushroom; industrial fermentations produce citric acid and enzymes, not a savory fruiting-body flavor",
+      "meatAnalogPotential": "low",
+      "meatAnalogRationale": "Not a mycoprotein or meat-analog biomass. Relevant because food-grade A. niger enzymes (amylases, pectinases, proteases, glucose oxidase) and citric acid are processing aids in plant- and fungal-protein products. Do not list the mould itself as an ingredient analog.",
+      "preparationContext": "Submerged fermentation for acids and enzymes; biomass is generally not the food",
+      "confidenceNotes": "Safety reviews support enzyme/acid production strains under current good practice. That is not approval to eat the mycelium as protein.",
+      "citationKeys": ["schuster2002_aniger"]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans",
+      "fruitingBodyStructure": "No mushroom; black conidial heads on unbranched stipes with vesicles",
+      "sporeCharacteristics": "Dark, rough conidia in chains from phialides on a globose vesicle",
+      "microscopyNotes": "Same aspergillum body plan as A. oryzae / A. sojae, with black rather than yellow-green heads"
+    },
+    "nutrition": {
+      "preparationContext": "Not a dietary protein ingredient",
+      "confidenceNotes": "No food-protein proximate is given — listing a protein % would imply the wrong use.",
+      "citationKeys": ["schuster2002_aniger"]
+    },
+    "geographic": {
+      "nativeRange": "Cosmopolitan saprotroph",
+      "cultivatedRegions": "Global industrial fermentation (citric acid, enzymes)",
+      "habitat": "Soil, decaying plant matter, indoor environments"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "1015",
+        "catalogUrl": "https://www.atcc.org/products/1015",
+        "availabilityNotes": "Classic citric-acid / genome strain — not automatically a food-enzyme production strain."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/7/74/Aspergillus_niger_01.jpg",
+        "caption": "Aspergillus niger culture",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Aspergillus_niger_01.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": false,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "Industrial source of citric acid and food enzymes used when processing plant and fungal proteins (hydrolysis, texture, acidity). The organism is a processing microbe, not an analog ingredient. T. reesei in this database is the cellulase counterpart.",
+      "companies": [
+        {
+          "name": "Industrial enzyme and citric-acid producers",
+          "region": "Global"
+        }
+      ],
+      "productionProcess": [
+        {
+          "title": "Submerged fermentation",
+          "description": "Acid or enzyme recovered from broth; residual biomass is not sold as mycoprotein."
+        }
+      ],
+      "confidenceNotes": "Food-use is of purified products, not of the fungus as food.",
+      "citationKeys": ["schuster2002_aniger"]
+    },
+    "morphology3D": {
+      "visualizationStyle": "microscopy",
+      "stainColor": "#2a2a2a",
+      "backgroundColor": "#f4f1ea",
+      "hyphaeBranchAngle": 40,
+      "hyphaeThickness": 0.012,
+      "hyphaeColor": "#4a4a4a",
+      "hyphaeDensity": 12,
+      "fruitingBodyType": "none",
+      "capDiameter": 0,
+      "stipeLength": 0,
+      "capColor": "#2a2a2a",
+      "showMycelium": true,
+      "showFruitingBody": false
+    },
+    "regulatory": {
+      "fda": "restricted_use",
+      "efsa": "restricted_use",
+      "notes": "Food-grade enzyme and citric-acid production is longstanding. The mould itself is not an authorized mycoprotein. Some isolates can make ochratoxin or other metabolites — production strains are selected and controlled."
+    },
+    "speciesCitationKeys": ["schuster2002_aniger", "ncbi_taxonomy"]
+  },
+  "altProteinResearch": [
+    {
+      "title": "On the safety of Aspergillus niger — a review",
+      "authors": "Schuster, Dunn-Coleman, Frisvad & van Dijck",
+      "journal": "Applied Microbiology and Biotechnology",
+      "year": 2002,
+      "doi": "10.1007/s00253-002-1032-6",
+      "summary": "Reviews industrial A. niger as an enzyme/acid producer and the controls that keep food-use limited to processed products, not edible biomass.",
+      "publishedAt": "2002-01-01"
+    }
+  ]
+}

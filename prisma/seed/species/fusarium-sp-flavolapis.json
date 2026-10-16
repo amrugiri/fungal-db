@@ -1,0 +1,142 @@
+{
+  "species": {
+    "slug": "fusarium-sp-flavolapis",
+    "genus": "Fusarium",
+    "speciesEpithet": "sp. flavolapis",
+    "scientificName": "Fusarium sp. 'flavolapis'",
+    "commonNames": [
+      "Fy fungus",
+      "Nature's Fynd fungus",
+      "Fusarium strain flavolapis"
+    ],
+    "synonyms": [
+      "Fusarium strain flavolapis",
+      "Fusarium novum yellowstonensis",
+      "Fusarium oxysporum MK7"
+    ],
+    "ncbiTaxonomyId": "2776169",
+    "taxonomy": {
+      "kingdom": "Fungi",
+      "phylum": "Ascomycota",
+      "class": "Sordariomycetes",
+      "order": "Hypocreales",
+      "family": "Nectriaceae",
+      "genus": "Fusarium"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 3,
+        "neutral": 4,
+        "earthy": 2
+      },
+      "textureAxes": {
+        "fibrous": 5,
+        "chewy": 4,
+        "meat_like": 5
+      },
+      "aromaNotes": "Mild after processing; commercial Fy Protein is formulated into dairy- and meat-style products",
+      "meatAnalogPotential": "high",
+      "meatAnalogRationale": "Commercial submerged-fermentation mycoprotein (Fy Protein) sold as a meat and dairy analog ingredient; hyphal biomass is texturized similarly to Quorn-style Fusarium protein.",
+      "preparationContext": "Heat-inactivated fermented biomass, not a fruiting-body food",
+      "confidenceNotes": "Commercial and regulatory dossiers describe use; published sensory scores for the raw biomass remain limited.",
+      "citationKeys": ["efsa2025_flavolapis", "gras904_flavolapis", "hc_fyprotein"]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "Not used in food production; product is filamentous biomass from fermentation",
+      "sporeCharacteristics": "Fusarium-type conidia in culture; not part of the food ingredient",
+      "microscopyNotes": "Septate branching hyphae typical of Fusarium; 'flavolapis' is an applicant-assigned strain name, not a formally published species epithet"
+    },
+    "nutrition": {
+      "proteinPercent": 48,
+      "fiberPercent": 20,
+      "fatPercent": 8,
+      "moisturePercent": 70,
+      "aminoAcidBasis": "percent_of_protein",
+      "limitingAminoAcids": "Sulfur amino acids (typical of Fusarium biomass)",
+      "preparationContext": "About 48% protein on a dry-weight basis for Fy Protein biomass (Health Canada novel-food summary)",
+      "confidenceNotes": "Protein figure from the Health Canada novel-food document; amino-acid profile not entered until a primary table is attached.",
+      "citationKeys": ["hc_fyprotein", "efsa2025_flavolapis"]
+    },
+    "geographic": {
+      "nativeRange": "Isolated from a geothermal spring, Yellowstone National Park, USA",
+      "cultivatedRegions": "Industrial fermentation (Nature's Fynd / The Fynder Group)",
+      "habitat": "Environmental isolate; food use is confined to controlled fermentation"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "PTA-10698",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Deposited as Fusarium oxysporum MK7; later designated Fusarium strain flavolapis."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Microconidia_and_conidiophores_of_Fusarium.png",
+        "caption": "Fusarium microconidia and conidiophores (genus-level morphology; not a photograph of strain flavolapis)",
+        "license": "CC BY-SA 4.0",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "microscopy",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:Microconidia_and_conidiophores_of_Fusarium.png"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_meat_analog",
+      "applicationSummary": "Fy Protein from Nature's Fynd — fermented Fusarium biomass used in dairy-style and meat-style products in the US and other notified markets.",
+      "companies": [
+        {
+          "name": "Nature's Fynd (The Fynder Group)",
+          "region": "United States",
+          "products": ["Fy Protein", "dairy-style cream cheese and meatless breakfast items"]
+        }
+      ],
+      "productionProcess": [
+        {
+          "title": "Submerged / surface fermentation",
+          "description": "Non-viable biomass harvested from Fusarium sp. strain flavolapis, then processed into a protein ingredient."
+        }
+      ],
+      "confidenceNotes": "Use and composition summarized from FDA GRAS, Health Canada, and EFSA novel-food documents.",
+      "citationKeys": ["gras904_flavolapis", "hc_fyprotein", "efsa2025_flavolapis"]
+    },
+    "morphology3D": {
+      "visualizationStyle": "microscopy",
+      "stainColor": "#3b6ea8",
+      "backgroundColor": "#f4f1ea",
+      "hyphaeBranchAngle": 42,
+      "hyphaeThickness": 0.012,
+      "hyphaeColor": "#3b6ea8",
+      "hyphaeDensity": 16,
+      "fruitingBodyType": "none",
+      "capDiameter": 0,
+      "stipeLength": 0,
+      "capColor": "#8b7355",
+      "showMycelium": true,
+      "showFruitingBody": false
+    },
+    "regulatory": {
+      "fda": "gras",
+      "efsa": "not_approved_food",
+      "notes": "FDA GRAS Notice 904 and Health Canada no-objection for Fy Protein. EFSA NDA (Sept 2025, 10.2903/j.efsa.2025.9536) concluded that safety of the biomass cannot be established under the proposed EU uses (insufficient margin of exposure; possible allergenicity). Not a formally published Linnaean species name."
+    },
+    "speciesCitationKeys": [
+      "efsa2025_flavolapis",
+      "gras904_flavolapis",
+      "hc_fyprotein"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Safety of the fungal biomass from Fusarium species strain flavolapis as a novel food",
+      "authors": "EFSA NDA Panel",
+      "journal": "EFSA Journal",
+      "year": 2025,
+      "doi": "10.2903/j.efsa.2025.9536",
+      "summary": "EFSA NDA opinion on Fy biomass: production and composition were acceptable, but safety could not be established under the proposed EU uses (thyroid findings in a 90-day rat study; insufficient margin of exposure; possible allergenicity).",
+      "publishedAt": "2025-09-01"
+    }
+  ]
+}

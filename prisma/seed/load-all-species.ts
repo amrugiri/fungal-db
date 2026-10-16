@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { altProteinResearchBySlug } from "./alt-protein-research";
+import { applyScientificAudit } from "./scientific-audit";
 import { applySpeciesImages } from "./species-images";
 import { applySpeciesOverlay } from "./species-overlays";
 import { speciesData as builtInSpeciesData } from "./species-data";
@@ -33,12 +34,12 @@ export function loadAllSpeciesSeeds(): SpeciesSeed[] {
 
   for (const sp of builtInSpeciesData.map(applySpeciesOverlay).map(applySpeciesImages)) {
     const custom = customBySlug.get(sp.slug);
-    merged.push(custom ? applySpeciesImages(custom.species) : sp);
+    merged.push(applyScientificAudit(custom ? applySpeciesImages(custom.species) : sp));
   }
 
   for (const [slug, bundle] of customBySlug) {
     if (!builtInSpeciesData.some((sp) => sp.slug === slug)) {
-      merged.push(applySpeciesImages(applySpeciesOverlay(bundle.species)));
+      merged.push(applyScientificAudit(applySpeciesImages(applySpeciesOverlay(bundle.species))));
     }
   }
 
@@ -60,14 +61,18 @@ export function loadAltProteinResearchMap(): Record<string, SpeciesBundle["altPr
 export function getSpeciesBundleBySlug(slug: string): SpeciesBundle | null {
   const customPath = path.join(CUSTOM_SPECIES_DIR, `${slug}.json`);
   if (fs.existsSync(customPath)) {
-    return JSON.parse(fs.readFileSync(customPath, "utf8")) as SpeciesBundle;
+    const bundle = JSON.parse(fs.readFileSync(customPath, "utf8")) as SpeciesBundle;
+    return {
+      ...bundle,
+      species: applyScientificAudit(applySpeciesImages(bundle.species)),
+    };
   }
 
   const builtIn = builtInSpeciesData.find((sp) => sp.slug === slug);
   if (!builtIn) return null;
 
   return {
-    species: applySpeciesImages(applySpeciesOverlay(builtIn)),
+    species: applyScientificAudit(applySpeciesImages(applySpeciesOverlay(builtIn))),
     altProteinResearch: altProteinResearchBySlug[slug],
   };
 }

@@ -2,6 +2,8 @@
 
 How to verify and add species to the Fungal Mycoprotein Database.
 
+Every month, run the living-resource playbook in `docs/MONTHLY_UPDATE.md` (OpenAlex scan, copy new table values into empty fields, add new food / mycoprotein fungi).
+
 ## Principles
 
 1. **Every factual claim needs a citation** — DOI, PMID, patent, or verified catalog URL.
@@ -44,11 +46,18 @@ Enter a scientific name. The app calls NCBI E-utilities to fetch taxonomy ID and
 - **catalog** — culture collection strain pages
 - **website** — taxonomic authorities (MycoBank, GBIF) — use sparingly
 
-## Sensory data rules
+## Strict extraction (nutrition and sensory)
 
-- Score taste/texture axes 0–5 only when literature provides quantified or semi-quantified data.
-- Record panel methodology in `confidence_notes`.
-- For `meat_analog_potential`, provide rationale text citing texture studies.
+Keep the field empty until a number is copied from a paper. Do not fill gaps with typical-mushroom defaults or 0–5 guesses.
+
+1. Open the paper (PDF or HTML). Confirm the species, sample (fresh/dry, fruiting body/biomass), and units.
+2. Copy only values that appear in a table or sentence. Record table/figure, basis (g/100 g wet, % dry matter), and method (AOAC, HPLC, N factor).
+3. If the paper names a compound but gives no number, add a `publishedEvidence` row without `value`/`unit`.
+4. One paper, one basis. Do not mix wet-weight and dry-weight percentages in the same table.
+5. Confirm the Crossref title matches the DOI before linking it.
+6. For `meat_analog_potential`, cite a product or a process paper — not a scaffold score.
+
+0–5 taste/texture axes stay empty unless a named panel protocol reports that scale.
 
 ## Images and 3D assets
 

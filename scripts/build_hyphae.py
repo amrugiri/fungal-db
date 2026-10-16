@@ -30,7 +30,8 @@ Usage:
 import numpy as np
 import trimesh
 
-from mesh_kit import revolve, finalize, srgb, verify_and_export
+from mesh_kit import revolve, finalize, srgb, shade_vertices, verify_and_export
+import shaders as sh
 
 # ---- parameters, from the species' 3D-model record -------------------------
 BRANCH_ANGLE = 35.0     # hyphaeBranchAngle
@@ -131,10 +132,15 @@ for i in range(3):
          [np.cos(a), np.sin(a), rng.uniform(-0.25, 0.45)],
          1.05, THICKNESS, 0)
 
-verify_and_export(
-    [
-        ("hyphal_filaments", finalize(trimesh.util.concatenate(tubes), HYPHA_COLOR, 0.62)),
-        ("septa_cross_walls", finalize(trimesh.util.concatenate(walls), SEPTUM_COLOR, 0.66)),
-    ],
-    "fusarium-venenatum.glb",
-)
+# Per-vertex colour: hyphae are not uniformly pigmented, and the cross-walls
+# read denser than the segments they divide.
+SHADED = [
+    ("hyphal_filaments", shade_vertices(
+        finalize(trimesh.util.concatenate(tubes), HYPHA_COLOR, 0.62),
+        sh.marbled("#7a6440", "#c4b088", seed=51, coarse=3.0, fine=7.5))),
+    ("septa_cross_walls", shade_vertices(
+        finalize(trimesh.util.concatenate(walls), SEPTUM_COLOR, 0.66),
+        sh.flat("#5f4c33", variation=0.10))),
+]
+
+verify_and_export(SHADED, "fusarium-venenatum.glb", vertex_colours=True)

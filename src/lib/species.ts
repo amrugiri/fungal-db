@@ -40,6 +40,13 @@ async function fetchAltProteinResearchHighlights(
   }
 }
 
+export async function getSpeciesCatalog() {
+  return db.species.findMany({
+    select: { slug: true, scientificName: true },
+    orderBy: { scientificName: "asc" },
+  });
+}
+
 export async function getSpeciesList(search?: string) {
   const species = await db.species.findMany({
     include: {

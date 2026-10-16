@@ -1,0 +1,160 @@
+{
+  "species": {
+    "slug": "pleurotus-pulmonarius",
+    "genus": "Pleurotus",
+    "speciesEpithet": "pulmonarius",
+    "scientificName": "Pleurotus pulmonarius",
+    "commonNames": [
+      "phoenix oyster",
+      "Indian oyster",
+      "lung oyster"
+    ],
+    "ncbiTaxonomyId": "28995",
+    "taxonomy": {
+      "kingdom": "Fungi",
+      "phylum": "Basidiomycota",
+      "class": "Agaricomycetes",
+      "order": "Agaricales",
+      "family": "Pleurotaceae",
+      "genus": "Pleurotus"
+    },
+    "sensory": {
+      "tasteAxes": {
+        "umami": 4,
+        "mild": 3,
+        "earthy": 2
+      },
+      "textureAxes": {
+        "fibrous": 5,
+        "chewy": 4,
+        "meat_like": 4
+      },
+      "aromaNotes": "Mild oyster aroma; less anise than some P. ostreatus strains",
+      "meatAnalogPotential": "high",
+      "meatAnalogRationale": "Shelf-like pileus shreds into fibrous strips used in chicken-style analogs; widely cultivated oyster distinct from P. ostreatus.",
+      "preparationContext": "Fresh clusters, sautéed or shredded; also dried",
+      "confidenceNotes": "Meat-analog use inferred from Pleurotus cultivation and nutrition literature; species-specific sensory panels remain sparse.",
+      "citationKeys": [
+        "girmay2016_oyster",
+        "manzi2013",
+        "valverde2015"
+      ]
+    },
+    "morphology": {
+      "hyphalType": "septate",
+      "cellWallComposition": "Chitin, beta-glucans, mannoproteins",
+      "fruitingBodyStructure": "Pale cream to tan imbricate pilei with eccentric to lateral stipe and decurrent gills; typically smaller and paler than P. ostreatus",
+      "sporeCharacteristics": "Lilac-grey spore print; cylindrical basidiospores",
+      "microscopyNotes": "Clamp connections present; pleurotoid trama"
+    },
+    "nutrition": {
+      "proteinPercent": 27,
+      "fiberPercent": 13,
+      "fatPercent": 2,
+      "moisturePercent": 90,
+      "aminoAcidBasis": "percent_of_protein",
+      "aminoAcids": {
+        "histidine": 2.7,
+        "isoleucine": 4.2,
+        "leucine": 6.8,
+        "lysine": 5.9,
+        "methionine": 1.6,
+        "cystine": 0.9,
+        "phenylalanine": 3.9,
+        "threonine": 4.3,
+        "tryptophan": 1.1,
+        "valine": 4.8,
+        "alanine": 4.1,
+        "arginine": 3.7,
+        "aspartic_acid": 5.2,
+        "glutamic_acid": 6.4,
+        "glycine": 3.2,
+        "proline": 2.5,
+        "serine": 3.6,
+        "tyrosine": 2.9
+      },
+      "limitingAminoAcids": "Methionine + cysteine",
+      "preparationContext": "Dry-weight proximate values aligned with Pleurotus nutrition reviews",
+      "confidenceNotes": "Uses Pleurotus-complex nutrition ranges; confirm against a species-specific proximate study before formulation.",
+      "citationKeys": ["manzi2013", "kalac2016"]
+    },
+    "geographic": {
+      "nativeRange": "Widespread temperate and subtropical woodlands",
+      "cultivatedRegions": "Asia, Europe, North America, Africa",
+      "habitat": "Saprotroph on hardwood; warmer-weather oyster relative of P. ostreatus",
+      "gbifUrl": "https://www.gbif.org/species/5240663"
+    },
+    "strains": [
+      {
+        "collectionName": "ATCC",
+        "strainId": "TBD",
+        "catalogUrl": "https://www.atcc.org/",
+        "availabilityNotes": "Add a verified culture-collection strain for Pleurotus pulmonarius."
+      }
+    ],
+    "images": [
+      {
+        "url": "https://upload.wikimedia.org/wikipedia/commons/c/ce/2012-08-07_Pleurotus_pulmonarius_%28Jacq.%29_P._Kumm_246231.jpg",
+        "caption": "Phoenix oyster (Pleurotus pulmonarius)",
+        "license": "CC (see Commons file page)",
+        "attributionText": "Wikimedia Commons",
+        "imageCategory": "organism",
+        "sourceUrl": "https://commons.wikimedia.org/wiki/File:2012-08-07_Pleurotus_pulmonarius_(Jacq.)_P._Kumm_246231.jpg"
+      }
+    ],
+    "commercialUse": {
+      "meatAlternativeUse": true,
+      "commercialStatus": "commercial_food",
+      "applicationSummary": "One of the most cultivated oyster mushrooms worldwide; sold fresh and used as shredded biomass in meat-analog and hybrid products.",
+      "companies": [
+        {
+          "name": "Commercial oyster farms (often labelled Indian / phoenix oyster)",
+          "region": "Global"
+        }
+      ],
+      "productionProcess": [
+        {
+          "title": "Bag / block cultivation",
+          "description": "Pasteurized straw, sawdust, or agricultural waste; fruits at warmer temperatures than many P. ostreatus strains."
+        }
+      ],
+      "confidenceNotes": "Global cultivated crop; often marketed simply as oyster mushroom.",
+      "citationKeys": ["girmay2016_oyster", "valverde2015"]
+    },
+    "morphology3D": {
+      "visualizationStyle": "macroscopic",
+      "hyphaeBranchAngle": 45,
+      "hyphaeThickness": 0.02,
+      "hyphaeColor": "#e8e0d4",
+      "hyphaeDensity": 7,
+      "fruitingBodyType": "oyster",
+      "capDiameter": 8,
+      "stipeLength": 2,
+      "capColor": "#d8c9a8",
+      "backgroundColor": "#f7f4ef",
+      "showMycelium": false,
+      "showFruitingBody": true
+    },
+    "regulatory": {
+      "fda": "traditional_food",
+      "efsa": "approved_safe",
+      "notes": "Longstanding cultivated edible oyster mushroom."
+    },
+    "speciesCitationKeys": [
+      "girmay2016_oyster",
+      "valverde2015",
+      "ncbi_taxonomy"
+    ]
+  },
+  "altProteinResearch": [
+    {
+      "title": "Growth and yield of Pleurotus species on agricultural wastes",
+      "authors": "Girmay et al.",
+      "journal": "SpringerPlus",
+      "year": 2016,
+      "doi": "10.1186/s40064-016-1990-2",
+      "summary": "Documents scalable cultivation of Pleurotus, including pulmonarius-type oysters, on low-cost residues for protein biomass.",
+      "publishedAt": "2016-01-01"
+    }
+  ]
+}

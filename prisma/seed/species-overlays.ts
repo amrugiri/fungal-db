@@ -1,6 +1,6 @@
 import type { RegulatoryStatus } from "../../src/generated/prisma/client";
 import type { MorphologyParameters } from "../../src/lib/types";
-import { speciesAminoAcidOverlays, speciesProductionOverlays } from "./species-enrichment";
+import { speciesProductionOverlays } from "./species-enrichment";
 import type { SpeciesSeed } from "./species-data";
 
 type CommercialOverlay = NonNullable<SpeciesSeed["commercialUse"]>;
@@ -44,20 +44,20 @@ export const speciesOverlays: Record<string, SpeciesOverlay> = {
           title: "Submerged Aerobic Fermentation",
           description:
             "Strain A3/5 grown in stirred fermenters on glucose and mineral salts; continuous culture controls RNA.",
-          learnMoreUrl: "https://www.quorn.co.uk/about-quorn/how-quorn-is-made",
-          learnMoreLabel: "How Quorn is made (Quorn Foods)",
+          learnMoreUrl: "https://www.quorn.com/",
+          learnMoreLabel: "About Quorn (Quorn Foods)",
         },
         {
           title: "Harvest & Heat Treatment",
           description: "Biomass separated and heat-treated to reduce RNA and inactivate enzymes.",
-          learnMoreUrl: "https://doi.org/10.1016/j.tifs.2018.04.008",
-          learnMoreLabel: "Finnigan (2018) review",
+          learnMoreUrl: "https://doi.org/10.1093/cdn/nzz021",
+          learnMoreLabel: "Finnigan (2019) review",
         },
         {
           title: "Texturization Into Meat-Like Forms",
           description: "Heat-treated hyphae bound and formed into fibrous meat-like products.",
-          learnMoreUrl: "https://patents.google.com/patent/US5945148",
-          learnMoreLabel: "Quorn texture patent",
+          learnMoreUrl: "https://patents.google.com/patent/US4041189A/en",
+          learnMoreLabel: "Quorn process patent",
         },
       ],
       confidenceNotes: "Only globally approved mycoprotein meat analog at commercial scale; sold in 17+ countries.",
@@ -501,8 +501,7 @@ export const speciesOverlays: Record<string, SpeciesOverlay> = {
 
 export function applySpeciesOverlay(sp: SpeciesSeed): SpeciesSeed {
   const overlay = speciesOverlays[sp.slug];
-  const aminoOverlay =
-    sp.nutrition.aminoAcids != null ? {} : (speciesAminoAcidOverlays[sp.slug] ?? {});
+  // Templated MUSHROOM_BASE amino acids are not publication data — do not fill gaps.
   const productionSteps =
     overlay?.commercialUse.productionProcess?.length
       ? overlay.commercialUse.productionProcess
@@ -511,7 +510,7 @@ export function applySpeciesOverlay(sp: SpeciesSeed): SpeciesSeed {
   if (!overlay) {
     return {
       ...sp,
-      nutrition: { ...sp.nutrition, ...aminoOverlay },
+      nutrition: { ...sp.nutrition },
       commercialUse: sp.commercialUse
         ? {
             ...sp.commercialUse,
@@ -527,7 +526,7 @@ export function applySpeciesOverlay(sp: SpeciesSeed): SpeciesSeed {
   return {
     ...sp,
     morphology3D: { ...sp.morphology3D, ...overlay.morphology3D },
-    nutrition: { ...sp.nutrition, ...overlay.nutrition, ...aminoOverlay },
+    nutrition: { ...sp.nutrition, ...overlay.nutrition },
     commercialUse: {
       ...overlay.commercialUse,
       productionProcess: productionSteps,

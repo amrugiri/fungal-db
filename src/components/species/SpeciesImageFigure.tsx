@@ -1,3 +1,4 @@
+import { ItalicizeTaxa } from "@/components/species/ScientificName";
 import { SectionHeading, SubHeading, labelClass } from "@/components/ui/headings";
 
 type SpeciesImageProps = {
@@ -44,7 +45,7 @@ export function SpeciesImageFigure({
           isMedium ? "text-[11px] leading-snug" : isCompact ? "text-[10px] leading-snug" : "text-sm"
         }`}
       >
-        {caption}
+        <ItalicizeTaxa text={caption} />
       </figcaption>
     </figure>
   );

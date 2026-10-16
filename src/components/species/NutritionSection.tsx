@@ -45,8 +45,25 @@ export function NutritionSection({ nutrition }: NutritionSectionProps) {
   const aminoAcidEntries = Object.entries(aminoAcids).sort(([a], [b]) =>
     a.localeCompare(b),
   );
+  const hasMacros =
+    nutrition.proteinPercent != null ||
+    nutrition.fiberPercent != null ||
+    nutrition.fatPercent != null ||
+    nutrition.moisturePercent != null;
+  const hasProteinQuality =
+    nutrition.pdcaas != null ||
+    nutrition.diaas != null ||
+    Boolean(nutrition.limitingAminoAcids);
+
   return (
     <CollapsibleSection title="Nutrition" defaultOpen id="nutrition">
+      {!hasMacros && aminoAcidEntries.length === 0 && (
+        <p className="mb-4 text-sm text-black">
+          No proximate or amino-acid values have been extracted from a verified
+          paper for this species. Citation badges below are papers that discuss
+          composition; they are not a substitute for a copied table.
+        </p>
+      )}
       <table className="w-full text-sm">
         <tbody>
           {nutrition.proteinPercent != null && (
@@ -80,6 +97,7 @@ export function NutritionSection({ nutrition }: NutritionSectionProps) {
         <p className="mt-2 text-sm text-black">{nutrition.preparationContext}</p>
       )}
 
+      {hasProteinQuality && (
       <div className="mt-6">
         <SubHeading>Protein Quality</SubHeading>
         <dl className="mt-2 grid gap-2 text-sm sm:grid-cols-2">
@@ -104,6 +122,7 @@ export function NutritionSection({ nutrition }: NutritionSectionProps) {
           </p>
         )}
       </div>
+      )}
 
       <div className="mt-6">
         <SubHeading>Amino Acid Profile</SubHeading>

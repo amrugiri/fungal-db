@@ -21,6 +21,7 @@ import {
   SceneFraming,
   SECTION_VIEW_OFFSET,
 } from "@/components/morphology-viewer/anatomical/SceneFraming";
+import { ItalicizeTaxa } from "@/components/species/ScientificName";
 import {
   CrossSectionIcon,
   InfoIcon,
@@ -94,20 +95,25 @@ function AnatomicalScene({
     <>
       <color attach="background" args={[bg]} />
       <fog attach="fog" args={[bg, lightBackground ? 10 : 4, fogFar]} />
-      <ambientLight intensity={lightBackground ? 0.72 : 0.28} />
+      {/* Irradiance used to run near 2.8, which lifted every mid-tone: a dark
+          red-brown Ganoderma crust rendered as light salmon. Now that species
+          carry real per-vertex colour the lighting has to let those values
+          through — but cut too far and the white species (Tremella, Calvatia,
+          Sparassis) go grey. These values are the balance point. */}
+      <ambientLight intensity={lightBackground ? 0.56 : 0.23} />
       <directionalLight
         position={[2.8, 5.5, 3.2]}
-        intensity={lightBackground ? 0.95 : 1.4}
+        intensity={lightBackground ? 0.78 : 1.05}
         color="#fffaf3"
       />
       <directionalLight
         position={[-3.5, 2.5, -1.5]}
-        intensity={lightBackground ? 0.35 : 0.35}
+        intensity={0.20}
         color="#e8eef8"
       />
-      <spotLight position={[0, 4, 1.5]} intensity={0.4} angle={0.5} penumbra={0.75} color="#ffffff" />
+      <spotLight position={[0, 4, 1.5]} intensity={0.26} angle={0.5} penumbra={0.75} color="#ffffff" />
       <hemisphereLight
-        args={[lightBackground ? "#ffffff" : "#f5f0ea", lightBackground ? "#e8e4dc" : "#1a1410", lightBackground ? 0.7 : 0.35]}
+        args={[lightBackground ? "#ffffff" : "#f5f0ea", lightBackground ? "#e8e4dc" : "#1a1410", lightBackground ? 0.52 : 0.28]}
       />
 
       <group ref={bodyGroupRef} position={[0, MODEL_OFFSET_Y, 0]}>
@@ -139,13 +145,13 @@ function AnatomicalScene({
         offsetOverride={viewOffset}
       />
 
+      {/* Zoom limits are set by SceneFraming from the fitted distance, so they
+          scale with the specimen rather than assuming a fixed 1.15-unit model. */}
       <OrbitControls
         ref={controlsRef}
         enablePan={false}
         enableRotate={interactionMode === "rotate"}
         enableZoom
-        minDistance={1.4}
-        maxDistance={4.8}
       />
     </>
   );
@@ -259,11 +265,11 @@ export function InteractiveMorphologyViewer({
         {showHeader && (
           <div className="pointer-events-none absolute left-5 top-5 z-10 max-w-xs">
             <p
-              className={`text-2xl font-bold italic tracking-tight ${
+              className={`text-2xl font-medium tracking-tight ${
                 lightBackground ? "text-black" : "text-white"
               }`}
             >
-              {scientificName}
+              <em className="italic">{scientificName}</em>
             </p>
             {commonNameLabel && (
               <p className={`text-sm ${lightBackground ? "text-zinc-600" : "text-zinc-300"}`}>
@@ -302,7 +308,7 @@ export function InteractiveMorphologyViewer({
                 lightBackground ? "text-zinc-700" : "text-zinc-300"
               }`}
             >
-              {morphologyConfig.description}
+              <ItalicizeTaxa text={morphologyConfig.description} />
             </p>
             <p className="mt-4 text-sm font-semibold text-emerald-600">Key Features</p>
             <ol className="mt-2 space-y-1.5">
@@ -316,7 +322,9 @@ export function InteractiveMorphologyViewer({
                   <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-white">
                     {feature.id}
                   </span>
-                  <span>{feature.title}</span>
+                  <span>
+                    <ItalicizeTaxa text={feature.title} />
+                  </span>
                 </li>
               ))}
             </ol>
