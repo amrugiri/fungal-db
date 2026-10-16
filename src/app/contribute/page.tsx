@@ -16,18 +16,16 @@ export default async function ContributePage() {
       <h1 className="font-display text-2xl font-semibold text-truffle">Contribute data</h1>
       <div className="mt-6 space-y-4 font-sans text-sm leading-relaxed text-truffle">
         <p>
-          This form is for researchers, product developers, and other subject-matter experts who
-          have a <strong>citable source</strong> for a species already in MycoProt. Use it to send
-          sensory measurements or alt-protein usage details.
+          This form is intended for researchers, product developers, and other subject-matter
+          experts who hold a <strong>citable source</strong> for a species already listed in
+          MycoProt. The sections correspond to those on each species page: images, alternative-protein
+          usage, sensory profile, morphology, nutrition, geographic distribution, culture-collection
+          strains, and regulatory status. Please complete only those fields for which a source is
+          available; leave remaining fields blank.
         </p>
         <p>
-          Nothing you submit is published automatically. The admin reviews every field against the
-          attached paper, table, or figure. We will email you if a number, unit, or sample needs
-          clarification. Curator guesses and unsourced 0–5 scores are not accepted.
-        </p>
-        <p>
-          Values stay empty on species pages until they are copied from a paper. Wet-weight and
-          dry-weight figures are not mixed.
+          All submitted information is reviewed by the administrator before it goes live on the
+          database. Please submit accurate data and include citations or supporting images.
         </p>
       </div>
       <div className="mt-10">

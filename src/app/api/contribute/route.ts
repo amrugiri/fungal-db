@@ -77,7 +77,75 @@ export async function POST(request: Request) {
   const companyProduct = field(form, "companyProduct");
   const productionNotes = field(form, "productionNotes");
   const additionalNotes = field(form, "additionalNotes");
+  const aromaNotes = field(form, "aromaNotes");
+  const imageCategory = field(form, "imageCategory");
+  const imageUrl = field(form, "imageUrl");
+  const imageCaption = field(form, "imageCaption");
+  const imageLicense = field(form, "imageLicense");
+  const hyphalType = field(form, "hyphalType");
+  const cellWall = field(form, "cellWall");
+  const fruitingBody = field(form, "fruitingBody");
+  const microscopyNotes = field(form, "microscopyNotes");
+  const proteinPercent = field(form, "proteinPercent");
+  const fiberPercent = field(form, "fiberPercent");
+  const fatPercent = field(form, "fatPercent");
+  const moisturePercent = field(form, "moisturePercent");
+  const nutritionBasis = field(form, "nutritionBasis");
+  const pdcaas = field(form, "pdcaas");
+  const diaas = field(form, "diaas");
+  const aminoAcidBasis = field(form, "aminoAcidBasis");
+  const nutritionPrep = field(form, "nutritionPrep");
+  const nativeRange = field(form, "nativeRange");
+  const cultivatedRegions = field(form, "cultivatedRegions");
+  const habitat = field(form, "habitat");
+  const gbifUrl = field(form, "gbifUrl");
+  const collectionName = field(form, "collectionName");
+  const strainId = field(form, "strainId");
+  const catalogUrl = field(form, "catalogUrl");
+  const strainNotes = field(form, "strainNotes");
+  const fdaStatus = field(form, "fdaStatus");
+  const efsaStatus = field(form, "efsaStatus");
+  const regulatoryNotes = field(form, "regulatoryNotes");
   const sensoryRows = parseSensoryRows(field(form, "sensoryRows"));
+  const sectionValues = {
+    meatAnalogPotential,
+    meatAnalogUse,
+    commercialStatus,
+    consumptionForm,
+    applicationNotes,
+    companyProduct,
+    productionNotes,
+    additionalNotes,
+    aromaNotes,
+    imageCategory,
+    imageUrl,
+    imageCaption,
+    imageLicense,
+    hyphalType,
+    cellWall,
+    fruitingBody,
+    microscopyNotes,
+    proteinPercent,
+    fiberPercent,
+    fatPercent,
+    moisturePercent,
+    nutritionBasis,
+    pdcaas,
+    diaas,
+    aminoAcidBasis,
+    nutritionPrep,
+    nativeRange,
+    cultivatedRegions,
+    habitat,
+    gbifUrl,
+    collectionName,
+    strainId,
+    catalogUrl,
+    strainNotes,
+    fdaStatus,
+    efsaStatus,
+    regulatoryNotes,
+  };
 
   if (!name || !email) {
     return NextResponse.json({ error: "Name and email are required." }, { status: 400 });
@@ -126,20 +194,10 @@ export async function POST(request: Request) {
   }
 
   const hasPayload =
-    sensoryRows.length > 0 ||
-    Boolean(
-      meatAnalogPotential ||
-        meatAnalogUse ||
-        commercialStatus ||
-        consumptionForm ||
-        applicationNotes ||
-        companyProduct ||
-        productionNotes ||
-        additionalNotes,
-    );
+    sensoryRows.length > 0 || Object.values(sectionValues).some((value) => value.length > 0);
   if (!hasPayload) {
     return NextResponse.json(
-      { error: "Add at least one sensory or alt-protein field before submitting." },
+      { error: "Fill at least one species-page section before submitting." },
       { status: 400 },
     );
   }
@@ -181,9 +239,17 @@ export async function POST(request: Request) {
       ${row("Source URL", sourceUrl)}
       ${row("Attached files", attachments.map((file) => file.filename).join(", ") || "None")}
     </table>
-    <h2>Sensory</h2>
+    <h2>Images</h2>
+    <table>
+      ${row("Category", imageCategory)}
+      ${row("URL", imageUrl)}
+      ${row("Caption", imageCaption)}
+      ${row("License", imageLicense)}
+    </table>
+    <h2>Sensory Profile</h2>
     ${sensoryHtml}
-    <h2>Alt-protein usage</h2>
+    <table>${row("Aroma", aromaNotes)}</table>
+    <h2>Alternative Protein Usage</h2>
     <table>
       ${row("Meat analog potential", meatAnalogPotential)}
       ${row("Used in meat analogs", meatAnalogUse)}
@@ -191,7 +257,46 @@ export async function POST(request: Request) {
       ${row("Consumption form", consumptionForm)}
       ${row("Company / product", companyProduct)}
       ${row("Application notes", applicationNotes)}
-      ${row("Production notes", productionNotes)}
+      ${row("Production process", productionNotes)}
+    </table>
+    <h2>Morphology</h2>
+    <table>
+      ${row("Hyphal type", hyphalType)}
+      ${row("Cell wall", cellWall)}
+      ${row("Fruiting body", fruitingBody)}
+      ${row("Microscopy notes", microscopyNotes)}
+    </table>
+    <h2>Nutrition</h2>
+    <table>
+      ${row("Protein", proteinPercent)}
+      ${row("Fiber", fiberPercent)}
+      ${row("Fat", fatPercent)}
+      ${row("Moisture", moisturePercent)}
+      ${row("Proximate basis", nutritionBasis)}
+      ${row("PDCAAS", pdcaas)}
+      ${row("DIAAS", diaas)}
+      ${row("Amino-acid basis", aminoAcidBasis)}
+      ${row("Sample / preparation", nutritionPrep)}
+    </table>
+    <h2>Geographic Distribution</h2>
+    <table>
+      ${row("Native range", nativeRange)}
+      ${row("Cultivated regions", cultivatedRegions)}
+      ${row("Habitat", habitat)}
+      ${row("GBIF URL", gbifUrl)}
+    </table>
+    <h2>Culture Collection Strains</h2>
+    <table>
+      ${row("Collection", collectionName)}
+      ${row("Strain ID", strainId)}
+      ${row("Catalog URL", catalogUrl)}
+      ${row("Availability notes", strainNotes)}
+    </table>
+    <h2>Regulatory Status</h2>
+    <table>
+      ${row("FDA (US)", fdaStatus)}
+      ${row("EFSA (EU)", efsaStatus)}
+      ${row("Notes", regulatoryNotes)}
     </table>
     <h2>Additional notes</h2>
     <p>${escapeHtml(additionalNotes) || "None"}</p>
@@ -205,7 +310,7 @@ export async function POST(request: Request) {
     `URL: ${sourceUrl || "—"}`,
     `Files: ${attachments.map((file) => file.filename).join(", ") || "none"}`,
     "",
-    JSON.stringify({ sensoryRows, meatAnalogPotential, meatAnalogUse, commercialStatus, consumptionForm, applicationNotes, companyProduct, productionNotes, additionalNotes }, null, 2),
+    JSON.stringify({ sensoryRows, ...sectionValues }, null, 2),
   ].join("\n");
 
   try {

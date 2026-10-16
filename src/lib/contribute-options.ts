@@ -91,6 +91,48 @@ export const CONSUMPTION_FORMS = [
   { value: "other", label: "Other (describe in notes)" },
 ] as const;
 
+export const IMAGE_CATEGORIES = [
+  { value: "", label: "Select image category" },
+  { value: "organism", label: "Organism / fruiting body" },
+  { value: "microscopy", label: "Microscopy" },
+  { value: "commercial_product", label: "Commercial product" },
+  { value: "biomass", label: "Biomass / mycelium" },
+  { value: "other", label: "Other" },
+] as const;
+
+export const HYPHAL_TYPES = [
+  { value: "", label: "Select hyphal type" },
+  { value: "septate", label: "Septate" },
+  { value: "coenocytic", label: "Coenocytic" },
+  { value: "unknown", label: "Unknown" },
+] as const;
+
+export const NUTRITION_BASES = [
+  { value: "", label: "Select basis" },
+  { value: "g/100 g fresh weight", label: "g/100 g fresh weight (wet)" },
+  { value: "g/100 g dry weight", label: "% or g/100 g dry weight" },
+  { value: "g/100 g wet ingredient", label: "g/100 g wet ingredient" },
+  { value: "other", label: "Other (describe in notes)" },
+] as const;
+
+export const AMINO_ACID_BASES = [
+  { value: "", label: "Select amino-acid basis" },
+  { value: "per_100g_protein", label: "g per 100 g protein" },
+  { value: "per_100g_food", label: "g per 100 g food" },
+  { value: "percent_of_protein", label: "% of protein" },
+] as const;
+
+export const REGULATORY_STATUSES = [
+  { value: "", label: "Select status" },
+  { value: "gras", label: "GRAS" },
+  { value: "novel_food_authorized", label: "Novel food authorized" },
+  { value: "traditional_food", label: "Traditional food / long history of use" },
+  { value: "approved_safe", label: "Approved safe" },
+  { value: "not_evaluated", label: "Not evaluated" },
+  { value: "not_approved_food", label: "Not approved as food" },
+  { value: "restricted_use", label: "Restricted use" },
+] as const;
+
 export const PROOF_TYPES = [
   { value: "", label: "Select proof type" },
   { value: "peer_reviewed_paper", label: "Peer-reviewed paper" },
